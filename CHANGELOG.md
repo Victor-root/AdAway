@@ -1,5 +1,25 @@
 # Changelog
 
+## [6.5.5-c] - 2026-06-12
+
+### 🔄 Changed
+
+* 🎨 Replace the faded light-theme rose with a vivid red (`#C62828`), a hair lighter than the dark theme red (`#B71C1C`) so both modes match while keeping each tuned to its background
+* ⬜ Make the text sitting on red headers white via the Material on-primary colour — the home header (app name, description, version) was dark and barely legible on the red background in light mode; the welcome screen titles/summaries get the same treatment
+* 🔒 Hide the Debug preferences category on release builds — developer tooling (telemetry toggle, debug log switch) is no longer shown to end users; it stays visible on debug builds
+
+### 🐛 Fixed
+
+* 🛡️ Fix ANR loop on the welcome screen when a mouse is connected (via scrcpy or Bluetooth): `Shell.getShell()` was blocking the main thread while waiting for the root shell, starving Android's input dispatcher (5 s timeout) and triggering repeated "App not responding" dialogs — moved to the asynchronous callback overload so the check runs off the main thread
+* 📐 Fix welcome screen method cards being clipped on tablets and in landscape orientation: the previous layout used portrait-only fixed-percentage heights and an empty `Barrier`, causing card content to overflow; replaced with a `NestedScrollView` so content is never cut off in any orientation
+* 💾 Fix file-descriptor leak in the VPN DNS forwarder: the `ParcelFileDescriptor` wrapping the UDP socket was never closed, exhausting file descriptors under sustained DNS load
+* 📡 Fix VPN DNS forwarder sending the full 1024-byte buffer instead of only the bytes actually received from the upstream resolver
+* 🏷️ Fix allow-list entries being silently dropped when a hosts source line carries an inline `# comment` at any position beyond column 1
+* 🔔 Fix quick-settings tile leaking a `LiveData` observer every time the tile is opened and closed
+* 🔗 Fix `ArrayIndexOutOfBoundsException` on malformed Gist source URLs (fewer than 3 path segments)
+* 📂 Fix crash when `ContentResolver.openInputStream` returns `null` for a local file hosts source instead of throwing — now raises a handled `IOException`
+* ⚡ Fix potential double-initialisation of the `AppExecutors` singleton under concurrent access (missing `volatile` + double-checked lock)
+
 ## [6.5.1-c] - 2026-05-16
 
 ### ➕ Added

@@ -16,6 +16,7 @@
 
 
 </div>
+
 AdAway Community is an unofficial fork of [AdAway](https://github.com/AdAway/AdAway), an open source ad blocker for Android using hosts sources and a local VPN / root-based blocking depending on the selected mode.
 
 This fork is **not affiliated with, endorsed by, or signed by** the official AdAway maintainers.
@@ -25,7 +26,7 @@ This fork is **not affiliated with, endorsed by, or signed by** the official AdA
 <p align="center"><strong>📱 Mobile</strong></p>
 <p align="center">
   <img
-    src="https://github.com/user-attachments/assets/83c8261b-fab2-49a8-b0f6-c8e2f02c8386"
+    src="https://github.com/user-attachments/assets/21fcbf4f-8024-4496-900d-ae44ce72c7c8"
     width="360"
     alt="AdAway Community — mobile home screen"
   />
@@ -34,7 +35,7 @@ This fork is **not affiliated with, endorsed by, or signed by** the official AdA
 <p align="center"><strong>📺 Android TV</strong></p>
 <p align="center">
   <img
-    src="https://github.com/user-attachments/assets/a534a45d-1482-49b9-a856-073c3db57e6d"
+    src="https://github.com/user-attachments/assets/2246a2da-337d-45e2-8f3c-95628f8790fa"
     width="720"
     alt="AdAway Community — Android TV home screen"
   />
@@ -69,7 +70,7 @@ If the official project becomes actively maintained again and equivalent fixes a
 
 Current community version:
 
-`6.5.1-c`
+`6.5.5-c`
 
 The `c` stands for **Community**.
 
@@ -77,7 +78,9 @@ This version includes:
 
 - 📱 mobile VPN stability fixes;
 - 📺 Android TV integration;
-- 🧩 small build/runtime fixes needed during testing;
+- 🎨 light theme polished with a vivid red matching the dark theme;
+- 🐛 reliability fixes (ANR, VPN DNS forwarder, allow-list parsing, quick-settings tile leak, and more);
+- 🔒 debug preferences hidden on release builds;
 - 🔧 version naming separated from the official AdAway releases.
 
 ---
@@ -231,6 +234,84 @@ For Logcat, useful filters may include:
 - `VpnWorker`
 - `VpnConnectionMonitor`
 - `AdBlockingTileService`
+
+---
+
+## 🌍 Translations
+
+**AdAway Community** speaks **65 languages** 🗣️ — entirely thanks to the community of volunteer translators. 💜
+
+Spotted a missing string or an awkward wording? Contributions to start a new language or improve an existing one are always welcome — every little bit helps! 🙌
+
+> **Legend** — 🟩 `80–100%` · 🟨 `50–79%` · 🟧 `25–49%` · 🟥 `0–24%`
+
+| Language | Progress | Done |
+|:---------|:---------|-----:|
+| 🇬🇧 English (source) | 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩 | **100%** |
+| 🇫🇷 French | 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩 | **99%** |
+| 🇳🇱 Dutch | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **90%** |
+| 🇩🇪 German | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **90%** |
+| 🇮🇹 Italian | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **90%** |
+| 🇵🇹 Portuguese | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **90%** |
+| 🇪🇸 Spanish | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **90%** |
+| 🇧🇬 Bulgarian | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **89%** |
+| 🇨🇳 Chinese (Simplified) | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **89%** |
+| 🇹🇼 Chinese (Traditional) | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **89%** |
+| 🇬🇷 Greek | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **89%** |
+| 🇮🇱 Hebrew | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **89%** |
+| 🇧🇷 Portuguese (Brazil) | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **89%** |
+| 🇸🇰 Slovak | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **89%** |
+| 🇸🇦 Arabic | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **88%** |
+| 🌐 Catalan | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **88%** |
+| 🇮🇩 Indonesian | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **88%** |
+| 🇯🇵 Japanese | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **88%** |
+| 🇵🇱 Polish | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **88%** |
+| 🇷🇺 Russian | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **88%** |
+| 🇸🇮 Slovenian | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **88%** |
+| 🇹🇷 Turkish | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **88%** |
+| 🇨🇿 Czech | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **85%** |
+| 🇻🇳 Vietnamese | 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ | **85%** |
+| 🇭🇷 Croatian | 🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜ | **84%** |
+| 🇰🇷 Korean | 🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜ | **84%** |
+| 🇸🇪 Swedish | 🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜ | **84%** |
+| 🇺🇦 Ukrainian | 🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜ | **84%** |
+| 🇧🇾 Belarusian | 🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜ | **83%** |
+| 🇭🇺 Hungarian | 🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜ | **83%** |
+| 🇷🇴 Romanian | 🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜ | **82%** |
+| 🇱🇹 Lithuanian | 🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜ | **81%** |
+| 🇲🇽 Spanish (Mexico) | 🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜ | **81%** |
+| 🌐 Basque | 🟨🟨🟨🟨🟨🟨🟨🟨⬜⬜ | **76%** |
+| 🇮🇷 Persian | 🟨🟨🟨🟨🟨🟨🟨⬜⬜⬜ | **70%** |
+| 🇫🇮 Finnish | 🟨🟨🟨🟨🟨🟨⬜⬜⬜⬜ | **58%** |
+| 🇪🇪 Estonian | 🟧🟧🟧🟧🟧⬜⬜⬜⬜⬜ | **47%** |
+| 🇦🇫 Pashto | 🟧🟧🟧🟧🟧⬜⬜⬜⬜⬜ | **45%** |
+| 🇮🇳 Malayalam | 🟧🟧🟧🟧⬜⬜⬜⬜⬜⬜ | **44%** |
+| 🇹🇭 Thai | 🟧🟧🟧🟧⬜⬜⬜⬜⬜⬜ | **44%** |
+| 🇩🇰 Danish | 🟧🟧🟧🟧⬜⬜⬜⬜⬜⬜ | **42%** |
+| 🌐 Asturian | 🟧🟧🟧⬜⬜⬜⬜⬜⬜⬜ | **31%** |
+| 🇦🇿 Azerbaijani | 🟧🟧🟧⬜⬜⬜⬜⬜⬜⬜ | **31%** |
+| 🌐 Galician | 🟧🟧🟧⬜⬜⬜⬜⬜⬜⬜ | **29%** |
+| 🇳🇴 Norwegian Bokmål | 🟧🟧🟧⬜⬜⬜⬜⬜⬜⬜ | **25%** |
+| 🇷🇸 Serbian | 🟧🟧🟧⬜⬜⬜⬜⬜⬜⬜ | **25%** |
+| 🇿🇦 Afrikaans | 🟥🟥⬜⬜⬜⬜⬜⬜⬜⬜ | **24%** |
+| 🇮🇳 Tamil | 🟥🟥⬜⬜⬜⬜⬜⬜⬜⬜ | **17%** |
+| 🇰🇭 Khmer | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **14%** |
+| 🇺🇿 Uzbek | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **12%** |
+| 🇵🇭 Filipino | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **10%** |
+| 🇧🇩 Bengali | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **7%** |
+| 🇳🇴 Norwegian | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **7%** |
+| 🇵🇰 Urdu | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **7%** |
+| 🌍 Esperanto | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **6%** |
+| 🌐 Kurdish | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **6%** |
+| 🇦🇱 Albanian | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **5%** |
+| 🇲🇲 Burmese | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **5%** |
+| 🇮🇳 Hindi | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **5%** |
+| 🇮🇸 Icelandic | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **5%** |
+| 🇲🇾 Malay | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **5%** |
+| 🇳🇵 Nepali | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **5%** |
+| 🇮🇳 Punjabi | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **5%** |
+| 🇱🇰 Sinhala | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **5%** |
+| 🇵🇭 Tagalog | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **5%** |
 
 ---
 
