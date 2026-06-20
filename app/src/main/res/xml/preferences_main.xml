@@ -45,7 +45,9 @@
             app:title="@string/pref_backup_restore" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/pref_debug_category">
+    <PreferenceCategory
+        app:key="@string/pref_debug_category_key"
+        app:title="@string/pref_debug_category">
         <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_enable_telemetry_def"
             app:icon="@drawable/outline_cloud_upload_24"

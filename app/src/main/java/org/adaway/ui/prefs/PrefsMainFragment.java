@@ -1,10 +1,12 @@
 package org.adaway.ui.prefs;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 
 import org.adaway.R;
@@ -32,6 +34,7 @@ public class PrefsMainFragment extends PreferenceFragmentCompat {
         bindThemePrefAction();
         bindAdBlockMethod();
         bindTelemetryPrefAction();
+        hideDebugCategoryOnReleaseBuild();
     }
 
     @Override
@@ -64,6 +67,22 @@ public class PrefsMainFragment extends PreferenceFragmentCompat {
         AdBlockMethod adBlockMethod = PreferenceHelper.getAdBlockMethod(requireContext());
         rootPreference.setEnabled(adBlockMethod == ROOT);
         vpnPreference.setEnabled(adBlockMethod == VPN);
+    }
+
+    /**
+     * Hide the whole debug category on a release build. The category only holds
+     * developer tooling (telemetry and debug logging), so it is irrelevant to
+     * end users. A release APK is not flagged debuggable, which is what we test.
+     */
+    private void hideDebugCategoryOnReleaseBuild() {
+        boolean debuggable = (requireContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        if (debuggable) {
+            return;
+        }
+        PreferenceCategory debugCategory = findPreference(getString(R.string.pref_debug_category_key));
+        if (debugCategory != null) {
+            debugCategory.setVisible(false);
+        }
     }
 
     private void bindTelemetryPrefAction() {

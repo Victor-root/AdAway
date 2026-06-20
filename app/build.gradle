@@ -2,10 +2,16 @@ plugins {
     id 'com.android.application'
 }
 
-boolean keyStoreDefined = project.hasProperty('signingStoreLocation') &&
-        project.hasProperty('signingStorePassword') &&
-        project.hasProperty('signingKeyAlias') &&
-        project.hasProperty('signingKeyPassword')
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+boolean keyStoreDefined = false
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    keyStoreDefined = keystoreProperties['storeFile'] &&
+            keystoreProperties['storePassword'] &&
+            keystoreProperties['keyAlias'] &&
+            keystoreProperties['keyPassword']
+}
 
 repositories {
     maven {
@@ -37,22 +43,22 @@ android {
     }
 
     /*
-     * To sign release build, create file gradle.properties in ~/.gradle/ with this content:
+     * To sign release build, create file keystore.properties at the project root with this content:
      *
-     * signingStoreLocation=/home/key.store
-     * signingStorePassword=xxx
-     * signingKeyAlias=alias
-     * signingKeyPassword=xxx
+     * storeFile=D:/path/to/your.jks
+     * storePassword=xxx
+     * keyAlias=alias
+     * keyPassword=xxx
      */
     if (keyStoreDefined) {
-        println "Found signature properties in gradle.properties. Build will be signed."
+        println "Found keystore.properties. Build will be signed."
 
         signingConfigs {
             release {
-                storeFile file(signingStoreLocation)
-                storePassword signingStorePassword
-                keyAlias signingKeyAlias
-                keyPassword signingKeyPassword
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
             }
         }
 

@@ -1,5 +1,6 @@
 # Android specific
 local.properties
+keystore.properties
 
 # Gradle
 .cxx
