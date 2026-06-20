@@ -24,6 +24,17 @@
     <!-- Help card -->
     <string name="help_label">Afficher l’aide\net les conseils</string>
 
+    <!-- Home action rows (redesigned home screen) -->
+    <string name="home_log_title">Journal des requêtes DNS</string>
+    <string name="home_log_subtitle">Voir ce qui est bloqué en temps réel</string>
+    <string name="home_help_title">Aide et conseils</string>
+    <string name="home_help_subtitle">Guides et dépannage</string>
+    <string name="home_preferences_subtitle">Configurer AdAway</string>
+
+    <!-- Compact navigation tiles (single-row layout) -->
+    <string name="home_tile_log">Journal DNS</string>
+    <string name="home_tile_help">Aide</string>
+
     <!-- Project card -->
     <string name="project_label">Ouvrir la page GitHub</string>
 

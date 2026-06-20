@@ -3,4 +3,17 @@
     <style name="Theme.AdAway" parent="Base.AdAway">
         <item name="colorPrimaryDark">?colorSurface</item>
     </style>
+
+    <style name="Theme.AdAway.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primaryVariant</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+        <item name="colorSecondary">@color/primary</item>
+        <item name="colorSecondaryVariant">@color/primaryVariant</item>
+        <item name="colorOnSecondary">@color/onPrimary</item>
+
+        <item name="android:statusBarColor">?colorPrimary</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
 </resources>

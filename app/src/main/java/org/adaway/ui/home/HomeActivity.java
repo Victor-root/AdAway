@@ -82,7 +82,6 @@ public class HomeActivity extends AppCompatActivity {
         this.homeViewModel.isAdBlocked().observe(this, this::notifyAdBlocked);
         this.homeViewModel.getError().observe(this, this::notifyError);
 
-        applyActionBar();
         bindAppVersion();
         bindUpdateBanner();
         bindHostCounter();
@@ -130,10 +129,6 @@ public class HomeActivity extends AppCompatActivity {
         if (checkUpdateAtStartup) {
             this.homeViewModel.update();
         }
-    }
-
-    private void applyActionBar() {
-        setSupportActionBar(this.binding.bar);
     }
 
     private void bindAppVersion() {
@@ -276,6 +271,7 @@ public class HomeActivity extends AppCompatActivity {
     private void notifyAdBlocked(boolean adBlocked) {
         int color = adBlocked ? getResources().getColor(R.color.primary, null) : Color.GRAY;
         this.binding.content.headerFrameLayout.setBackgroundColor(color);
+        getWindow().setStatusBarColor(color);
         this.binding.fab.setImageResource(adBlocked ? R.drawable.ic_pause_24dp : R.drawable.logo);
     }
 

@@ -125,11 +125,13 @@
             android:name=".ui.prefs.PrefsActivity"
             android:exported="false"
             android:label="@string/preferences_drawer_item"
-            android:parentActivityName=".ui.home.HomeActivity" />
+            android:parentActivityName=".ui.home.HomeActivity"
+            android:theme="@style/Theme.AdAway.Prefs" />
         <activity
             android:name=".ui.prefs.exclusion.PrefsVpnExcludedAppsActivity"
             android:exported="false"
-            android:label="@string/pref_vpn_exclude_user_apps_activity" />
+            android:label="@string/pref_vpn_exclude_user_apps_activity"
+            android:theme="@style/Theme.AdAway.Prefs" />
         <activity
             android:name=".ui.update.UpdateActivity"
             android:exported="false"

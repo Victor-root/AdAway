@@ -3,6 +3,61 @@
 
     <style name="Theme.AdAway" parent="Base.AdAway" />
 
+    <!--
+        Preferences theme: same as the app theme but (1) makes every
+        SwitchPreferenceCompat use the standard Material 3 MaterialSwitch,
+        (2) keeps the app bar red in dark mode (Material would otherwise colour it
+        with colorSurface) and (3) modernises the preference dialogs (ListPreference
+        etc.) with rounded corners and Material styling.
+    -->
+    <style name="Theme.AdAway.Prefs" parent="Base.AdAway">
+        <item name="switchPreferenceCompatStyle">@style/Preference.AdAway.SwitchPreferenceCompat</item>
+        <item name="actionBarStyle">@style/Widget.AdAway.Prefs.ActionBar</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.AdAway.Dialog</item>
+    </style>
+
+    <!-- Keep the preferences app bar red regardless of day/night. -->
+    <style name="Widget.AdAway.Prefs.ActionBar" parent="Widget.MaterialComponents.ActionBar.PrimarySurface">
+        <item name="background">@color/primary</item>
+    </style>
+
+    <!--
+        Modern rounded dialog used by the preference screens (e.g. the dark-theme
+        picker). Rounded surface, red accent for the selected radio and the buttons.
+    -->
+    <style name="ThemeOverlay.AdAway.Dialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorControlActivated">@color/primary</item>
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.AdAway.Dialog.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.AdAway.Dialog.Button</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.AdAway.Dialog.Button</item>
+    </style>
+
+    <style name="Widget.AdAway.Dialog.Button" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <!--
+        Preference switches use the standard Material 3 MaterialSwitch (same widget as
+        e.g. Material Files), via a custom widget layout. No custom tint/drawable: the
+        MD3 look comes entirely from the M3 colour tokens + colorPrimary.
+    -->
+    <style name="Preference.AdAway.SwitchPreferenceCompat" parent="Preference.SwitchPreferenceCompat.Material">
+        <item name="android:widgetLayout">@layout/switch_preference_widget_material3</item>
+    </style>
+
+    <!--
+        The app theme is Material 2, but MaterialSwitch needs the Material 3 colour
+        tokens (and materialSwitchStyle) to render its MD3 appearance. We host the
+        switch in an isolated M3 theme so it picks those up, while forcing colorPrimary
+        to the AdAway red (no dynamic colour, so the checked track is always red).
+    -->
+    <style name="ThemeOverlay.AdAway.MaterialSwitch" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+    </style>
+
     <style name="Base.AdAway" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primaryVariant</item>
@@ -24,6 +79,8 @@
         <item name="colorOnSecondary">@color/onPrimary</item>
 
         <item name="android:statusBarColor">?colorPrimary</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
     <style name="Theme.AdAway.NoActionBar.Red" parent="Theme.MaterialComponents.NoActionBar">
@@ -37,5 +94,30 @@
         <item name="android:statusBarColor">?colorOnSecondary</item>
         <item name="android:navigationBarColor">@color/welcomeBackground</item>
         <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!--
+        Shared style for every card in the home screen lower zone (sources card and
+        the 3 navigation rows). Single source of truth so all cards get an identical,
+        soft and discrete elevation shadow. Keep elevation subtle (2dp); do NOT raise
+        it to 8/10dp on these large cards.
+    -->
+    <style name="Widget.AdAway.HomeCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+        <item name="cardCornerRadius">22dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardUseCompatPadding">false</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <!--
+        Rounded-corner shape for the header AdAway logo. Applied to a ShapeableImageView so
+        the logo is clipped identically on every device/manufacturer (Android 10 included),
+        instead of relying on the per-OEM adaptive-icon mask.
+    -->
+    <style name="ShapeAppearanceOverlay.AdAway.Logo" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">25%</item>
     </style>
 </resources>
