@@ -232,7 +232,20 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
             case STARTING:
             case RUNNING:
                 notificationManager.cancel(VPN_RESUME_SERVICE_NOTIFICATION_ID);
-                startForeground(VPN_RUNNING_SERVICE_NOTIFICATION_ID, notification);
+                try {
+                    startForeground(VPN_RUNNING_SERVICE_NOTIFICATION_ID, notification);
+                } catch (Exception e) {
+                    // startForeground() can be denied by AppOps when the process is killed
+                    // and restarted by the OEM system (e.g. battery manager). Force a clean
+                    // stop so the UI reflects the real state instead of staying stuck on "pause".
+                    Timber.e(e, "startForeground denied — forcing VPN stop.");
+                    PreferenceHelper.setVpnServiceStatus(this, STOPPED);
+                    Intent stoppedIntent = new Intent(VPN_UPDATE_STATUS_INTENT);
+                    stoppedIntent.putExtra(VPN_UPDATE_STATUS_EXTRA, STOPPED);
+                    LocalBroadcastManager.getInstance(this).sendBroadcast(stoppedIntent);
+                    stopSelf();
+                    return;
+                }
                 break;
             default:
                 if (checkSelfPermission(POST_NOTIFICATIONS) == PERMISSION_GRANTED) {

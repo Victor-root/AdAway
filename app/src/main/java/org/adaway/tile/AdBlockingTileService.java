@@ -4,6 +4,7 @@ import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import org.adaway.AdAwayApplication;
 import org.adaway.model.adblocking.AdBlockModel;
@@ -24,6 +25,10 @@ import timber.log.Timber;
  */
 public class AdBlockingTileService extends TileService {
     private final AtomicBoolean toggling = new AtomicBoolean(false);
+    // Single Observer instance so onStopListening removes exactly what onStartListening registered.
+    // A "this::updateTile" method reference creates a new instance each time, so removeObserver
+    // would never match and observers would pile up.
+    private final Observer<Boolean> appliedObserver = this::updateTile;
 
     @Override
     public void onTileAdded() {
@@ -34,13 +39,13 @@ public class AdBlockingTileService extends TileService {
     @Override
     public void onStartListening() {
         LiveData<Boolean> applied = getModel().isApplied();
-        applied.observeForever(this::updateTile);
+        applied.observeForever(this.appliedObserver);
     }
 
     @Override
     public void onStopListening() {
         LiveData<Boolean> applied = getModel().isApplied();
-        applied.removeObserver(this::updateTile);
+        applied.removeObserver(this.appliedObserver);
     }
 
     @Override

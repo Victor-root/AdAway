@@ -184,7 +184,7 @@ class SourceLoader {
         private HostListItem parseAllowListItem(String line) {
             // Extract hostname
             int indexOf = line.indexOf('#');
-            if (indexOf == 1) {
+            if (indexOf != -1) {
                 line = line.substring(0, indexOf);
             }
             line = line.trim();

@@ -59,6 +59,9 @@ public class BootReceiver extends BroadcastReceiver {
                 // Ensure VPN is prepared
                 Intent prepareIntent = android.net.VpnService.prepare(context);
                 if (prepareIntent != null) {
+                    // A BroadcastReceiver is not an Activity context: starting an activity from
+                    // here requires FLAG_ACTIVITY_NEW_TASK, otherwise Android throws on API 28+.
+                    prepareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(prepareIntent);
                 }
                 // Start VPN service if enabled in preferences

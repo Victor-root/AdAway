@@ -67,12 +67,18 @@ public class WelcomeMethodFragment extends WelcomeFragment {
 
     private void checkRoot(@Nullable View view) {
         notifyVpnDisabled();
-        Shell.getShell();
-        if (TRUE.equals(Shell.isAppGrantedRoot())) {
-            notifyRootEnabled();
-        } else {
-            notifyRootDisabled(true);
-        }
+        this.binding.rootCardView.setClickable(false);
+        Shell.getShell(shell -> {
+            boolean granted = TRUE.equals(Shell.isAppGrantedRoot());
+            requireActivity().runOnUiThread(() -> {
+                this.binding.rootCardView.setClickable(true);
+                if (granted) {
+                    notifyRootEnabled();
+                } else {
+                    notifyRootDisabled(true);
+                }
+            });
+        });
     }
 
     private void enableVpnService(@Nullable View view) {

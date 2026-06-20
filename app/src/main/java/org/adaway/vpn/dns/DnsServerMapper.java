@@ -53,6 +53,11 @@ public class DnsServerMapper {
      */
     private static final int IPV6_PREFIX_LENGTH = 120;
     /**
+     * The public DNS server to fall back to when the active network reports no DNS server.
+     * Prevents establishing a tunnel without any resolver, which would break all name resolution.
+     */
+    private static final String FALLBACK_DNS_SERVER = "1.1.1.1";
+    /**
      * The original DNS servers.
      */
     private final List<InetAddress> dnsServers;
@@ -94,12 +99,30 @@ public class DnsServerMapper {
                 builder.addRoute(dnsAddressAlias, 32);
             }
         }
+        // Safety net: never establish a tunnel without a resolver. If the active network
+        // reported no usable DNS server (e.g. queried during a network transition or right
+        // after boot), apps under the VPN would have no DNS at all and lose connectivity
+        // until the VPN profile is recreated. Fall back to a public DNS so the tunnel always
+        // resolves. This only triggers when no DNS server was mapped above, so the normal
+        // path is left untouched.
+        if (this.dnsServers.isEmpty()) {
+            try {
+                InetAddress fallbackDnsServer = InetAddress.getByName(FALLBACK_DNS_SERVER);
+                this.dnsServers.add(fallbackDnsServer);
+                InetAddress dnsAddressAlias = ipv4Subnet.getAddress(this.dnsServers.size());
+                Timber.w("No network DNS server found, falling back to %s mapped as %s.", fallbackDnsServer, dnsAddressAlias);
+                builder.addDnsServer(dnsAddressAlias);
+                builder.addRoute(dnsAddressAlias, 32);
+            } catch (UnknownHostException e) {
+                Timber.w(e, "Failed to add fallback DNS server.");
+            }
+        }
     }
 
     public InetAddress getDefaultDnsServerAddress() {
         if (this.dnsServers.isEmpty()) {
             try {
-                return InetAddress.getByName("1.1.1.1");
+                return InetAddress.getByName(FALLBACK_DNS_SERVER);
             } catch (UnknownHostException e) {
                 throw new IllegalStateException("Failed to parse hardcoded DNS IP address.", e);
             }

@@ -8,6 +8,7 @@ import android.system.StructPollfd;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 import timber.log.Timber;
@@ -22,6 +23,11 @@ class DnsQuery implements AutoCloseable {
      * The socket used to query DNS server.
      */
     private final DatagramSocket socket;
+    /**
+     * The parcel file descriptor wrapping the socket. Kept for the query lifetime so the polled
+     * file descriptor stays valid, and closed in {@link #close()} to avoid leaking it.
+     */
+    private final ParcelFileDescriptor parcelFileDescriptor;
     /**
      * The callback to call with the query response data.
      */
@@ -46,7 +52,8 @@ class DnsQuery implements AutoCloseable {
         this.callback = callback;
         this.time = System.currentTimeMillis() / 1000;
         this.pollfd = new StructPollfd();
-        this.pollfd.fd = ParcelFileDescriptor.fromDatagramSocket(this.socket).getFileDescriptor();
+        this.parcelFileDescriptor = ParcelFileDescriptor.fromDatagramSocket(this.socket);
+        this.pollfd.fd = this.parcelFileDescriptor.getFileDescriptor();
         this.pollfd.events = (short) POLLIN;
     }
 
@@ -85,7 +92,8 @@ class DnsQuery implements AutoCloseable {
             byte[] responseData = new byte[1024];
             DatagramPacket responsePacket = new DatagramPacket(responseData, responseData.length);
             this.socket.receive(responsePacket);
-            this.callback.accept(responseData);
+            // Forward only the bytes actually received, not the whole 1024-byte buffer.
+            this.callback.accept(Arrays.copyOf(responseData, responsePacket.getLength()));
         } catch (IOException e) {
             Timber.w(e, "Could not handle DNS response.");
         } finally {
@@ -96,5 +104,10 @@ class DnsQuery implements AutoCloseable {
     @Override
     public void close() {
         this.socket.close();
+        try {
+            this.parcelFileDescriptor.close();
+        } catch (IOException e) {
+            Timber.w(e, "Could not close DNS query file descriptor.");
+        }
     }
 }
