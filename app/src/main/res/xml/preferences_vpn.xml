@@ -52,6 +52,19 @@
             app:title="@string/pref_vpn_exclude_user_apps" />
     </PreferenceCategory>
 
+    <!-- Troubleshooting -->
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_vpn_troubleshooting">
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_vpn_reset_key"
+            app:persistent="false"
+            app:singleLineTitle="false"
+            app:summary="@string/pref_vpn_reset_description"
+            app:title="@string/pref_vpn_reset" />
+    </PreferenceCategory>
+
     <!-- Custom DNS-->
 
 </PreferenceScreen>

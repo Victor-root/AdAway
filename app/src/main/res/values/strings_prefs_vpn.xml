@@ -21,4 +21,11 @@
     <string name="pref_vpn_exclude_user_apps_select_all">Select all</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">Deselect all</string>
     <string name="pref_vpn_exclude_user_apps_icon">Application icon</string>
+
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">Troubleshooting</string>
+    <string name="pref_vpn_reset">Reset VPN</string>
+    <string name="pref_vpn_reset_description">Rebuild the VPN connection from scratch. Use this if the VPN stops working — no internet access or DNS errors.</string>
+    <string name="pref_vpn_reset_done">VPN connection rebuilt.</string>
+    <string name="pref_vpn_reset_not_running">VPN is not running.</string>
 </resources>

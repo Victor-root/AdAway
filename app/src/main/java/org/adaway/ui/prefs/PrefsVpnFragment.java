@@ -3,6 +3,7 @@ package org.adaway.ui.prefs;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
@@ -36,6 +37,7 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
         // Bind pref actions
         bindExcludedSystemApps();
         bindExcludedUserApps();
+        bindResetVpn();
     }
 
     @Override
@@ -67,6 +69,24 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
         excludeUserAppsPreferences.setOnPreferenceClickListener(preference -> {
             Intent intent = new Intent(context, PrefsVpnExcludedAppsActivity.class);
             this.startActivityLauncher.launch(intent);
+            return true;
+        });
+    }
+
+    private void bindResetVpn() {
+        Context context = requireContext();
+        Preference resetPreference = findPreference(getString(R.string.pref_vpn_reset_key));
+        assert resetPreference != null : PREFERENCE_NOT_FOUND;
+        resetPreference.setOnPreferenceClickListener(preference -> {
+            // Tear down and re-establish the tunnel so the DNS configuration is read again.
+            // This recovers from a tunnel stuck in a broken state (e.g. established with no
+            // resolver after a network transition) without needing to recreate the VPN profile.
+            if (VpnServiceControls.isRunning(context)) {
+                restartVpn();
+                Toast.makeText(context, R.string.pref_vpn_reset_done, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, R.string.pref_vpn_reset_not_running, Toast.LENGTH_SHORT).show();
+            }
             return true;
         });
     }
