@@ -16,4 +16,10 @@
         <item name="android:navigationBarColor">?attr/colorSurface</item>
         <item name="android:windowLightNavigationBar">false</item>
     </style>
+
+    <!-- Preferences theme (dark): navigation bar follows the surface like the home screen. -->
+    <style name="Theme.AdAway.Prefs" parent="Base.AdAway.Prefs">
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
 </resources>

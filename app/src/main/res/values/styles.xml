@@ -4,16 +4,26 @@
     <style name="Theme.AdAway" parent="Base.AdAway" />
 
     <!--
-        Preferences theme: same as the app theme but (1) makes every
-        SwitchPreferenceCompat use the standard Material 3 MaterialSwitch,
-        (2) keeps the app bar red in dark mode (Material would otherwise colour it
-        with colorSurface) and (3) modernises the preference dialogs (ListPreference
-        etc.) with rounded corners and Material styling.
+        Shared preferences styling: (1) makes every SwitchPreferenceCompat use the
+        standard Material 3 MaterialSwitch, (2) keeps the app bar red in dark mode
+        (Material would otherwise colour it with colorSurface) and (3) modernises the
+        preference dialogs (ListPreference etc.) with rounded corners and Material
+        styling. The concrete day/night themes below only add the navigation bar.
     -->
-    <style name="Theme.AdAway.Prefs" parent="Base.AdAway">
+    <style name="Base.AdAway.Prefs" parent="Base.AdAway">
         <item name="switchPreferenceCompatStyle">@style/Preference.AdAway.SwitchPreferenceCompat</item>
         <item name="actionBarStyle">@style/Widget.AdAway.Prefs.ActionBar</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.AdAway.Dialog</item>
+    </style>
+
+    <!--
+        Preferences theme (light): keep the navigation bar white like the home screen.
+        Without this, stock Android (e.g. Pixel) falls back to a black navigation bar
+        on the settings screens while OEM skins keep it white.
+    -->
+    <style name="Theme.AdAway.Prefs" parent="Base.AdAway.Prefs">
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
     <!-- Keep the preferences app bar red regardless of day/night. -->
