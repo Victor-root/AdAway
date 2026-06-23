@@ -47,6 +47,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -94,6 +95,15 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
      * The VPN network interface, (<code>null</code> if not established).
      */
     private final AtomicReference<ParcelFileDescriptor> vpnNetworkInterface;
+    /**
+     * Whether an intentional stop is in progress. Set by {@link #stop()} before the tunnel
+     * is force-closed so the worker loop can tell the resulting read failure (EBADF on the
+     * blocking device read) apart from a genuine network error: on a stop it must exit
+     * cleanly instead of reconnecting. Without this, pausing the VPN closed the tunnel, the
+     * blocked native read threw EBADF, and the loop "reconnected" — bringing the VPN back up
+     * right after the user paused it (so the first tap appeared to do nothing).
+     */
+    private final AtomicBoolean stopping;
 
     /**
      * Constructor.
@@ -111,6 +121,7 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
         this.vpnWatchDog = new VpnWatchdog();
         this.executor = new AtomicReference<>(null);
         this.vpnNetworkInterface = new AtomicReference<>(null);
+        this.stopping = new AtomicBoolean(false);
     }
 
     /**
@@ -119,6 +130,8 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
      */
     public void start() {
         Timber.d("Starting VPN thread…");
+        // Clear any pending stop flag so a fresh worker reconnects normally on errors.
+        this.stopping.set(false);
         ExecutorService executor = Executors.newFixedThreadPool(2);
         executor.submit(this::work);
         executor.submit(this.connectionMonitor::monitor);
@@ -141,6 +154,9 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
      */
     public void stop() {
         Timber.d("Stopping VPN thread.");
+        // Mark the stop BEFORE closing the tunnel so the worker loop treats the resulting
+        // read failure as an intentional shutdown and does not reconnect.
+        this.stopping.set(true);
         this.connectionMonitor.reset();
         forceCloseTunnel();
         setExecutor(null);
@@ -196,6 +212,14 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
                 Thread.currentThread().interrupt();
                 break;
             } catch (VpnNetworkException | IOException e) {
+                // An intentional stop force-closes the tunnel, which unblocks the native
+                // device read with EBADF. That is not a network error: exit cleanly instead
+                // of reconnecting, otherwise the VPN comes straight back up after the user
+                // paused it (requiring a second tap).
+                if (this.stopping.get()) {
+                    Timber.d("Tunnel closed by stop request, exiting VPN thread.");
+                    break;
+                }
                 Timber.w(e, "Network exception in vpn thread, reconnecting…");
                 // If an exception was thrown, notify status and try again
                 this.vpnService.notifyVpnStatus(RECONNECTING_NETWORK_ERROR);
