@@ -102,35 +102,67 @@ public class VpnConnectionMonitor {
      * Monitor the VPN network interface is still up while the VPN is running.
      */
     void monitor() {
+        while (this.running.get()) {
+            if (!isVpnInterfacePresent()) {
+                stop();
+                if (mayRestart()) {
+                    Timber.i("No VPN tunnel interface present. Restarting VPN service…");
+                    VpnServiceControls.start(this.context);
+                } else {
+                    Timber.i("VPN tunnel interface gone but user has stopped the VPN; not restarting.");
+                }
+                return;
+            }
+            try {
+                Thread.sleep(CONNECTION_CHECK_DELAY_MS);
+            } catch (InterruptedException e) {
+                Timber.d("Stop monitoring.");
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+    }
+
+    /**
+     * Check whether a VPN tunnel interface ({@code tunX}) is currently present.
+     * <p>
+     * Returns {@code true} immediately if the tunnel has not been initialized yet for this
+     * session (i.e. {@link #initialize()} has not been called or {@link #reset()} was called
+     * since the last initialize): the monitor must not fire while the worker is still in the
+     * throttle-wait before the new tunnel is established, or it would falsely conclude the
+     * tunnel is gone and trigger an extra restart.
+     * <p>
+     * Once initialized, this deliberately probes for the <em>presence</em> of the interface
+     * by re-enumerating the device interfaces on every cycle, instead of calling
+     * {@link NetworkInterface#isUp()} on the cached instance: on some devices / Android
+     * versions that {@code ioctl} fails with {@code ENODEV} (or the cached instance goes stale)
+     * while the tunnel is in fact still up, which made the monitor tear down a perfectly working
+     * tunnel every 10s in a restart loop. Checking for presence also transparently handles the
+     * interface being renumbered (e.g. {@code tun0} → {@code tun1}) on a rebuild.
+     *
+     * @return <code>true</code> if a tunnel interface is present — or if the tunnel has not
+     * been initialized yet, or if the interfaces could not be probed at all (transient error);
+     * <code>false</code> only when the device positively reports no tunnel interface AND the
+     * tunnel had been successfully initialized.
+     */
+    private boolean isVpnInterfacePresent() {
+        // Not yet initialized for this VPN session — the worker is still in the throttle
+        // wait before establishing the tunnel. Skip the check to avoid a false "no tunnel"
+        // detection that would immediately trigger another restart.
+        if (this.networkInterface == null) {
+            return true;
+        }
         try {
-            while (this.running.get()) {
-                if (this.networkInterface != null && !this.networkInterface.isUp()) {
-                    stop();
-                    if (mayRestart()) {
-                        Timber.i("VPN network interface %s is down. Restarting VPN service…",
-                                this.networkInterface == null ? "unset" : this.networkInterface.getName());
-                        VpnServiceControls.start(this.context);
-                    } else {
-                        Timber.i("VPN network interface is down but user has stopped the VPN; not restarting.");
-                    }
-                }
-                try {
-                    Thread.sleep(CONNECTION_CHECK_DELAY_MS);
-                } catch (InterruptedException e) {
-                    Timber.d("Stop monitoring.");
-                    Thread.currentThread().interrupt();
-                    break;
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                if (TUNNEL_PATTERN.matcher(interfaces.nextElement().getName()).matches()) {
+                    return true;
                 }
             }
+            return false;
         } catch (SocketException e) {
-            String name = this.networkInterface == null ? "unset" : this.networkInterface.getName();
-            reset();
-            if (mayRestart()) {
-                Timber.w(e, "Failed to test VPN network interface %s. Restarting VPN service…", name);
-                VpnServiceControls.start(this.context);
-            } else {
-                Timber.w(e, "Failed to test VPN network interface %s; user stopped the VPN, not restarting.", name);
-            }
+            Timber.w(e, "Failed to probe VPN tunnel interface; assuming it is still up.");
+            return true;
         }
     }
 
@@ -143,6 +175,19 @@ public class VpnConnectionMonitor {
         return VpnStartDecision.mayBackgroundStart(
                 PreferenceHelper.getVpnServiceUserEnabled(this.context)
         );
+    }
+
+    /**
+     * Activate the monitor so the loop runs on the next {@code monitor()} call.
+     * <p>
+     * Must be called from {@link org.adaway.vpn.worker.VpnWorker#start()} before
+     * submitting the monitor task, because a previous self-triggered restart (the monitor
+     * detecting a gone tunnel and calling {@link VpnServiceControls#start}) calls
+     * {@link #stop()} which sets {@code running} to {@code false}. Without this reset the
+     * new monitor task exits immediately on the {@code while (running.get())} check.
+     */
+    void activate() {
+        this.running.set(true);
     }
 
     /**

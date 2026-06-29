@@ -349,6 +349,11 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         if (noNetwork) {
             this.primaryNetwork = type;
             Timber.d("Reconnecting VPN on network %s.", type);
+            // The device had no network at all (both WiFi and cellular were gone) and is now
+            // back online. This is an explicit connectivity-restored event, not a reconnection
+            // storm, so reset the throttler so the tunnel comes up immediately instead of
+            // waiting up to 128 seconds after several prior rapid-reconnect cycles.
+            this.vpnWorker.resetThrottle();
             reconnect();
         } else {
             // Adding a secondary network does not require a tunnel rebuild — the

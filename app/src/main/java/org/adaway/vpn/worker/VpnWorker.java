@@ -132,6 +132,10 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
         Timber.d("Starting VPN thread…");
         // Clear any pending stop flag so a fresh worker reconnects normally on errors.
         this.stopping.set(false);
+        // Re-arm the monitor: if a previous monitor cycle called stop() (running=false) before
+        // triggering this restart via VpnServiceControls.start(), the new monitor task would
+        // exit immediately on the while(running.get()) check without this reset.
+        this.connectionMonitor.activate();
         ExecutorService executor = Executors.newFixedThreadPool(2);
         executor.submit(this::work);
         executor.submit(this.connectionMonitor::monitor);
