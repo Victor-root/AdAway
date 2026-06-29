@@ -63,9 +63,7 @@ import org.adaway.ui.home.HomeActivity;
 import org.adaway.vpn.worker.VpnWorker;
 
 import java.lang.ref.WeakReference;
-import java.util.EnumMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import timber.log.Timber;
@@ -100,12 +98,6 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
     private final NetworkTypeCallback wifiNetworkCallback;
     private final NetworkTypeCallback cellularNetworkCallback;
     private final Set<NetworkType> availableNetworkTypes;
-    /**
-     * The actual {@link Network} object backing each available network type, captured from
-     * the network callbacks. Used only to declare the tunnel's real upstream network via
-     * {@link #setUnderlyingNetworks(Network[])}; it never drives the reconnection logic.
-     */
-    private final Map<NetworkType, Network> networksByType = new EnumMap<>(NetworkType.class);
     /**
      * The network the tunnel is currently bound to (whose DNS the {@link
      * org.adaway.vpn.dns.DnsServerMapper} resolved). When a network listed in
@@ -363,7 +355,6 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
             // tunnel is still bound to the primary network whose DNS we resolved.
             Timber.d("Secondary network %s available, keeping tunnel on %s.", type, this.primaryNetwork);
         }
-        updateUnderlyingNetwork();
     }
 
     private void removeNetworkType(NetworkType type) {
@@ -385,25 +376,6 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
             // devices, making the status-bar VPN icon blink continuously.
             Timber.d("Secondary network %s lost, keeping tunnel on %s.", type, this.primaryNetwork);
         }
-        updateUnderlyingNetwork();
-    }
-
-    /**
-     * Declare the real network the tunnel currently runs on top of, so the system
-     * attributes the VPN's upstream traffic/metering correctly and handles network
-     * transitions more smoothly (recommended by Android). This is only a hint: per the
-     * platform contract it never causes the VPN to reconnect, so it cannot disrupt an
-     * established tunnel. Passing {@code null} lets the system fall back to its default
-     * (the previous behaviour), and any OEM quirk is swallowed so it can never crash the
-     * service.
-     */
-    private void updateUnderlyingNetwork() {
-        Network underlying = this.primaryNetwork == null ? null : this.networksByType.get(this.primaryNetwork);
-        try {
-            setUnderlyingNetworks(underlying == null ? null : new Network[]{underlying});
-        } catch (Exception e) {
-            Timber.w(e, "Failed to set VPN underlying network.");
-        }
     }
 
     /**
@@ -422,14 +394,12 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         @Override
         public void onAvailable(@NonNull Network network) {
             Timber.d("On available %s", this.monitoredType);
-            VpnService.this.networksByType.put(this.monitoredType, network);
             addNetworkType(this.monitoredType);
         }
 
         @Override
         public void onLost(@NonNull Network network) {
             Timber.d("On lost %s", this.monitoredType);
-            VpnService.this.networksByType.remove(this.monitoredType);
             removeNetworkType(this.monitoredType);
         }
     }
