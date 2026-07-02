@@ -340,7 +340,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
                 }
             }
         }
-        Timber.d("Initial network types: %s, primary=%s.", this.availableNetworkTypes, this.primaryNetwork);
+        Timber.i("Initial network types: %s, primary=%s.", this.availableNetworkTypes, this.primaryNetwork);
     }
 
     private void addNetworkType(NetworkType type) {
@@ -348,7 +348,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         this.availableNetworkTypes.add(type);
         if (noNetwork) {
             this.primaryNetwork = type;
-            Timber.d("Reconnecting VPN on network %s.", type);
+            Timber.i("Reconnecting VPN on network %s.", type);
             // The device had no network at all (both WiFi and cellular were gone) and is now
             // back online. This is an explicit connectivity-restored event, not a reconnection
             // storm, so reset the throttler so the tunnel comes up immediately instead of
@@ -366,13 +366,13 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         this.availableNetworkTypes.remove(type);
         if (this.availableNetworkTypes.isEmpty()) {
             this.primaryNetwork = null;
-            Timber.d("Waiting for network…");
+            Timber.i("Waiting for network…");
             waitForNetVpn();
         } else if (type == this.primaryNetwork) {
             // The network the tunnel was bound to is gone but a fallback is still
             // available; switch over so the DNS server mapper can re-resolve.
             this.primaryNetwork = this.availableNetworkTypes.iterator().next();
-            Timber.d("Primary network %s lost, reconnecting on %s.", type, this.primaryNetwork);
+            Timber.i("Primary network %s lost, reconnecting on %s.", type, this.primaryNetwork);
             reconnect();
         } else {
             // A secondary network went away while the primary is still up — keep the

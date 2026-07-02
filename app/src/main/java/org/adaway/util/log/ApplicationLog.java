@@ -29,6 +29,9 @@ public final class ApplicationLog {
      * @param application The application instance.
      */
     public static void init(Application application) {
+        // Always capture INFO+ to a small, exportable on-disk log so users can share a
+        // diagnostic trail with us even when the device is not connected to a computer.
+        Timber.plant(new DiagnosticLogTree(DiagnosticLog.getInstance(application)));
         if (isApplicationDebuggable(application) || PreferenceHelper.getDebugEnabled(application)) {
             Shell.enableVerboseLogging = true;
             Timber.plant(new Timber.DebugTree());

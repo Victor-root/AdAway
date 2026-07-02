@@ -28,4 +28,13 @@
     <string name="pref_vpn_reset_description">Reconstruire entièrement la connexion RPV/VPN. À utiliser si le RPV/VPN ne fonctionne plus — pas d’accès à Internet ou erreurs DNS.</string>
     <string name="pref_vpn_reset_done">Connexion RPV/VPN reconstruite.</string>
     <string name="pref_vpn_reset_not_running">Le RPV/VPN n’est pas actif.</string>
+    <string name="pref_vpn_diagnostic_log">Journal de diagnostic</string>
+    <string name="pref_vpn_diagnostic_log_description">Consulter, copier ou partager les erreurs et événements RPV/VPN récents. Utile pour signaler un problème.</string>
+    <string name="pref_vpn_diagnostic_log_empty">Aucun événement n’a encore été enregistré.</string>
+    <string name="pref_vpn_diagnostic_log_share">Partager le journal de diagnostic</string>
+    <string name="pref_vpn_diagnostic_log_copy">Copier</string>
+    <string name="pref_vpn_diagnostic_log_copied">Journal de diagnostic copié dans le presse-papiers.</string>
+    <string name="pref_vpn_diagnostic_log_clear">Effacer le journal de diagnostic</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">Supprimer les événements enregistrés. À faire avant de reproduire un problème pour capturer une trace propre.</string>
+    <string name="pref_vpn_diagnostic_log_cleared">Journal de diagnostic effacé.</string>
 </resources>
