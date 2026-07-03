@@ -20,7 +20,9 @@ import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static org.adaway.broadcast.Command.START;
 import static org.adaway.broadcast.Command.STOP;
@@ -63,8 +65,6 @@ import org.adaway.ui.home.HomeActivity;
 import org.adaway.vpn.worker.VpnWorker;
 
 import java.lang.ref.WeakReference;
-import java.util.HashSet;
-import java.util.Set;
 
 import timber.log.Timber;
 
@@ -97,17 +97,32 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
     private final MyHandler handler;
     private final NetworkTypeCallback wifiNetworkCallback;
     private final NetworkTypeCallback cellularNetworkCallback;
-    private final Set<NetworkType> availableNetworkTypes;
     /**
-     * The network the tunnel is currently bound to (whose DNS the {@link
-     * org.adaway.vpn.dns.DnsServerMapper} resolved). When a network listed in
-     * {@link #availableNetworkTypes} comes or goes but it is NOT this primary, there is
-     * no need to rebuild the tunnel — the user keeps connectivity through the same
-     * underlying network. This avoids tearing the tunnel down on every cellular
-     * radio flicker on devices like Oppo / ColorOS that toggle the cellular transport
-     * every few seconds while Wi-Fi is in use.
+     * Whether a Wi-Fi network is currently available on the device.
      */
-    private NetworkType primaryNetwork;
+    private boolean wifiAvailable;
+    /**
+     * Whether the available Wi-Fi network has validated internet connectivity
+     * ({@link android.net.NetworkCapabilities#NET_CAPABILITY_VALIDATED}). Android only promotes
+     * Wi-Fi to the default (active) network — the one that actually carries the tunnel's traffic
+     * and whose DNS the {@link org.adaway.vpn.dns.DnsServerMapper} resolves — once it is
+     * validated. Switching the tunnel to Wi-Fi before then would bind it to a DNS server that is
+     * not yet reachable.
+     */
+    private boolean wifiValidated;
+    /**
+     * Whether a cellular network is currently available on the device.
+     */
+    private boolean cellularAvailable;
+    /**
+     * The transport the running tunnel is currently built for, or <code>null</code> when the VPN
+     * is stopped (no network). The tunnel is rebuilt only when the transport Android would route
+     * through actually changes — not when a secondary network merely appears or disappears (e.g.
+     * the cellular radio flickering on Oppo / ColorOS power-saving devices while Wi-Fi stays the
+     * default). This is the single source of truth that keeps the tunnel's DNS in sync with the
+     * network carrying its traffic.
+     */
+    private NetworkType currentTransport;
     private final VpnWorker vpnWorker;
 
     /**
@@ -117,7 +132,10 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         this.handler = new MyHandler(this);
         this.wifiNetworkCallback = new NetworkTypeCallback(WIFI);
         this.cellularNetworkCallback = new NetworkTypeCallback(CELLULAR);
-        this.availableNetworkTypes = new HashSet<>();
+        this.wifiAvailable = false;
+        this.wifiValidated = false;
+        this.cellularAvailable = false;
+        this.currentTransport = null;
         this.vpnWorker = new VpnWorker(this);
     }
 
@@ -201,6 +219,9 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         // The throttler is meant to dampen reconnection storms, NOT to delay user
         // actions — reset it so the tunnel comes up immediately.
         this.vpnWorker.resetThrottle();
+        // Record the transport the tunnel is being built for so the network reconciler only
+        // rebuilds it when the default network actually changes transport.
+        this.currentTransport = computeDesiredTransport();
         this.vpnWorker.start();
         Timber.i("VPN service started.");
     }
@@ -208,6 +229,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
     private void stopVpn() {
         Timber.d("Stopping VPN service…");
         PreferenceHelper.setVpnServiceStatus(this, STOPPED);
+        this.currentTransport = null;
         this.vpnWorker.stop();
         stopForeground(true);
         stopSelf();
@@ -309,7 +331,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         NetworkRequest cellularNetworkRequest = new NetworkRequest.Builder()
                 .addTransportType(TRANSPORT_CELLULAR)
                 .build();
-        initializeNetworkTypes(connectivityManager);
+        initializeNetworkState(connectivityManager);
         connectivityManager.registerNetworkCallback(wifiNetworkRequest, this.wifiNetworkCallback, this.handler);
         connectivityManager.registerNetworkCallback(cellularNetworkRequest, this.cellularNetworkCallback, this.handler);
 
@@ -321,65 +343,110 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         connectivityManager.unregisterNetworkCallback(this.cellularNetworkCallback);
     }
 
-    private void initializeNetworkTypes(ConnectivityManager connectivityManager) {
-        this.availableNetworkTypes.clear();
-        this.primaryNetwork = null;
-        Network activeNetwork = connectivityManager.getActiveNetwork();
-        if (activeNetwork != null) {
-            NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork);
-            if (networkCapabilities != null) {
-                if (networkCapabilities.hasTransport(TRANSPORT_WIFI)) {
-                    this.availableNetworkTypes.add(WIFI);
-                    this.primaryNetwork = WIFI;
-                }
-                if (networkCapabilities.hasTransport(TRANSPORT_CELLULAR)) {
-                    this.availableNetworkTypes.add(CELLULAR);
-                    if (this.primaryNetwork == null) {
-                        this.primaryNetwork = CELLULAR;
-                    }
-                }
+    private void initializeNetworkState(ConnectivityManager connectivityManager) {
+        this.wifiAvailable = false;
+        this.wifiValidated = false;
+        this.cellularAvailable = false;
+        this.currentTransport = null;
+        // Seed the state synchronously from the current networks. The per-transport callbacks
+        // fire right after registration and will refine this, but seeding first means startVpn()
+        // (which runs before the callbacks get a chance) already knows the transport to build for.
+        for (Network network : connectivityManager.getAllNetworks()) {
+            NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(network);
+            if (capabilities == null || capabilities.hasTransport(TRANSPORT_VPN)) {
+                continue;
+            }
+            if (capabilities.hasTransport(TRANSPORT_WIFI)) {
+                this.wifiAvailable = true;
+                this.wifiValidated = capabilities.hasCapability(NET_CAPABILITY_VALIDATED);
+            } else if (capabilities.hasTransport(TRANSPORT_CELLULAR)) {
+                this.cellularAvailable = true;
             }
         }
-        Timber.i("Initial network types: %s, primary=%s.", this.availableNetworkTypes, this.primaryNetwork);
+        Timber.i("Initial network state: wifi=%s (validated=%s), cellular=%s.",
+                this.wifiAvailable, this.wifiValidated, this.cellularAvailable);
     }
 
-    private void addNetworkType(NetworkType type) {
-        boolean noNetwork = this.availableNetworkTypes.isEmpty();
-        this.availableNetworkTypes.add(type);
-        if (noNetwork) {
-            this.primaryNetwork = type;
-            Timber.i("Reconnecting VPN on network %s.", type);
-            // The device had no network at all (both WiFi and cellular were gone) and is now
-            // back online. This is an explicit connectivity-restored event, not a reconnection
-            // storm, so reset the throttler so the tunnel comes up immediately instead of
-            // waiting up to 128 seconds after several prior rapid-reconnect cycles.
+    /**
+     * Determine which transport the tunnel should be built for, mirroring how Android chooses the
+     * default (active) network: Wi-Fi is preferred over cellular, but only once it has validated
+     * internet connectivity. Before Wi-Fi validates, Android keeps routing through cellular, so
+     * the tunnel must too — otherwise its DNS (resolved from the active network) would not match
+     * the network actually carrying the traffic.
+     *
+     * @return The transport to build the tunnel for, or <code>null</code> if no network is available.
+     */
+    private NetworkType computeDesiredTransport() {
+        if (this.wifiAvailable && this.cellularAvailable) {
+            // Both present: follow Android, which only promotes Wi-Fi to the default once it is
+            // validated. Until then cellular remains the network carrying the traffic.
+            return this.wifiValidated ? WIFI : CELLULAR;
+        }
+        if (this.wifiAvailable) {
+            return WIFI;
+        }
+        if (this.cellularAvailable) {
+            return CELLULAR;
+        }
+        return null;
+    }
+
+    /**
+     * Reconcile the tunnel with the current default network.
+     * <p>
+     * This is the single decision point for every network change. It rebuilds the tunnel only
+     * when the transport Android routes through actually changes — never on a mere secondary
+     * network appearing or disappearing (e.g. the cellular radio flickering on ColorOS / Oppo
+     * power-saving devices while Wi-Fi stays the default), which keeps the tunnel stable and the
+     * status-bar VPN icon from blinking.
+     */
+    private void reconcile() {
+        NetworkType desired = computeDesiredTransport();
+        if (desired == null) {
+            // No usable network at all: stop the tunnel and wait. A later reconcile() restarts it
+            // when connectivity returns.
+            if (this.currentTransport != null) {
+                this.currentTransport = null;
+                Timber.i("No network available, waiting for network…");
+                waitForNetVpn();
+            }
+        } else if (this.currentTransport == null) {
+            // Connectivity (re)gained while the tunnel was down: bring it up now. Reset the
+            // throttler as this is a real connectivity-restored event, not a reconnection storm.
+            this.currentTransport = desired;
+            Timber.i("Network available (%s), connecting VPN.", desired);
             this.vpnWorker.resetThrottle();
             reconnect();
-        } else {
-            // Adding a secondary network does not require a tunnel rebuild — the
-            // tunnel is still bound to the primary network whose DNS we resolved.
-            Timber.d("Secondary network %s available, keeping tunnel on %s.", type, this.primaryNetwork);
+        } else if (desired != this.currentTransport) {
+            // The default network switched transport (e.g. cellular ↔ Wi-Fi). The tunnel's DNS is
+            // resolved from the active network, so rebuild it to match — otherwise it keeps
+            // forwarding DNS to the old network and every query fails with ENETUNREACH. No
+            // throttler reset here so rapid flapping is still damped.
+            Timber.i("Default network changed from %s to %s, reconnecting VPN.", this.currentTransport, desired);
+            this.currentTransport = desired;
+            reconnect();
         }
+        // else: the tunnel is already on the right transport — nothing to do.
     }
 
-    private void removeNetworkType(NetworkType type) {
-        this.availableNetworkTypes.remove(type);
-        if (this.availableNetworkTypes.isEmpty()) {
-            this.primaryNetwork = null;
-            Timber.i("Waiting for network…");
-            waitForNetVpn();
-        } else if (type == this.primaryNetwork) {
-            // The network the tunnel was bound to is gone but a fallback is still
-            // available; switch over so the DNS server mapper can re-resolve.
-            this.primaryNetwork = this.availableNetworkTypes.iterator().next();
-            Timber.i("Primary network %s lost, reconnecting on %s.", type, this.primaryNetwork);
-            reconnect();
+    private void setNetworkAvailable(NetworkType type, boolean available) {
+        if (type == WIFI) {
+            this.wifiAvailable = available;
+            if (!available) {
+                // A gone Wi-Fi network is no longer validated.
+                this.wifiValidated = false;
+            }
         } else {
-            // A secondary network went away while the primary is still up — keep the
-            // tunnel as-is. Without this guard the VPN was being torn down and rebuilt
-            // every time the cellular radio flickered on Oppo / ColorOS power-saving
-            // devices, making the status-bar VPN icon blink continuously.
-            Timber.d("Secondary network %s lost, keeping tunnel on %s.", type, this.primaryNetwork);
+            this.cellularAvailable = available;
+        }
+        reconcile();
+    }
+
+    private void setWifiValidated(boolean validated) {
+        if (validated != this.wifiValidated) {
+            this.wifiValidated = validated;
+            Timber.d("Wi-Fi validation changed: %s", validated);
+            reconcile();
         }
     }
 
@@ -398,14 +465,24 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
 
         @Override
         public void onAvailable(@NonNull Network network) {
-            Timber.d("On available %s", this.monitoredType);
-            addNetworkType(this.monitoredType);
+            Timber.d("Network available: %s", this.monitoredType);
+            setNetworkAvailable(this.monitoredType, true);
         }
 
         @Override
         public void onLost(@NonNull Network network) {
-            Timber.d("On lost %s", this.monitoredType);
-            removeNetworkType(this.monitoredType);
+            Timber.d("Network lost: %s", this.monitoredType);
+            setNetworkAvailable(this.monitoredType, false);
+        }
+
+        @Override
+        public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
+            // Only Wi-Fi validation drives the tunnel decision: Android promotes Wi-Fi to the
+            // default network once it validates. Cellular validation is irrelevant — cellular is
+            // only ever the fallback when Wi-Fi is not usable.
+            if (this.monitoredType == WIFI) {
+                setWifiValidated(networkCapabilities.hasCapability(NET_CAPABILITY_VALIDATED));
+            }
         }
     }
 
