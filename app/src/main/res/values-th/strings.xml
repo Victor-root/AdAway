@@ -124,7 +124,6 @@
     <string name="menu_export">ส่งออกข้อมูลสำรอง</string>
 
     <!--Help-->
-    <string name="help_tab_s_on_s_off">S-ON/S-OFF</string>
     <string name="help_tab_faq">ถาม-ตอบ</string>
     <string name="help_tab_problems">ปัญหา</string>
 

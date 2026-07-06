@@ -37,7 +37,6 @@
     <string name="menu_add">បន្ថែម</string>
     <string name="menu_help">ជំនួយ</string>
     <!--Help-->
-    <string name="help_tab_s_on_s_off">S-ON/S-OFF</string>
     <!--Other-->
     <string name="app_subtitle">អ្នកបំបិទការឃោសនា</string>
     <string name="no_file_manager_title">ពុំមានកម្មវិធីគ្រប់គ្រងឯកសារត្រូវបានបញ្ចូល</string>

@@ -25,7 +25,7 @@
     <!-- Troubleshooting -->
     <string name="pref_vpn_troubleshooting">Dépannage</string>
     <string name="pref_vpn_reset">Réinitialiser le RPV/VPN</string>
-    <string name="pref_vpn_reset_description">Reconstruire entièrement la connexion RPV/VPN. À utiliser si le RPV/VPN ne fonctionne plus — pas d’accès à Internet ou erreurs DNS.</string>
+    <string name="pref_vpn_reset_description">Reconstruire entièrement la connexion RPV/VPN. À utiliser si le RPV/VPN ne fonctionne plus (pas d’accès à Internet ou erreurs DNS).</string>
     <string name="pref_vpn_reset_done">Connexion RPV/VPN reconstruite.</string>
     <string name="pref_vpn_reset_not_running">Le RPV/VPN n’est pas actif.</string>
     <string name="pref_vpn_diagnostic_log">Journal de diagnostic</string>

@@ -162,7 +162,6 @@
     <string name="menu_export">导出备份</string>
 
     <!--Help-->
-    <string name="help_tab_s_on_s_off">S-ON/S-OFF</string>
     <string name="help_tab_faq">常问问题</string>
     <string name="help_tab_problems">其他问题</string>
 
