@@ -12,7 +12,7 @@
     -->
     <style name="Base.AdAway.Prefs" parent="Base.AdAway">
         <item name="switchPreferenceCompatStyle">@style/Preference.AdAway.SwitchPreferenceCompat</item>
-        <item name="actionBarStyle">@style/Widget.AdAway.Prefs.ActionBar</item>
+        <item name="actionBarStyle">@style/Widget.AdAway.ActionBar</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.AdAway.Dialog</item>
     </style>
 
@@ -26,10 +26,21 @@
         <item name="android:windowLightNavigationBar">true</item>
     </style>
 
-    <!-- Keep the preferences app bar red regardless of day/night. -->
-    <style name="Widget.AdAway.Prefs.ActionBar" parent="Widget.MaterialComponents.ActionBar.PrimarySurface">
+    <!--
+        App bar shared by every ActionBar screen (home sub-screens, DNS log, help, lists,
+        sources, preferences…). This style only sets the red background; the WHITE title,
+        subtitle and icons come from actionBarTheme=ThemeOverlay.AdAway.ActionBar on the base
+        theme. The window ActionBar takes its title colour from android:textColorPrimary, NOT
+        from titleTextColor (that is a Toolbar attribute), so the Dark.ActionBar overlay is what
+        actually flips the text to white on the red bar in both light and dark mode.
+    -->
+    <style name="Widget.AdAway.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
         <item name="background">@color/primary</item>
+        <item name="android:background">@color/primary</item>
     </style>
+
+    <!-- Forces the app bar title, subtitle and icons white on the red background (both modes). -->
+    <style name="ThemeOverlay.AdAway.ActionBar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
     <!--
         Modern rounded dialog used by the preference screens (e.g. the dark-theme
@@ -69,6 +80,8 @@
     </style>
 
     <style name="Base.AdAway" parent="Theme.MaterialComponents.DayNight">
+        <item name="actionBarStyle">@style/Widget.AdAway.ActionBar</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.AdAway.ActionBar</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primaryVariant</item>
         <item name="colorOnPrimary">@color/onPrimary</item>
