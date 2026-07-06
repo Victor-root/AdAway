@@ -42,4 +42,31 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Consulte a Ajuda para mais informações.</string>
 
+    <!-- Hosts card descriptions -->
+    <string name="blocked_hosts_description">Anúncios e rastreadores</string>
+    <string name="allowed_hosts_description">Exceções</string>
+    <string name="redirect_hosts_description">Regras personalizadas</string>
+
+    <!-- Home action rows -->
+    <string name="home_log_title">Registro de solicitações DNS</string>
+    <string name="home_log_subtitle">Veja o que é bloqueado em tempo real</string>
+    <string name="home_help_title">Ajuda e dicas</string>
+    <string name="home_help_subtitle">Guias e solução de problemas</string>
+    <string name="home_preferences_subtitle">Configurar o AdAway</string>
+
+    <!-- Compact navigation tiles -->
+    <string name="home_tile_log">Registro DNS</string>
+    <string name="home_tile_help">Ajuda</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">Sobre</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Versão %s</string>
+    <string name="about_description">Fork não oficial do AdAway, mantido pela comunidade.</string>
+    <string name="about_source_label">Código-fonte (GitHub)</string>
+    <string name="about_issues_label">Relatar um problema</string>
+    <string name="about_releases_label">Lançamentos</string>
+    <string name="about_upstream_label">AdAway oficial (upstream)</string>
+    <string name="about_license_label">Licença: GNU General Public License v3.0 or later (GPLv3+)</string>
+
 </resources>

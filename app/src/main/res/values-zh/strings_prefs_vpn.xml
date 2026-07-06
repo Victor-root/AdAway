@@ -21,4 +21,20 @@
     <string name="pref_vpn_exclude_user_apps_select_all">全选</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">取消全选</string>
     <string name="pref_vpn_exclude_user_apps_icon">应用程序图标</string>
+
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">故障排除</string>
+    <string name="pref_vpn_reset">重置 VPN</string>
+    <string name="pref_vpn_reset_description">从头重建 VPN 连接。如果 VPN 停止工作（无法访问互联网或出现 DNS 错误），请使用此功能。</string>
+    <string name="pref_vpn_reset_done">VPN 连接已重建。</string>
+    <string name="pref_vpn_reset_not_running">VPN 未在运行。</string>
+    <string name="pref_vpn_diagnostic_log">诊断日志</string>
+    <string name="pref_vpn_diagnostic_log_description">查看、复制或分享最近的错误和 VPN 事件。在报告问题时很有用。</string>
+    <string name="pref_vpn_diagnostic_log_empty">尚未记录任何事件。</string>
+    <string name="pref_vpn_diagnostic_log_share">分享诊断日志</string>
+    <string name="pref_vpn_diagnostic_log_copy">复制</string>
+    <string name="pref_vpn_diagnostic_log_copied">诊断日志已复制到剪贴板。</string>
+    <string name="pref_vpn_diagnostic_log_clear">清除诊断日志</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">删除已记录的事件。请在重现问题之前执行此操作，以捕获干净的记录。</string>
+    <string name="pref_vpn_diagnostic_log_cleared">诊断日志已清除。</string>
 </resources>

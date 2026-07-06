@@ -21,4 +21,20 @@
     <string name="pref_vpn_exclude_user_apps_select_all">Pilih semua</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">Batal pilih semua</string>
     <string name="pref_vpn_exclude_user_apps_icon">Ikon aplikasi</string>
+
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">Pemecahan masalah</string>
+    <string name="pref_vpn_reset">Setel ulang VPN</string>
+    <string name="pref_vpn_reset_description">Bangun ulang koneksi VPN dari awal. Gunakan ini jika VPN berhenti berfungsi (tidak ada akses internet atau kesalahan DNS).</string>
+    <string name="pref_vpn_reset_done">Koneksi VPN telah dibangun ulang.</string>
+    <string name="pref_vpn_reset_not_running">VPN tidak berjalan.</string>
+    <string name="pref_vpn_diagnostic_log">Log diagnostik</string>
+    <string name="pref_vpn_diagnostic_log_description">Lihat, salin, atau bagikan kesalahan dan peristiwa VPN terbaru. Berguna saat melaporkan masalah.</string>
+    <string name="pref_vpn_diagnostic_log_empty">Belum ada peristiwa yang tercatat.</string>
+    <string name="pref_vpn_diagnostic_log_share">Bagikan log diagnostik</string>
+    <string name="pref_vpn_diagnostic_log_copy">Salin</string>
+    <string name="pref_vpn_diagnostic_log_copied">Log diagnostik disalin ke papan klip.</string>
+    <string name="pref_vpn_diagnostic_log_clear">Hapus log diagnostik</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">Hapus peristiwa yang tercatat. Lakukan ini sebelum mereproduksi masalah untuk mendapatkan jejak yang bersih.</string>
+    <string name="pref_vpn_diagnostic_log_cleared">Log diagnostik telah dihapus.</string>
 </resources>

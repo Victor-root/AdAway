@@ -42,4 +42,31 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Παρακαλούμε ανατρέξτε στην Βοήθεια για περισσότερες πληροφορίες</string>
 
+    <!-- Hosts card descriptions -->
+    <string name="blocked_hosts_description">Διαφημίσεις και ιχνηλάτες</string>
+    <string name="allowed_hosts_description">Εξαιρέσεις</string>
+    <string name="redirect_hosts_description">Προσαρμοσμένοι κανόνες</string>
+
+    <!-- Home action rows -->
+    <string name="home_log_title">Αρχείο καταγραφής αιτήσεων DNS</string>
+    <string name="home_log_subtitle">Δείτε τι αποκλείεται σε πραγματικό χρόνο</string>
+    <string name="home_help_title">Βοήθεια και συμβουλές</string>
+    <string name="home_help_subtitle">Οδηγοί και αντιμετώπιση προβλημάτων</string>
+    <string name="home_preferences_subtitle">Διαμόρφωση του AdAway</string>
+
+    <!-- Compact navigation tiles -->
+    <string name="home_tile_log">Αρχείο DNS</string>
+    <string name="home_tile_help">Βοήθεια</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">Σχετικά</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Έκδοση %s</string>
+    <string name="about_description">Ανεπίσημη διακλάδωση του AdAway που συντηρείται από την κοινότητα.</string>
+    <string name="about_source_label">Πηγαίος κώδικας (GitHub)</string>
+    <string name="about_issues_label">Αναφορά προβλήματος</string>
+    <string name="about_releases_label">Εκδόσεις</string>
+    <string name="about_upstream_label">Επίσημο AdAway (upstream)</string>
+    <string name="about_license_label">Άδεια: GNU General Public License v3.0 ή νεότερη (GPLv3+)</string>
+
 </resources>

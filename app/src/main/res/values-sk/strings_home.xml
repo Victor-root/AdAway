@@ -46,4 +46,31 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Prosím, pre viac informácií si prečítajte Pomoc.</string>
 
+    <!-- Hosts card descriptions -->
+    <string name="blocked_hosts_description">Reklamy a sledovače</string>
+    <string name="allowed_hosts_description">Výnimky</string>
+    <string name="redirect_hosts_description">Vlastné pravidlá</string>
+
+    <!-- Home action rows -->
+    <string name="home_log_title">Záznam požiadaviek DNS</string>
+    <string name="home_log_subtitle">Pozrite si, čo sa blokuje, v reálnom čase</string>
+    <string name="home_help_title">Pomoc a tipy</string>
+    <string name="home_help_subtitle">Návody a riešenie problémov</string>
+    <string name="home_preferences_subtitle">Konfigurovať AdAway</string>
+
+    <!-- Compact navigation tiles -->
+    <string name="home_tile_log">Záznam DNS</string>
+    <string name="home_tile_help">Pomoc</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">O aplikácii</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Verzia %s</string>
+    <string name="about_description">Neoficiálny fork AdAway udržiavaný komunitou.</string>
+    <string name="about_source_label">Zdrojový kód (GitHub)</string>
+    <string name="about_issues_label">Nahlásiť problém</string>
+    <string name="about_releases_label">Vydania</string>
+    <string name="about_upstream_label">Oficiálny AdAway (upstream)</string>
+    <string name="about_license_label">Licencia: GNU General Public License v3.0 or later (GPLv3+)</string>
+
 </resources>

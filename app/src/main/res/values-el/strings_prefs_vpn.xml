@@ -21,4 +21,20 @@
     <string name="pref_vpn_exclude_user_apps_select_all">Επιλογή όλων</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">Αποεπιλογή όλων</string>
     <string name="pref_vpn_exclude_user_apps_icon">Εικονίδιο εφαρμογής</string>
+
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">Αντιμετώπιση προβλημάτων</string>
+    <string name="pref_vpn_reset">Επαναφορά VPN</string>
+    <string name="pref_vpn_reset_description">Ανακατασκευή της σύνδεσης VPN από την αρχή. Χρησιμοποιήστε το εάν το VPN σταματήσει να λειτουργεί (χωρίς πρόσβαση στο διαδίκτυο ή σφάλματα DNS).</string>
+    <string name="pref_vpn_reset_done">Η σύνδεση VPN ανακατασκευάστηκε.</string>
+    <string name="pref_vpn_reset_not_running">Το VPN δεν εκτελείται.</string>
+    <string name="pref_vpn_diagnostic_log">Αρχείο διαγνωστικών</string>
+    <string name="pref_vpn_diagnostic_log_description">Προβολή, αντιγραφή ή κοινοποίηση των πρόσφατων σφαλμάτων και συμβάντων VPN. Χρήσιμο κατά την αναφορά ενός προβλήματος.</string>
+    <string name="pref_vpn_diagnostic_log_empty">Δεν έχουν καταγραφεί ακόμη συμβάντα.</string>
+    <string name="pref_vpn_diagnostic_log_share">Κοινοποίηση αρχείου διαγνωστικών</string>
+    <string name="pref_vpn_diagnostic_log_copy">Αντιγραφή</string>
+    <string name="pref_vpn_diagnostic_log_copied">Το αρχείο διαγνωστικών αντιγράφηκε στο πρόχειρο.</string>
+    <string name="pref_vpn_diagnostic_log_clear">Εκκαθάριση αρχείου διαγνωστικών</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">Διαγραφή των καταγεγραμμένων συμβάντων. Κάντε το πριν αναπαράγετε ένα πρόβλημα για να καταγράψετε ένα καθαρό ίχνος.</string>
+    <string name="pref_vpn_diagnostic_log_cleared">Το αρχείο διαγνωστικών εκκαθαρίστηκε.</string>
 </resources>

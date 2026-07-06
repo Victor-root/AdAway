@@ -85,6 +85,11 @@ filters:
     source_language: en
     translation_files_expression: 'app/src/main/res/values-<lang>/strings_welcome.xml'
   - filter_type: file
+    source_file: app/src/main/res/values/strings_tv.xml
+    file_format: ANDROID
+    source_language: en
+    translation_files_expression: 'app/src/main/res/values-<lang>/strings_tv.xml'
+  - filter_type: file
     source_file: app/src/main/res/raw/help_faq.html
     file_format: HTML
     source_language: en
@@ -94,11 +99,6 @@ filters:
     file_format: HTML
     source_language: en
     translation_files_expression: 'app/src/main/res/raw-<lang>/help_problems.html'
-  - filter_type: file
-    source_file: app/src/main/res/raw/help_s_on_s_off.html
-    file_format: HTML
-    source_language: en
-    translation_files_expression: 'app/src/main/res/raw-<lang>/help_s_on_s_off.html'
   - filter_type: file
     source_file: metadata/en/title.txt
     file_format: TXT

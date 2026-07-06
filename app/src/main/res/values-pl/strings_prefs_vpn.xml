@@ -21,4 +21,20 @@
     <string name="pref_vpn_exclude_user_apps_select_all">Zaznacz wszystkie</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">Odznacz wszystkie</string>
     <string name="pref_vpn_exclude_user_apps_icon">Ikona aplikacji</string>
+
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">Rozwiązywanie problemów</string>
+    <string name="pref_vpn_reset">Zresetuj VPN</string>
+    <string name="pref_vpn_reset_description">Odbuduj połączenie VPN od podstaw. Użyj tej opcji, jeśli VPN przestanie działać (brak dostępu do internetu lub błędy DNS).</string>
+    <string name="pref_vpn_reset_done">Połączenie VPN zostało odbudowane.</string>
+    <string name="pref_vpn_reset_not_running">VPN nie jest uruchomiony.</string>
+    <string name="pref_vpn_diagnostic_log">Dziennik diagnostyczny</string>
+    <string name="pref_vpn_diagnostic_log_description">Wyświetl, skopiuj lub udostępnij ostatnie błędy i zdarzenia VPN. Przydatne podczas zgłaszania problemu.</string>
+    <string name="pref_vpn_diagnostic_log_empty">Nie zarejestrowano jeszcze żadnych zdarzeń.</string>
+    <string name="pref_vpn_diagnostic_log_share">Udostępnij dziennik diagnostyczny</string>
+    <string name="pref_vpn_diagnostic_log_copy">Kopiuj</string>
+    <string name="pref_vpn_diagnostic_log_copied">Skopiowano dziennik diagnostyczny do schowka.</string>
+    <string name="pref_vpn_diagnostic_log_clear">Wyczyść dziennik diagnostyczny</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">Usuń zarejestrowane zdarzenia. Zrób to przed odtworzeniem problemu, aby zarejestrować czysty ślad.</string>
+    <string name="pref_vpn_diagnostic_log_cleared">Dziennik diagnostyczny został wyczyszczony.</string>
 </resources>

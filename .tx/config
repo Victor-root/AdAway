@@ -121,6 +121,13 @@ source_file = app/src/main/res/values/strings_welcome.xml
 source_lang = en
 type = ANDROID
 
+[adaway.app-src-main-res-values-strings-tv-xml--master]
+file_filter = app/src/main/res/values-<lang>/strings_tv.xml
+minimum_perc = 0
+source_file = app/src/main/res/values/strings_tv.xml
+source_lang = en
+type = ANDROID
+
 [adaway.help-faq-html--master]
 file_filter = app/src/main/res/raw-<lang>/help_faq.html
 minimum_perc = 0
@@ -132,13 +139,6 @@ type = HTML
 file_filter = app/src/main/res/raw-<lang>/help_problems.html
 minimum_perc = 0
 source_file = app/src/main/res/raw/help_problems.html
-source_lang = en
-type = HTML
-
-[adaway.help-s-on-s-off-html--master]
-file_filter = app/src/main/res/raw-<lang>/help_s_on_s_off.html
-minimum_perc = 0
-source_file = app/src/main/res/raw/help_s_on_s_off.html
 source_lang = en
 type = HTML
 

@@ -42,4 +42,31 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Irakurri Laguntza argibide gehiagorako.</string>
 
+    <!-- Hosts card descriptions -->
+    <string name="blocked_hosts_description">Iragarkiak eta jarraipen-egileak</string>
+    <string name="allowed_hosts_description">Salbuespenak</string>
+    <string name="redirect_hosts_description">Arau pertsonalizatuak</string>
+
+    <!-- Home action rows -->
+    <string name="home_log_title">DNS eskarien erregistroa</string>
+    <string name="home_log_subtitle">Ikusi zer blokeatzen den denbora errealean</string>
+    <string name="home_help_title">Laguntza eta aholkuak</string>
+    <string name="home_help_subtitle">Gidak eta arazoen konponketa</string>
+    <string name="home_preferences_subtitle">Konfiguratu AdAway</string>
+
+    <!-- Compact navigation tiles -->
+    <string name="home_tile_log">DNS erregistroa</string>
+    <string name="home_tile_help">Laguntza</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">Honi buruz</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">%s bertsioa</string>
+    <string name="about_description">AdAway-ren komunitateak mantendutako fork ez-ofiziala.</string>
+    <string name="about_source_label">Iturburu-kodea (GitHub)</string>
+    <string name="about_issues_label">Eman arazo baten berri</string>
+    <string name="about_releases_label">Bertsioak</string>
+    <string name="about_upstream_label">AdAway ofiziala (upstream)</string>
+    <string name="about_license_label">Lizentzia: GNU General Public License v3.0 edo berriagoa (GPLv3+)</string>
+
 </resources>

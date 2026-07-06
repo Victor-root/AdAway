@@ -44,4 +44,31 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Pročitajte pomoć za više informacija.</string>
 
+    <!-- Hosts card descriptions -->
+    <string name="blocked_hosts_description">Oglasi i pratitelji</string>
+    <string name="allowed_hosts_description">Iznimke</string>
+    <string name="redirect_hosts_description">Prilagođena pravila</string>
+
+    <!-- Home action rows (redesigned home screen) -->
+    <string name="home_log_title">Zapis DNS zahtjeva</string>
+    <string name="home_log_subtitle">Pogledajte što je blokirano u stvarnom vremenu</string>
+    <string name="home_help_title">Pomoć i savjeti</string>
+    <string name="home_help_subtitle">Vodiči i rješavanje problema</string>
+    <string name="home_preferences_subtitle">Konfigurirajte AdAway</string>
+
+    <!-- Compact navigation tiles (single-row layout) -->
+    <string name="home_tile_log">DNS zapis</string>
+    <string name="home_tile_help">Pomoć</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">O aplikaciji</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Verzija %s</string>
+    <string name="about_description">Neslužbeni ogranak aplikacije AdAway koji održava zajednica.</string>
+    <string name="about_source_label">Izvorni kod (GitHub)</string>
+    <string name="about_issues_label">Prijavi problem</string>
+    <string name="about_releases_label">Izdanja</string>
+    <string name="about_upstream_label">Službeni AdAway (izvorni projekt)</string>
+    <string name="about_license_label">Licenca: GNU General Public License v3.0 or later (GPLv3+)</string>
+
 </resources>

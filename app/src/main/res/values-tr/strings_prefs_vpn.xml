@@ -21,4 +21,20 @@
     <string name="pref_vpn_exclude_user_apps_select_all">Tümünü seç</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">Tüm seçimleri kaldır</string>
     <string name="pref_vpn_exclude_user_apps_icon">Uygulama simgesi</string>
+
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">Sorun giderme</string>
+    <string name="pref_vpn_reset">VPN\'yi sıfırla</string>
+    <string name="pref_vpn_reset_description">VPN bağlantısını sıfırdan yeniden oluşturun. VPN çalışmayı durdurursa (internet erişimi yok veya DNS hataları) bunu kullanın.</string>
+    <string name="pref_vpn_reset_done">VPN bağlantısı yeniden oluşturuldu.</string>
+    <string name="pref_vpn_reset_not_running">VPN çalışmıyor.</string>
+    <string name="pref_vpn_diagnostic_log">Tanılama günlüğü</string>
+    <string name="pref_vpn_diagnostic_log_description">Son hataları ve VPN olaylarını görüntüleyin, kopyalayın veya paylaşın. Bir sorunu bildirirken yararlıdır.</string>
+    <string name="pref_vpn_diagnostic_log_empty">Henüz hiçbir olay kaydedilmedi.</string>
+    <string name="pref_vpn_diagnostic_log_share">Tanılama günlüğünü paylaş</string>
+    <string name="pref_vpn_diagnostic_log_copy">Kopyala</string>
+    <string name="pref_vpn_diagnostic_log_copied">Tanılama günlüğü panoya kopyalandı.</string>
+    <string name="pref_vpn_diagnostic_log_clear">Tanılama günlüğünü temizle</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">Kaydedilen olayları silin. Temiz bir iz yakalamak için bir sorunu yeniden oluşturmadan önce bunu yapın.</string>
+    <string name="pref_vpn_diagnostic_log_cleared">Tanılama günlüğü temizlendi.</string>
 </resources>

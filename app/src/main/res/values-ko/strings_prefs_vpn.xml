@@ -21,4 +21,20 @@
     <string name="pref_vpn_exclude_user_apps_select_all">모두 선택</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">모두 선택 해제</string>
     <string name="pref_vpn_exclude_user_apps_icon">앱 아이콘</string>
+
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">문제 해결</string>
+    <string name="pref_vpn_reset">VPN 재설정</string>
+    <string name="pref_vpn_reset_description">VPN 연결을 처음부터 다시 구축합니다. VPN이 작동하지 않을 때(인터넷 접속 불가 또는 DNS 오류) 사용하십시오.</string>
+    <string name="pref_vpn_reset_done">VPN 연결을 다시 구축했습니다.</string>
+    <string name="pref_vpn_reset_not_running">VPN이 실행 중이 아닙니다.</string>
+    <string name="pref_vpn_diagnostic_log">진단 로그</string>
+    <string name="pref_vpn_diagnostic_log_description">최근 오류와 VPN 이벤트를 보거나 복사 또는 공유합니다. 문제를 신고할 때 유용합니다.</string>
+    <string name="pref_vpn_diagnostic_log_empty">아직 기록된 이벤트가 없습니다.</string>
+    <string name="pref_vpn_diagnostic_log_share">진단 로그 공유</string>
+    <string name="pref_vpn_diagnostic_log_copy">복사</string>
+    <string name="pref_vpn_diagnostic_log_copied">진단 로그를 클립보드에 복사했습니다.</string>
+    <string name="pref_vpn_diagnostic_log_clear">진단 로그 지우기</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">기록된 이벤트를 삭제합니다. 깔끔한 추적을 남기려면 문제를 재현하기 전에 실행하십시오.</string>
+    <string name="pref_vpn_diagnostic_log_cleared">진단 로그를 지웠습니다.</string>
 </resources>

@@ -21,4 +21,19 @@
     <string name="pref_vpn_exclude_user_apps_select_all">Selecionar tudo</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">Remover todos</string>
     <string name="pref_vpn_exclude_user_apps_icon">Ícone do aplicativo</string>
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">Solução de problemas</string>
+    <string name="pref_vpn_reset">Redefinir VPN</string>
+    <string name="pref_vpn_reset_description">Reconstruir a conexão VPN do zero. Use isto se a VPN parar de funcionar (sem acesso à internet ou erros de DNS).</string>
+    <string name="pref_vpn_reset_done">Conexão VPN reconstruída.</string>
+    <string name="pref_vpn_reset_not_running">A VPN não está em execução.</string>
+    <string name="pref_vpn_diagnostic_log">Registro de diagnóstico</string>
+    <string name="pref_vpn_diagnostic_log_description">Veja, copie ou compartilhe os erros recentes e eventos da VPN. Útil ao relatar um problema.</string>
+    <string name="pref_vpn_diagnostic_log_empty">Nenhum evento foi registrado ainda.</string>
+    <string name="pref_vpn_diagnostic_log_share">Compartilhar registro de diagnóstico</string>
+    <string name="pref_vpn_diagnostic_log_copy">Copiar</string>
+    <string name="pref_vpn_diagnostic_log_copied">Registro de diagnóstico copiado para a área de transferência.</string>
+    <string name="pref_vpn_diagnostic_log_clear">Limpar registro de diagnóstico</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">Exclua os eventos registrados. Faça isto antes de reproduzir um problema para capturar um rastro limpo.</string>
+    <string name="pref_vpn_diagnostic_log_cleared">Registro de diagnóstico limpo.</string>
 </resources>

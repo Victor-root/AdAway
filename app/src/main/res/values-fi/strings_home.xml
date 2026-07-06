@@ -42,4 +42,31 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Lue lisätietoja ohjeista.</string>
 
+    <!-- Hosts card descriptions -->
+    <string name="blocked_hosts_description">Mainokset ja seuraimet</string>
+    <string name="allowed_hosts_description">Poikkeukset</string>
+    <string name="redirect_hosts_description">Mukautetut säännöt</string>
+
+    <!-- Home action rows -->
+    <string name="home_log_title">DNS-pyyntöloki</string>
+    <string name="home_log_subtitle">Katso reaaliajassa, mitä estetään</string>
+    <string name="home_help_title">Ohje ja vinkit</string>
+    <string name="home_help_subtitle">Oppaat ja vianmääritys</string>
+    <string name="home_preferences_subtitle">Määritä AdAway</string>
+
+    <!-- Compact navigation tiles -->
+    <string name="home_tile_log">DNS-loki</string>
+    <string name="home_tile_help">Ohje</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">Tietoja</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Versio %s</string>
+    <string name="about_description">Epävirallinen, yhteisön ylläpitämä AdAwayn haara.</string>
+    <string name="about_source_label">Lähdekoodi (GitHub)</string>
+    <string name="about_issues_label">Ilmoita ongelmasta</string>
+    <string name="about_releases_label">Julkaisut</string>
+    <string name="about_upstream_label">Virallinen AdAway (upstream)</string>
+    <string name="about_license_label">Lisenssi: GNU General Public License v3.0 tai uudempi (GPLv3+)</string>
+
 </resources>

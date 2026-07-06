@@ -36,4 +36,31 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">மேலும் தகவலுக்கு உதவியைப் படிக்கவும்</string>
 
+    <!-- Hosts card descriptions -->
+    <string name="blocked_hosts_description">விளம்பரங்கள் &amp; கண்காணிப்பான்கள்</string>
+    <string name="allowed_hosts_description">விதிவிலக்குகள்</string>
+    <string name="redirect_hosts_description">தனிப்பயன் விதிகள்</string>
+
+    <!-- Home action rows -->
+    <string name="home_log_title">DNS கோரிக்கை பதிவு</string>
+    <string name="home_log_subtitle">எது தடுக்கப்படுகிறது என்பதை நிகழ்நேரத்தில் காணுங்கள்</string>
+    <string name="home_help_title">உதவி &amp; குறிப்புகள்</string>
+    <string name="home_help_subtitle">வழிகாட்டிகள் மற்றும் சிக்கல் தீர்வு</string>
+    <string name="home_preferences_subtitle">AdAway ஐ உள்ளமைக்கவும்</string>
+
+    <!-- Compact navigation tiles -->
+    <string name="home_tile_log">DNS பதிவு</string>
+    <string name="home_tile_help">உதவி</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">பற்றி</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">பதிப்பு %s</string>
+    <string name="about_description">AdAway இன் அதிகாரப்பூர்வமற்ற, சமூகத்தால் பராமரிக்கப்படும் பிரிவு.</string>
+    <string name="about_source_label">மூலக் குறியீடு (GitHub)</string>
+    <string name="about_issues_label">சிக்கலைப் புகாரளிக்கவும்</string>
+    <string name="about_releases_label">வெளியீடுகள்</string>
+    <string name="about_upstream_label">அதிகாரப்பூர்வ AdAway (மூலத் திட்டம்)</string>
+    <string name="about_license_label">உரிமம்: GNU General Public License v3.0 அல்லது அதற்குப் பிந்தையது (GPLv3+)</string>
+
 </resources>

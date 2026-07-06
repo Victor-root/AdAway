@@ -40,4 +40,25 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Detalesnę informaciją rasite skiltyje Pagalba</string>
 
+    <!-- Home action rows / About tab -->
+    <string name="blocked_hosts_description">Reklamos ir stebėjimo priemonės</string>
+    <string name="allowed_hosts_description">Išimtys</string>
+    <string name="redirect_hosts_description">Tinkintos taisyklės</string>
+    <string name="home_log_title">DNS užklausų žurnalas</string>
+    <string name="home_log_subtitle">Matykite, kas blokuojama realiuoju laiku</string>
+    <string name="home_help_title">Pagalba ir patarimai</string>
+    <string name="home_help_subtitle">Vadovai ir trikčių šalinimas</string>
+    <string name="home_preferences_subtitle">Konfigūruoti AdAway</string>
+    <string name="home_tile_log">DNS žurnalas</string>
+    <string name="home_tile_help">Pagalba</string>
+    <string name="help_tab_about">Apie</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Versija %s</string>
+    <string name="about_description">Neoficiali bendruomenės prižiūrima AdAway atšaka.</string>
+    <string name="about_source_label">Pirminis kodas (GitHub)</string>
+    <string name="about_issues_label">Pranešti apie problemą</string>
+    <string name="about_releases_label">Laidos</string>
+    <string name="about_upstream_label">Oficiali AdAway pirminė versija</string>
+    <string name="about_license_label">Licencija: GNU General Public License v3.0 or later (GPLv3+)</string>
+
 </resources>

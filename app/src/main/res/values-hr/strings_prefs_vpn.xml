@@ -21,4 +21,20 @@
     <string name="pref_vpn_exclude_user_apps_select_all">Odaberi sve</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">Ukloni odabir svih</string>
     <string name="pref_vpn_exclude_user_apps_icon">Ikona aplikacije</string>
+
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">Rješavanje problema</string>
+    <string name="pref_vpn_reset">Ponovno uspostavi VPN</string>
+    <string name="pref_vpn_reset_description">Ponovno uspostavite VPN vezu od početka. Upotrijebite ovo ako VPN prestane raditi (nema pristupa internetu ili DNS pogreške).</string>
+    <string name="pref_vpn_reset_done">VPN veza je ponovno uspostavljena.</string>
+    <string name="pref_vpn_reset_not_running">VPN nije pokrenut.</string>
+    <string name="pref_vpn_diagnostic_log">Dijagnostički zapis</string>
+    <string name="pref_vpn_diagnostic_log_description">Pregledajte, kopirajte ili podijelite nedavne pogreške i VPN događaje. Korisno pri prijavi problema.</string>
+    <string name="pref_vpn_diagnostic_log_empty">Još nije zabilježen nijedan događaj.</string>
+    <string name="pref_vpn_diagnostic_log_share">Podijeli dijagnostički zapis</string>
+    <string name="pref_vpn_diagnostic_log_copy">Kopiraj</string>
+    <string name="pref_vpn_diagnostic_log_copied">Dijagnostički zapis kopiran je u međuspremnik.</string>
+    <string name="pref_vpn_diagnostic_log_clear">Očisti dijagnostički zapis</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">Izbrišite zabilježene događaje. Učinite to prije ponavljanja problema kako biste dobili čist zapis.</string>
+    <string name="pref_vpn_diagnostic_log_cleared">Dijagnostički zapis je očišćen.</string>
 </resources>

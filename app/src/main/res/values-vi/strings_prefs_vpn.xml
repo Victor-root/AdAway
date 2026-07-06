@@ -21,4 +21,20 @@
     <string name="pref_vpn_exclude_user_apps_select_all">Chọn tất cả</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">Bỏ chọn tất cả</string>
     <string name="pref_vpn_exclude_user_apps_icon">Biểu tượng ứng dụng</string>
+
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">Khắc phục sự cố</string>
+    <string name="pref_vpn_reset">Đặt lại VPN</string>
+    <string name="pref_vpn_reset_description">Xây dựng lại kết nối VPN từ đầu. Sử dụng tùy chọn này nếu VPN ngừng hoạt động (không có truy cập internet hoặc lỗi DNS).</string>
+    <string name="pref_vpn_reset_done">Đã xây dựng lại kết nối VPN.</string>
+    <string name="pref_vpn_reset_not_running">VPN không chạy.</string>
+    <string name="pref_vpn_diagnostic_log">Nhật ký chẩn đoán</string>
+    <string name="pref_vpn_diagnostic_log_description">Xem, sao chép hoặc chia sẻ các lỗi và sự kiện VPN gần đây. Hữu ích khi báo cáo sự cố.</string>
+    <string name="pref_vpn_diagnostic_log_empty">Chưa có sự kiện nào được ghi lại.</string>
+    <string name="pref_vpn_diagnostic_log_share">Chia sẻ nhật ký chẩn đoán</string>
+    <string name="pref_vpn_diagnostic_log_copy">Sao chép</string>
+    <string name="pref_vpn_diagnostic_log_copied">Đã sao chép nhật ký chẩn đoán vào bảng nhớ tạm.</string>
+    <string name="pref_vpn_diagnostic_log_clear">Xóa nhật ký chẩn đoán</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">Xóa các sự kiện đã ghi. Hãy làm điều này trước khi tái hiện sự cố để thu được bản ghi sạch.</string>
+    <string name="pref_vpn_diagnostic_log_cleared">Đã xóa nhật ký chẩn đoán.</string>
 </resources>

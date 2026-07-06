@@ -42,4 +42,31 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Kérlek olvassa el a Súgót további információkért!</string>
 
+    <!-- Hosts card descriptions -->
+    <string name="blocked_hosts_description">Reklámok és nyomkövetők</string>
+    <string name="allowed_hosts_description">Kivételek</string>
+    <string name="redirect_hosts_description">Egyéni szabályok</string>
+
+    <!-- Home action rows (redesigned home screen) -->
+    <string name="home_log_title">DNS-kérések naplója</string>
+    <string name="home_log_subtitle">Nézze meg valós időben, mi van blokkolva</string>
+    <string name="home_help_title">Súgó és tippek</string>
+    <string name="home_help_subtitle">Útmutatók és hibaelhárítás</string>
+    <string name="home_preferences_subtitle">Az AdAway beállítása</string>
+
+    <!-- Compact navigation tiles (single-row layout) -->
+    <string name="home_tile_log">DNS-napló</string>
+    <string name="home_tile_help">Súgó</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">Névjegy</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Verzió %s</string>
+    <string name="about_description">Az AdAway nem hivatalos, közösség által karbantartott forkja.</string>
+    <string name="about_source_label">Forráskód (GitHub)</string>
+    <string name="about_issues_label">Probléma jelentése</string>
+    <string name="about_releases_label">Kiadások</string>
+    <string name="about_upstream_label">Hivatalos AdAway (upstream)</string>
+    <string name="about_license_label">Licenc: GNU General Public License v3.0 or later (GPLv3+)</string>
+
 </resources>

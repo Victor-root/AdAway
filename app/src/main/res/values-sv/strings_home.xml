@@ -42,4 +42,31 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Läs Hjälp för mer information.</string>
 
+    <!-- Hosts card descriptions -->
+    <string name="blocked_hosts_description">Annonser och spårare</string>
+    <string name="allowed_hosts_description">Undantag</string>
+    <string name="redirect_hosts_description">Anpassade regler</string>
+
+    <!-- Home action rows -->
+    <string name="home_log_title">Logg över DNS-förfrågningar</string>
+    <string name="home_log_subtitle">Se vad som blockeras i realtid</string>
+    <string name="home_help_title">Hjälp och tips</string>
+    <string name="home_help_subtitle">Guider och felsökning</string>
+    <string name="home_preferences_subtitle">Konfigurera AdAway</string>
+
+    <!-- Compact navigation tiles -->
+    <string name="home_tile_log">DNS-logg</string>
+    <string name="home_tile_help">Hjälp</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">Om</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Version %s</string>
+    <string name="about_description">Inofficiell, community-underhållen förgrening av AdAway.</string>
+    <string name="about_source_label">Källkod (GitHub)</string>
+    <string name="about_issues_label">Rapportera ett problem</string>
+    <string name="about_releases_label">Utgåvor</string>
+    <string name="about_upstream_label">Officiella AdAway (uppström)</string>
+    <string name="about_license_label">Licens: GNU General Public License v3.0 eller senare (GPLv3+)</string>
+
 </resources>

@@ -21,4 +21,20 @@
     <string name="pref_vpn_exclude_user_apps_select_all">Összes kijelölése</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">Összes kijelölésének törlése</string>
     <string name="pref_vpn_exclude_user_apps_icon">Application icon</string>
+
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">Hibaelhárítás</string>
+    <string name="pref_vpn_reset">VPN visszaállítása</string>
+    <string name="pref_vpn_reset_description">A VPN-kapcsolat teljes újraépítése. Használja, ha a VPN nem működik többé (nincs internet-hozzáférés vagy DNS-hibák).</string>
+    <string name="pref_vpn_reset_done">A VPN-kapcsolat újraépítve.</string>
+    <string name="pref_vpn_reset_not_running">A VPN nem fut.</string>
+    <string name="pref_vpn_diagnostic_log">Diagnosztikai napló</string>
+    <string name="pref_vpn_diagnostic_log_description">A legutóbbi hibák és VPN-események megtekintése, másolása vagy megosztása. Hasznos probléma bejelentésekor.</string>
+    <string name="pref_vpn_diagnostic_log_empty">Még nincsenek rögzített események.</string>
+    <string name="pref_vpn_diagnostic_log_share">Diagnosztikai napló megosztása</string>
+    <string name="pref_vpn_diagnostic_log_copy">Másolás</string>
+    <string name="pref_vpn_diagnostic_log_copied">Diagnosztikai napló a vágólapra másolva.</string>
+    <string name="pref_vpn_diagnostic_log_clear">Diagnosztikai napló törlése</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">A rögzített események törlése. Egy probléma reprodukálása előtt végezze el, hogy tiszta nyomkövetést rögzíthessen.</string>
+    <string name="pref_vpn_diagnostic_log_cleared">Diagnosztikai napló törölve.</string>
 </resources>

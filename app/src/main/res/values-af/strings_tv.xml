@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tv_status_enabled">Advertensieblokkering: geaktiveer</string>
+    <string name="tv_status_disabled">Advertensieblokkering: gedeaktiveer</string>
+    <string name="tv_dialog_add_to_allowed">Voeg by toegelaat</string>
+    <string name="tv_dialog_add_to_blocked">Voeg by geblokkeer</string>
+    <string name="tv_dialog_remove_from_allowed">Verwyder uit toegelaat</string>
+    <string name="tv_dialog_remove_from_blocked">Verwyder uit geblokkeer</string>
+    <string name="tv_dialog_copy_hostname">Kopieer gasheernaam</string>
+    <string name="tv_log_entry_status_description">Domeinstatus</string>
+    <string name="tv_button_vpn_persistence">VPN-volharding</string>
+    <string name="tv_button_theme_light">Ligte modus</string>
+    <string name="tv_button_theme_dark">Donker modus</string>
+    <string name="tv_persistence_indicator_active">Altyd-aan VPN aktief</string>
+    <string name="tv_always_on_hint_title">VPN-volharding</string>
+    <string name="tv_always_on_hint_message">AdAway hanteer reeds herbegins, laegeheue-doodmakings en ineenstortings self, so in die meeste gevalle is geen ekstra opstelling nodig nie.\n\nAs die VPN ooit onverwags stop, speld AdAway vas as die Android-stelsel se Altyd-aan VPN vir die sterkste waarborg.</string>
+    <string name="tv_persistence_status_enabled">Altyd-aan VPN is geaktiveer vir AdAway. ✓</string>
+    <string name="tv_persistence_status_disabled">Altyd-aan VPN nie gestel nie. AdAway se ingeboude volharding hanteer dit.</string>
+    <string name="tv_persistence_adb_commands">As die stelsel-VPN-skerm op jou TV versteek is, gebruik ADB:\n\n• Aktiveer altyd-aan vir AdAway:\n  adb shell settings put global always_on_vpn_app %1$s\n\n• Deaktiveer altyd-aan:\n  adb shell settings delete global always_on_vpn_app</string>
+    <string name="tv_always_on_hint_open_settings">Open VPN-instellings</string>
+    <string name="tv_always_on_hint_later">Reg so</string>
+    <string name="tv_persistence_intent_failed">VPN-instellings is op hierdie Android TV versteek. Gebruik die ADB-opdragte wat gewys word.</string>
+</resources>

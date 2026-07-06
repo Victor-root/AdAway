@@ -21,4 +21,20 @@
     <string name="pref_vpn_exclude_user_apps_select_all">בחר הכל</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">הסר הכל</string>
     <string name="pref_vpn_exclude_user_apps_icon">סמל יישום</string>
+
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">פתרון בעיות</string>
+    <string name="pref_vpn_reset">איפוס VPN</string>
+    <string name="pref_vpn_reset_description">בנה מחדש את חיבור ה־VPN מאפס. השתמש באפשרות זו אם ה־VPN מפסיק לעבוד (אין גישה לאינטרנט או שגיאות DNS).</string>
+    <string name="pref_vpn_reset_done">חיבור ה־VPN נבנה מחדש.</string>
+    <string name="pref_vpn_reset_not_running">ה־VPN אינו פעיל.</string>
+    <string name="pref_vpn_diagnostic_log">יומן אבחון</string>
+    <string name="pref_vpn_diagnostic_log_description">הצג, העתק או שתף את השגיאות ואירועי ה־VPN האחרונים. שימושי בעת דיווח על בעיה.</string>
+    <string name="pref_vpn_diagnostic_log_empty">עדיין לא נרשמו אירועים.</string>
+    <string name="pref_vpn_diagnostic_log_share">שתף את יומן האבחון</string>
+    <string name="pref_vpn_diagnostic_log_copy">העתק</string>
+    <string name="pref_vpn_diagnostic_log_copied">יומן האבחון הועתק ללוח.</string>
+    <string name="pref_vpn_diagnostic_log_clear">נקה את יומן האבחון</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">מחק את האירועים שנרשמו. עשה זאת לפני שחזור הבעיה כדי לקבל רישום נקי.</string>
+    <string name="pref_vpn_diagnostic_log_cleared">יומן האבחון נוקה.</string>
 </resources>

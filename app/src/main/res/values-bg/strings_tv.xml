@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tv_status_enabled">Блокиране на реклами: включено</string>
+    <string name="tv_status_disabled">Блокиране на реклами: изключено</string>
+    <string name="tv_dialog_add_to_allowed">Добавяне към позволените</string>
+    <string name="tv_dialog_add_to_blocked">Добавяне към блокираните</string>
+    <string name="tv_dialog_remove_from_allowed">Премахване от позволените</string>
+    <string name="tv_dialog_remove_from_blocked">Премахване от блокираните</string>
+    <string name="tv_dialog_copy_hostname">Копиране на името на хоста</string>
+    <string name="tv_log_entry_status_description">Състояние на домейна</string>
+    <string name="tv_button_vpn_persistence">Устойчивост на VPN</string>
+    <string name="tv_button_theme_light">Светъл режим</string>
+    <string name="tv_button_theme_dark">Тъмен режим</string>
+    <string name="tv_persistence_indicator_active">Винаги включеният VPN е активен</string>
+    <string name="tv_always_on_hint_title">Устойчивост на VPN</string>
+    <string name="tv_always_on_hint_message">AdAway вече сам се справя с рестартиранията, спиранията поради недостиг на памет и сривовете, така че в повечето случаи не е необходима допълнителна настройка.\n\nАко VPN някога спре неочаквано, задайте AdAway като „Винаги включен VPN“ на системата Android за най-силна гаранция.</string>
+    <string name="tv_persistence_status_enabled">Винаги включеният VPN е разрешен за AdAway. ✓</string>
+    <string name="tv_persistence_status_disabled">Винаги включеният VPN не е зададен. Вградената устойчивост на AdAway се грижи за това.</string>
+    <string name="tv_persistence_adb_commands">Ако системният VPN екран е скрит на вашия телевизор, използвайте ADB:\n\n• Разрешаване на винаги включен за AdAway:\n  adb shell settings put global always_on_vpn_app %1$s\n\n• Изключване на винаги включен:\n  adb shell settings delete global always_on_vpn_app</string>
+    <string name="tv_always_on_hint_open_settings">Отваряне на настройките за VPN</string>
+    <string name="tv_always_on_hint_later">Разбрах</string>
+    <string name="tv_persistence_intent_failed">Настройките за VPN са скрити на този Android TV. Използвайте показаните ADB команди.</string>
+</resources>

@@ -38,4 +38,31 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Citește secțiunea de Ajutor pentru mai multe informații!</string>
 
+    <!-- Hosts card descriptions -->
+    <string name="blocked_hosts_description">Reclame și urmăritoare</string>
+    <string name="allowed_hosts_description">Excepții</string>
+    <string name="redirect_hosts_description">Reguli personalizate</string>
+
+    <!-- Home action rows -->
+    <string name="home_log_title">Jurnalul cererilor DNS</string>
+    <string name="home_log_subtitle">Vezi ce este blocat în timp real</string>
+    <string name="home_help_title">Ajutor și sfaturi</string>
+    <string name="home_help_subtitle">Ghiduri și depanare</string>
+    <string name="home_preferences_subtitle">Configurează AdAway</string>
+
+    <!-- Compact navigation tiles -->
+    <string name="home_tile_log">Jurnal DNS</string>
+    <string name="home_tile_help">Ajutor</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">Despre</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Versiunea %s</string>
+    <string name="about_description">Fork neoficial al AdAway, întreținut de comunitate.</string>
+    <string name="about_source_label">Codul sursă (GitHub)</string>
+    <string name="about_issues_label">Raportează o problemă</string>
+    <string name="about_releases_label">Lansări</string>
+    <string name="about_upstream_label">AdAway oficial (upstream)</string>
+    <string name="about_license_label">Licență: GNU General Public License v3.0 or later (GPLv3+)</string>
+
 </resources>

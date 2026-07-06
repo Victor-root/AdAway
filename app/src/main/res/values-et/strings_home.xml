@@ -31,4 +31,31 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Palun loe abi rohkema teabe saamiseks.</string>
 
+    <!-- Hosts card descriptions -->
+    <string name="blocked_hosts_description">Reklaamid ja jälgijad</string>
+    <string name="allowed_hosts_description">Erandid</string>
+    <string name="redirect_hosts_description">Kohandatud reeglid</string>
+
+    <!-- Home action rows -->
+    <string name="home_log_title">DNS-päringute logi</string>
+    <string name="home_log_subtitle">Vaata reaalajas, mis on blokeeritud</string>
+    <string name="home_help_title">Abi ja näpunäited</string>
+    <string name="home_help_subtitle">Juhendid ja tõrkeotsing</string>
+    <string name="home_preferences_subtitle">Seadista AdAway</string>
+
+    <!-- Compact navigation tiles -->
+    <string name="home_tile_log">DNS-logi</string>
+    <string name="home_tile_help">Abi</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">Teave</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Versioon %s</string>
+    <string name="about_description">Mitteametlik, kogukonna hallatav AdAway haru.</string>
+    <string name="about_source_label">Lähtekood (GitHub)</string>
+    <string name="about_issues_label">Teata probleemist</string>
+    <string name="about_releases_label">Väljalasked</string>
+    <string name="about_upstream_label">Ametlik AdAway (upstream)</string>
+    <string name="about_license_label">Litsents: GNU General Public License v3.0 või uuem (GPLv3+)</string>
+
 </resources>

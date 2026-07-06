@@ -40,4 +40,25 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">더 많은 정보는 도움말을 참조해주세요.</string>
 
+    <!-- Home action rows / About tab -->
+    <string name="blocked_hosts_description">광고 및 추적기</string>
+    <string name="allowed_hosts_description">예외</string>
+    <string name="redirect_hosts_description">사용자 지정 규칙</string>
+    <string name="home_log_title">DNS 요청 기록</string>
+    <string name="home_log_subtitle">차단된 항목을 실시간으로 확인</string>
+    <string name="home_help_title">도움말 및 팁</string>
+    <string name="home_help_subtitle">가이드 및 문제 해결</string>
+    <string name="home_preferences_subtitle">AdAway 구성</string>
+    <string name="home_tile_log">DNS 기록</string>
+    <string name="home_tile_help">도움말</string>
+    <string name="help_tab_about">정보</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">버전 %s</string>
+    <string name="about_description">AdAway의 비공식 커뮤니티 관리 포크입니다.</string>
+    <string name="about_source_label">소스 코드 (GitHub)</string>
+    <string name="about_issues_label">문제 신고</string>
+    <string name="about_releases_label">릴리스</string>
+    <string name="about_upstream_label">공식 AdAway 업스트림</string>
+    <string name="about_license_label">라이선스: GNU General Public License v3.0 or later (GPLv3+)</string>
+
 </resources>

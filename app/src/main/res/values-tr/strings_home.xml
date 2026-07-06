@@ -42,4 +42,27 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Daha fazla bilgi için Yardım\'ı okuyunuz.</string>
 
+    <!-- Home action rows (redesigned home screen) -->
+    <string name="blocked_hosts_description">Reklamlar ve izleyiciler</string>
+    <string name="allowed_hosts_description">İstisnalar</string>
+    <string name="redirect_hosts_description">Özel kurallar</string>
+    <string name="home_log_title">DNS istek günlüğü</string>
+    <string name="home_log_subtitle">Neyin engellendiğini gerçek zamanlı görün</string>
+    <string name="home_help_title">Yardım ve ipuçları</string>
+    <string name="home_help_subtitle">Kılavuzlar ve sorun giderme</string>
+    <string name="home_preferences_subtitle">AdAway\'i yapılandırın</string>
+    <string name="home_tile_log">DNS günlüğü</string>
+    <string name="home_tile_help">Yardım</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">Hakkında</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Sürüm %s</string>
+    <string name="about_description">AdAway\'in gayriresmi, topluluk tarafından sürdürülen çatalı.</string>
+    <string name="about_source_label">Kaynak kodu (GitHub)</string>
+    <string name="about_issues_label">Sorun bildir</string>
+    <string name="about_releases_label">Sürümler</string>
+    <string name="about_upstream_label">Resmi AdAway (üst kaynak)</string>
+    <string name="about_license_label">Lisans: GNU General Public License v3.0 veya üzeri (GPLv3+)</string>
+
 </resources>

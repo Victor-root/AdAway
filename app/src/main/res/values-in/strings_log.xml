@@ -8,4 +8,8 @@
     <string name="log_sort_top_level_domain">Urutkan sesuai TLD</string>
     <!-- Redirect dialog  -->
     <string name="log_redirect_dialog_title">Alihkan domain</string>
+    <string name="log_description_start_recording">Tekan tombol rekam untuk mulai mencatat permintaan, jelajahi Web atau gunakan aplikasi, lalu kembali atau geser untuk menyegarkan log.</string>
+    <string name="log_start_recording_button">Mulai Merekam</string>
+    <string name="log_start_recording_vpn_inactive">Mulai Merekam (VPN tidak aktif)</string>
+    <string name="log_stop_recording">Berhenti Merekam</string>
 </resources>

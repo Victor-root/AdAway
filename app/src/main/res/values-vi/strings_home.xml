@@ -40,4 +40,27 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Hãy đọc Trợ giúp để biết thêm thông tin.</string>
 
+    <!-- Home action rows (redesigned home screen) -->
+    <string name="blocked_hosts_description">Quảng cáo và trình theo dõi</string>
+    <string name="allowed_hosts_description">Ngoại lệ</string>
+    <string name="redirect_hosts_description">Quy tắc tùy chỉnh</string>
+    <string name="home_log_title">Nhật ký yêu cầu DNS</string>
+    <string name="home_log_subtitle">Xem nội dung bị chặn theo thời gian thực</string>
+    <string name="home_help_title">Trợ giúp và mẹo</string>
+    <string name="home_help_subtitle">Hướng dẫn và khắc phục sự cố</string>
+    <string name="home_preferences_subtitle">Cấu hình AdAway</string>
+    <string name="home_tile_log">Nhật ký DNS</string>
+    <string name="home_tile_help">Trợ giúp</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">Giới thiệu</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Phiên bản %s</string>
+    <string name="about_description">Bản phân nhánh không chính thức của AdAway do cộng đồng duy trì.</string>
+    <string name="about_source_label">Mã nguồn (GitHub)</string>
+    <string name="about_issues_label">Báo cáo sự cố</string>
+    <string name="about_releases_label">Các bản phát hành</string>
+    <string name="about_upstream_label">AdAway chính thức (nguồn gốc)</string>
+    <string name="about_license_label">Giấy phép: GNU General Public License v3.0 trở lên (GPLv3+)</string>
+
 </resources>

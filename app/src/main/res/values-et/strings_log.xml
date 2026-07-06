@@ -5,4 +5,8 @@
     <string name="log_sort_top_level_domain">TLD järjekord</string>
     <!-- Redirect dialog  -->
     <string name="log_redirect_dialog_title">Suuna domeen</string>
+    <string name="log_description_start_recording">Vajuta salvestusnuppu, et alustada päringute logimist, sirvi veebi või kasuta rakendusi, seejärel mine tagasi või tõmba logide värskendamiseks.</string>
+    <string name="log_start_recording_button">Alusta salvestamist</string>
+    <string name="log_start_recording_vpn_inactive">Alusta salvestamist (VPN pole aktiivne)</string>
+    <string name="log_stop_recording">Peata salvestamine</string>
 </resources>

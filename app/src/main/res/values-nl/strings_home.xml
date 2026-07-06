@@ -42,4 +42,23 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Bekijk de hulpsectie voor meer informatie.</string>
 
+    <string name="blocked_hosts_description">Advertenties &amp; trackers</string>
+    <string name="allowed_hosts_description">Uitzonderingen</string>
+    <string name="redirect_hosts_description">Aangepaste regels</string>
+    <string name="home_log_title">DNS-verzoeklogboek</string>
+    <string name="home_log_subtitle">Zie in realtime wat er geblokkeerd wordt</string>
+    <string name="home_help_title">Help &amp; tips</string>
+    <string name="home_help_subtitle">Handleidingen en probleemoplossing</string>
+    <string name="home_preferences_subtitle">AdAway configureren</string>
+    <string name="home_tile_log">DNS-logboek</string>
+    <string name="home_tile_help">Help</string>
+    <string name="help_tab_about">Over</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Versie %s</string>
+    <string name="about_description">Onofficiële, door de gemeenschap onderhouden fork van AdAway.</string>
+    <string name="about_source_label">Broncode (GitHub)</string>
+    <string name="about_issues_label">Een probleem melden</string>
+    <string name="about_releases_label">Releases</string>
+    <string name="about_upstream_label">Officiële AdAway-upstream</string>
+    <string name="about_license_label">Licentie: GNU General Public License v3.0 of later (GPLv3+)</string>
 </resources>

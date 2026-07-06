@@ -21,4 +21,19 @@
     <string name="pref_vpn_exclude_user_apps_select_all">Selectare toate</string>
     <string name="pref_vpn_exclude_user_apps_deselect_all">Anulare selecție</string>
     <string name="pref_vpn_exclude_user_apps_icon">Pictograma aplicației</string>
+    <!-- Troubleshooting -->
+    <string name="pref_vpn_troubleshooting">Depanare</string>
+    <string name="pref_vpn_reset">Resetează VPN</string>
+    <string name="pref_vpn_reset_description">Reconstruiește conexiunea VPN de la zero. Folosește această opțiune dacă VPN-ul nu mai funcționează (fără acces la internet sau erori DNS).</string>
+    <string name="pref_vpn_reset_done">Conexiunea VPN a fost reconstruită.</string>
+    <string name="pref_vpn_reset_not_running">VPN-ul nu rulează.</string>
+    <string name="pref_vpn_diagnostic_log">Jurnal de diagnosticare</string>
+    <string name="pref_vpn_diagnostic_log_description">Vizualizează, copiază sau distribuie erorile recente și evenimentele VPN. Util când raportezi o problemă.</string>
+    <string name="pref_vpn_diagnostic_log_empty">Nu a fost înregistrat încă niciun eveniment.</string>
+    <string name="pref_vpn_diagnostic_log_share">Distribuie jurnalul de diagnosticare</string>
+    <string name="pref_vpn_diagnostic_log_copy">Copiază</string>
+    <string name="pref_vpn_diagnostic_log_copied">Jurnalul de diagnosticare a fost copiat în clipboard.</string>
+    <string name="pref_vpn_diagnostic_log_clear">Șterge jurnalul de diagnosticare</string>
+    <string name="pref_vpn_diagnostic_log_clear_description">Șterge evenimentele înregistrate. Fă acest lucru înainte de a reproduce o problemă pentru a captura o urmă curată.</string>
+    <string name="pref_vpn_diagnostic_log_cleared">Jurnalul de diagnosticare a fost șters.</string>
 </resources>

@@ -46,4 +46,31 @@
     <!-- Error dialog -->
     <string name="error_dialog_help">Пожалуйста, прочтите Справку, чтобы узнать больше.</string>
 
+    <!-- Hosts card descriptions -->
+    <string name="blocked_hosts_description">Реклама и трекеры</string>
+    <string name="allowed_hosts_description">Исключения</string>
+    <string name="redirect_hosts_description">Пользовательские правила</string>
+
+    <!-- Home action rows -->
+    <string name="home_log_title">Журнал запросов DNS</string>
+    <string name="home_log_subtitle">Смотрите, что блокируется, в реальном времени</string>
+    <string name="home_help_title">Справка и советы</string>
+    <string name="home_help_subtitle">Руководства и устранение неполадок</string>
+    <string name="home_preferences_subtitle">Настройка AdAway</string>
+
+    <!-- Compact navigation tiles -->
+    <string name="home_tile_log">Журнал DNS</string>
+    <string name="home_tile_help">Справка</string>
+
+    <!-- About tab -->
+    <string name="help_tab_about">О приложении</string>
+    <string name="about_app_name">AdAway Community</string>
+    <string name="about_version">Версия %s</string>
+    <string name="about_description">Неофициальный форк AdAway, поддерживаемый сообществом.</string>
+    <string name="about_source_label">Исходный код (GitHub)</string>
+    <string name="about_issues_label">Сообщить о проблеме</string>
+    <string name="about_releases_label">Релизы</string>
+    <string name="about_upstream_label">Официальный AdAway (upstream)</string>
+    <string name="about_license_label">Лицензия: GNU General Public License v3.0 or later (GPLv3+)</string>
+
 </resources>
