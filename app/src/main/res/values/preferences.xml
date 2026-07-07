@@ -52,6 +52,8 @@
     <string name="pref_vpn_watchdog_enabled_key" translatable="false">vpnWatchdog</string>
     <bool name="pref_vpn_watchdog_enabled_def">false</bool>
     <string name="pref_vpn_reset_key" translatable="false">vpnReset</string>
+    <string name="pref_vpn_diagnostic_log_enabled_key" translatable="false">vpnDiagnosticLogEnabled</string>
+    <bool name="pref_vpn_diagnostic_log_enabled_def">false</bool>
     <string name="pref_vpn_diagnostic_log_key" translatable="false">vpnDiagnosticLog</string>
     <string name="pref_vpn_diagnostic_log_clear_key" translatable="false">vpnDiagnosticLogClear</string>
     <string name="pref_tv_always_on_hint_shown_key" translatable="false">tvAlwaysOnVpnHintShown</string>

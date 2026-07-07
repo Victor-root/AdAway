@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import org.adaway.helper.PreferenceHelper;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -13,6 +15,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A tiny, self-bounding diagnostic log that persists important events to a file on disk so the
@@ -22,6 +25,9 @@ import java.util.concurrent.Executors;
  * Only {@code INFO} and above are captured (see {@link DiagnosticLogTree}), so the file stays
  * small and readable: no per-packet DNS spam, just lifecycle events, network transitions,
  * warnings and errors — exactly what is needed to diagnose why the VPN stopped.
+ * <p>
+ * Recording is opt-in and off by default (see {@link #isEnabled()}): nothing is written to disk
+ * until the user turns on "Record diagnostic log" in the VPN preferences.
  * <p>
  * The log rotates into a single backup once the active file exceeds {@link #MAX_FILE_SIZE}, so at
  * most {@code 2 × MAX_FILE_SIZE} of history is ever kept on disk. All file access happens on a
@@ -45,6 +51,7 @@ public final class DiagnosticLog {
     private final File logFile;
     private final File backupFile;
     private final ExecutorService executor;
+    private final AtomicBoolean enabled;
 
     private DiagnosticLog(Context context) {
         File directory = context.getFilesDir();
@@ -55,6 +62,28 @@ public final class DiagnosticLog {
             thread.setDaemon(true);
             return thread;
         });
+        // Seed from the persisted preference so recording resumes across app restarts if the
+        // user previously turned it on.
+        this.enabled = new AtomicBoolean(PreferenceHelper.getVpnDiagnosticLogEnabled(context));
+    }
+
+    /**
+     * Whether recording is currently turned on. Checked by {@link DiagnosticLogTree} before every
+     * write, so nothing touches disk while the user has not opted in.
+     */
+    public boolean isEnabled() {
+        return this.enabled.get();
+    }
+
+    /**
+     * Turn recording on or off immediately (in-memory). The Preference widget itself is
+     * responsible for persisting the choice to disk; this only updates the cached flag so the
+     * change takes effect on the very next log line, without needing an app restart.
+     *
+     * @param enabled The new recording state.
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled.set(enabled);
     }
 
     /**

@@ -51,7 +51,9 @@ public final class DiagnosticLogTree extends Timber.Tree {
 
     @Override
     protected boolean isLoggable(@Nullable String tag, int priority) {
-        return priority >= Log.INFO;
+        // Recording is opt-in (off by default): skip everything, cheaply, until the user turns
+        // it on in Preferences > VPN > Record diagnostic log.
+        return priority >= Log.INFO && this.log.isEnabled();
     }
 
     @Override

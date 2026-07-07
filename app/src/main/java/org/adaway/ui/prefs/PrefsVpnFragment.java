@@ -5,6 +5,9 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -44,6 +47,7 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
         bindExcludedSystemApps();
         bindExcludedUserApps();
         bindResetVpn();
+        bindDiagnosticLogEnabled();
         bindDiagnosticLog();
         bindClearDiagnosticLog();
     }
@@ -107,6 +111,18 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
         }
     }
 
+    private void bindDiagnosticLogEnabled() {
+        Context context = requireContext();
+        Preference preference = findPreference(getString(R.string.pref_vpn_diagnostic_log_enabled_key));
+        assert preference != null : PREFERENCE_NOT_FOUND;
+        preference.setOnPreferenceChangeListener((p, newValue) -> {
+            // The preference widget persists the new value itself; update the cached in-memory
+            // flag too so recording starts/stops on the very next log line, not after a restart.
+            DiagnosticLog.getInstance(context).setEnabled(Boolean.TRUE.equals(newValue));
+            return true;
+        });
+    }
+
     private void bindDiagnosticLog() {
         Context context = requireContext();
         Preference preference = findPreference(getString(R.string.pref_vpn_diagnostic_log_key));
@@ -131,11 +147,20 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
         Context context = requireContext();
         boolean empty = log == null || log.trim().isEmpty();
         CharSequence message = empty ? getString(R.string.pref_vpn_diagnostic_log_empty) : previewOf(log);
+        // Render the log in a custom view (a fixed-height ScrollView) instead of setMessage(): a
+        // very long log made the dialog's own button row grow past the screen and forced the
+        // user to scroll through the BUTTONS to find them. With a custom view, only this content
+        // area scrolls — the Share/Copy/OK button bar stays outside it and always visible.
+        View view = LayoutInflater.from(context).inflate(R.layout.pref_vpn_diagnostic_log_dialog, null);
+        TextView textView = view.findViewById(R.id.diagnosticLogText);
+        textView.setText(message);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context)
                 .setTitle(R.string.pref_vpn_diagnostic_log)
-                .setMessage(message)
+                .setView(view)
                 .setNegativeButton(android.R.string.ok, null);
         if (!empty) {
+            // Short labels ("Share"/"Copy"/"OK") so the 3 buttons always fit on one row instead
+            // of Material's dialog stacking them vertically when the combined text is too wide.
             builder.setPositiveButton(R.string.pref_vpn_diagnostic_log_share, (dialog, which) -> shareLog(log));
             builder.setNeutralButton(R.string.pref_vpn_diagnostic_log_copy, (dialog, which) -> copyLog(log));
         }
@@ -165,11 +190,15 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
     }
 
     private void shareLog(String log) {
+        // pref_vpn_diagnostic_log_share_title (not the short button label) is used here: the
+        // subject/chooser title can be descriptive since it is not competing for space with two
+        // other dialog buttons.
+        String title = getString(R.string.pref_vpn_diagnostic_log_share_title);
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.pref_vpn_diagnostic_log));
+        intent.putExtra(Intent.EXTRA_SUBJECT, title);
         intent.putExtra(Intent.EXTRA_TEXT, log);
-        startActivity(Intent.createChooser(intent, getString(R.string.pref_vpn_diagnostic_log_share)));
+        startActivity(Intent.createChooser(intent, title));
     }
 
     private void bindClearDiagnosticLog() {

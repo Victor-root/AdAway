@@ -304,6 +304,21 @@ public final class PreferenceHelper {
         );
     }
 
+    /**
+     * Whether the diagnostic log is allowed to record events. Off by default: the user must
+     * explicitly opt in (Preferences > VPN > Record diagnostic log) before anything is captured.
+     */
+    public static boolean getVpnDiagnosticLogEnabled(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(
+                Constants.PREFS_NAME,
+                Context.MODE_PRIVATE
+        );
+        return prefs.getBoolean(
+                context.getString(R.string.pref_vpn_diagnostic_log_enabled_key),
+                context.getResources().getBoolean(R.bool.pref_vpn_diagnostic_log_enabled_def)
+        );
+    }
+
     public static boolean isTvAlwaysOnVpnHintShown(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(
                 Constants.PREFS_NAME,

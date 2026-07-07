@@ -64,6 +64,14 @@
             app:summary="@string/pref_vpn_reset_description"
             app:title="@string/pref_vpn_reset" />
 
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_vpn_diagnostic_log_enabled_def"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_vpn_diagnostic_log_enabled_key"
+            app:singleLineTitle="false"
+            app:summary="@string/pref_vpn_diagnostic_log_enabled_description"
+            app:title="@string/pref_vpn_diagnostic_log_enabled" />
+
         <Preference
             app:iconSpaceReserved="false"
             app:key="@string/pref_vpn_diagnostic_log_key"
