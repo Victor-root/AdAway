@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -93,11 +94,19 @@ public class ListsActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
         // Get navigation view
         BottomNavigationView navigationView = findViewById(R.id.navigation);
+        // Red indicator that sits on the top edge of the active tab (like a tab indicator).
+        View navIndicator = findViewById(R.id.nav_indicator);
+        // Position it under the initial tab once the bar has been measured, and keep it aligned
+        // if the bar is re-laid out (e.g. on rotation).
+        navigationView.post(() -> positionIndicator(navIndicator, navigationView, viewPager.getCurrentItem(), false));
+        navigationView.addOnLayoutChangeListener((v, l, t, r, b, ol, ot, or, ob) ->
+                positionIndicator(navIndicator, navigationView, viewPager.getCurrentItem(), false));
         // Add view pager on page listener to set selected tab according the selected page
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 navigationView.getMenu().getItem(position).setChecked(true);
+                positionIndicator(navIndicator, navigationView, position, true);
                 pagerAdapter.ensureActionModeCanceled();
             }
         });
@@ -143,6 +152,30 @@ public class ListsActivity extends AppCompatActivity {
         this.listsViewModel.getModelChanged().observe(this, applySnackbar.createObserver());
         // Get the intent, verify the action and get the query
         handleQuery(intent);
+    }
+
+    /**
+     * Place the red active-tab indicator on the top edge of the given tab. The indicator spans one
+     * tab cell (bar width / item count) and is moved horizontally to the selected position.
+     *
+     * @param indicator The indicator view.
+     * @param nav       The bottom navigation bar.
+     * @param position  The selected tab position.
+     * @param animate   Whether to animate the move (true on user selection, false on initial/layout).
+     */
+    private void positionIndicator(View indicator, BottomNavigationView nav, int position, boolean animate) {
+        int itemCount = nav.getMenu().size();
+        if (itemCount == 0 || nav.getWidth() == 0) {
+            return;
+        }
+        int itemWidth = nav.getWidth() / itemCount;
+        // Centre the fixed-width pill within the selected tab cell.
+        float targetX = (float) position * itemWidth + (itemWidth - indicator.getWidth()) / 2f;
+        if (animate) {
+            indicator.animate().translationX(targetX).setDuration(200).start();
+        } else {
+            indicator.setTranslationX(targetX);
+        }
     }
 
     @Override
