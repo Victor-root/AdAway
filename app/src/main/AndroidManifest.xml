@@ -109,7 +109,8 @@
             android:exported="false"
             android:label="@string/lists_title"
             android:launchMode="singleTop"
-            android:parentActivityName=".ui.home.HomeActivity">
+            android:parentActivityName=".ui.home.HomeActivity"
+            android:theme="@style/Theme.AdAway.Lists">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/list_searchable" />

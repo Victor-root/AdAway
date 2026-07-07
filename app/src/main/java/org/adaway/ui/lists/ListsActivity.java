@@ -94,7 +94,7 @@ public class ListsActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
         // Get navigation view
         BottomNavigationView navigationView = findViewById(R.id.navigation);
-        // Red indicator that sits on the top edge of the active tab (like a tab indicator).
+        // White indicator that sits on the bottom edge of the active tab (like a tab indicator).
         View navIndicator = findViewById(R.id.nav_indicator);
         // Position it under the initial tab once the bar has been measured, and keep it aligned
         // if the bar is re-laid out (e.g. on rotation).
@@ -155,8 +155,9 @@ public class ListsActivity extends AppCompatActivity {
     }
 
     /**
-     * Place the red active-tab indicator on the top edge of the given tab. The indicator spans one
-     * tab cell (bar width / item count) and is moved horizontally to the selected position.
+     * Place the white active-tab indicator on the bottom edge of the given tab. The indicator
+     * spans one tab cell (bar width / item count) and is moved horizontally to the selected
+     * position.
      *
      * @param indicator The indicator view.
      * @param nav       The bottom navigation bar.

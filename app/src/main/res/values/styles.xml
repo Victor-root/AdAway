@@ -106,6 +106,18 @@
         <item name="android:windowLightNavigationBar">true</item>
     </style>
 
+    <!--
+        "Your lists" screen (Blocked/Allowed/Redirected): its footer is red, so the system
+        navigation bar is coloured to match it, closing the seam between the app UI and the
+        system bar. White navigation bar icons (windowLightNavigationBar=false) contrast well
+        against red in both light and dark mode, so a single declaration covers both — @color/
+        primary already resolves to the right shade per theme via values-night/colors.xml.
+    -->
+    <style name="Theme.AdAway.Lists" parent="Theme.AdAway">
+        <item name="android:navigationBarColor">@color/primary</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
     <style name="Theme.AdAway.NoActionBar.Red" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/welcomeBackground</item>
         <item name="colorPrimaryVariant">@color/primaryVariant</item>

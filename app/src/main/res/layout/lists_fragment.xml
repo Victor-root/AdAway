@@ -5,10 +5,13 @@
     android:layout_height="match_parent">
 
     <!--
-        Bottom navigation footer. The BottomNavigationView is wrapped in a container so a thin
-        red indicator (nav_indicator) can be overlaid on the top edge of the active tab, moved in
-        code as the selection changes (like a TabLayout indicator). Elevation is 0: the footer is
-        flat, with no drop shadow above it.
+        Bottom navigation footer. The BottomNavigationView is wrapped in a container so a thick
+        white indicator (nav_indicator) can be overlaid on the BOTTOM edge of the active tab,
+        moved in code as the selection changes (like a TabLayout indicator). Sitting on the
+        bottom edge — between the red footer and the (also red, see Theme.AdAway.Lists) system
+        navigation bar — makes it clearly visible against solid red on both sides; the top edge
+        sits right at the seam with the white content above, where it barely showed. Elevation is
+        0: the footer is flat, with no drop shadow above it.
     -->
     <FrameLayout
         android:id="@+id/nav_container"
@@ -34,7 +37,7 @@
             android:id="@+id/nav_indicator"
             android:layout_width="40dp"
             android:layout_height="4dp"
-            android:layout_gravity="top|start"
+            android:layout_gravity="bottom|start"
             android:background="@drawable/nav_indicator" />
     </FrameLayout>
 
