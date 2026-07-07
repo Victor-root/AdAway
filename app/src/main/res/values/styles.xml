@@ -91,6 +91,16 @@
 
         <!--Remap legacy AppCompat attributes to MaterialComponent attributes-->
         <item name="colorPrimaryDark">?colorPrimary</item>
+        <!--
+            Explicit statusBarColor declared here (the shared parent, not on Theme.AdAway itself):
+            values-night/styles.xml redeclares Theme.AdAway with only colorPrimaryDark — in dark
+            mode Android replaces the whole light-mode Theme.AdAway declaration rather than merging
+            it, so any item only set on the light Theme.AdAway (this used to include statusBarColor
+            attempts) is lost in dark mode there. Base.AdAway itself has no night-qualified override,
+            so declaring it here is inherited unchanged by every screen in both light and dark mode:
+            bare Theme.AdAway (DNS log, Help, Hosts sources, Source edit) and Theme.AdAway.Prefs.
+        -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
     </style>
 
     <style name="Theme.AdAway.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -114,6 +124,13 @@
         primary already resolves to the right shade per theme via values-night/colors.xml.
     -->
     <style name="Theme.AdAway.Lists" parent="Theme.AdAway">
+        <!--
+            Explicit statusBarColor, not left to the inherited colorPrimaryDark: the night variant
+            of Theme.AdAway (values-night/styles.xml) overrides colorPrimaryDark to colorSurface
+            for other screens, which this theme would otherwise inherit, leaving the status bar on
+            the dark surface colour instead of red in dark mode.
+        -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/primary</item>
         <item name="android:windowLightNavigationBar">false</item>
     </style>

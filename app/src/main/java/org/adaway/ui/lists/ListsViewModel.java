@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelKt;
 import androidx.paging.Pager;
 import androidx.paging.PagingConfig;
 import androidx.paging.PagingData;
@@ -20,7 +21,10 @@ import org.adaway.util.AppExecutors;
 import java.util.Optional;
 import java.util.concurrent.Executor;
 
+import kotlinx.coroutines.CoroutineScope;
+
 import static androidx.lifecycle.Transformations.switchMap;
+import static androidx.paging.PagingLiveData.cachedIn;
 import static androidx.paging.PagingLiveData.getLiveData;
 import static org.adaway.db.entity.HostsSource.USER_SOURCE_ID;
 import static org.adaway.db.entity.ListType.ALLOWED;
@@ -47,23 +51,30 @@ public class ListsViewModel extends AndroidViewModel {
         this.hostListItemDao = AppDatabase.getInstance(application).hostsListItemDao();
         this.filter = new MutableLiveData<>(ALL);
         PagingConfig pagingConfig = new PagingConfig(50, 150, true);
+        // Each PagingData can only be collected once: without cachedIn(), re-observing this
+        // LiveData after the fragment is recreated (e.g. an Activity recreation on a light/dark
+        // theme switch) redelivers the very same, already-collected PagingData to a brand new
+        // adapter and crashes with "Attempt to collect twice from pageEventFlow". cachedIn(),
+        // scoped to this ViewModel (which survives the recreation), makes each Pager's stream
+        // safely re-collectable by a new adapter instance.
+        CoroutineScope viewModelScope = ViewModelKt.getViewModelScope(this);
         this.blockedListItems = switchMap(
                 this.filter,
-                filter -> getLiveData(new Pager<>(pagingConfig, () ->
+                filter -> cachedIn(getLiveData(new Pager<>(pagingConfig, () ->
                         this.hostListItemDao.loadList(BLOCKED.getValue(), filter.sourcesIncluded, filter.sqlQuery)
-                ))
+                )), viewModelScope)
         );
         this.allowedListItems = switchMap(
                 this.filter,
-                filter -> getLiveData(new Pager<>(pagingConfig, () ->
+                filter -> cachedIn(getLiveData(new Pager<>(pagingConfig, () ->
                         this.hostListItemDao.loadList(ALLOWED.getValue(), filter.sourcesIncluded, filter.sqlQuery)
-                ))
+                )), viewModelScope)
         );
         this.redirectedListItems = switchMap(
                 this.filter,
-                filter -> getLiveData(new Pager<>(pagingConfig, () ->
+                filter -> cachedIn(getLiveData(new Pager<>(pagingConfig, () ->
                         this.hostListItemDao.loadList(REDIRECTED.getValue(), filter.sourcesIncluded, filter.sqlQuery)
-                ))
+                )), viewModelScope)
         );
         this.modelChanged = new MutableLiveData<>(false);
     }
