@@ -467,7 +467,7 @@
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toTopOf="@+id/outdatedSourcesTextView"
-                        app:layout_constraintEnd_toStartOf="@+id/checkForUpdateImageView"
+                        app:layout_constraintEnd_toStartOf="@+id/syncSourcesImageView"
                         app:layout_constraintStart_toEndOf="@+id/sourceImageView"
                         app:layout_constraintTop_toTopOf="@+id/sourceImageView"
                         app:layout_constraintVertical_chainStyle="packed"
@@ -481,38 +481,28 @@
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                         android:textColor="@color/homeCardSubtitle"
                         app:layout_constraintBottom_toBottomOf="@+id/sourceImageView"
-                        app:layout_constraintEnd_toStartOf="@+id/checkForUpdateImageView"
+                        app:layout_constraintEnd_toStartOf="@+id/syncSourcesImageView"
                         app:layout_constraintStart_toEndOf="@+id/sourceImageView"
                         app:layout_constraintTop_toBottomOf="@+id/upToDateSourcesTextView"
                         tools:text="0 outdated source" />
 
+                    <!--
+                        Single action: checking and downloading were two separate buttons before,
+                        but retrieveHostsSources() (triggered by sync()) already checks each
+                        source's online date and only re-downloads what actually changed, so one
+                        tap covers both without wasting a request.
+                    -->
                     <ImageView
-                        android:id="@+id/updateImageView"
+                        android:id="@+id/syncSourcesImageView"
                         android:layout_width="44dp"
                         android:layout_height="44dp"
                         android:background="@drawable/bg_circle"
-                        android:backgroundTint="@color/pastelRedBg"
+                        android:backgroundTint="@color/pastelBlueBg"
                         android:contentDescription="@string/update_hosts_description"
                         android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:padding="10dp"
                         app:layout_constraintBottom_toBottomOf="@+id/sourceImageView"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/sourceImageView"
-                        app:srcCompat="@drawable/ic_get_app_24dp"
-                        app:tint="@color/pastelRedFg" />
-
-                    <ImageView
-                        android:id="@+id/checkForUpdateImageView"
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/bg_circle"
-                        android:backgroundTint="@color/pastelBlueBg"
-                        android:contentDescription="@string/check_hosts_update_description"
-                        android:foreground="?attr/selectableItemBackgroundBorderless"
-                        android:padding="10dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/sourceImageView"
-                        app:layout_constraintEnd_toStartOf="@+id/updateImageView"
                         app:layout_constraintTop_toTopOf="@+id/sourceImageView"
                         app:srcCompat="@drawable/ic_sync_24dp"
                         app:tint="@color/pastelBlueFg" />
@@ -522,7 +512,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:barrierDirection="bottom"
-                        app:constraint_referenced_ids="sourceImageView,outdatedSourcesTextView,updateImageView" />
+                        app:constraint_referenced_ids="sourceImageView,outdatedSourcesTextView,syncSourcesImageView" />
 
                     <com.google.android.material.progressindicator.LinearProgressIndicator
                         android:id="@+id/sourcesProgressBar"

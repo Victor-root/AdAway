@@ -76,9 +76,8 @@
     <TextView
         android:id="@+id/errorTextView"
         android:layout_width="wrap_content"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:gravity="fill_vertical"
         android:text="@string/welcome_sync_error"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:visibility="invisible"

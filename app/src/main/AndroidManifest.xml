@@ -36,6 +36,10 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Required to show the system "ignore battery optimizations" dialog for AdAway itself
+         (Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS in WelcomeBatteryFragment). Without
+         it, that specific intent throws a SecurityException at runtime. -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <uses-permission

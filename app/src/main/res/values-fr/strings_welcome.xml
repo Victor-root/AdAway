@@ -3,6 +3,8 @@
     <string name="welcome_title">Bienvenue</string>
     <string name="welcome_first_step">Première étape de l’assistant</string>
     <string name="welcome_second_step">Deuxième étape de l’assistant</string>
+    <string name="welcome_third_step">Troisième étape de l’assistant</string>
+    <string name="welcome_fourth_step">Quatrième étape de l’assistant</string>
 
     <!-- Method UI -->
     <string name="welcome_method_header">Bienvenue dans AdAway !</string>
@@ -43,6 +45,69 @@
     <string name="welcome_sync_notifications">Peut envoyer des notifications pour afficher l’état et le contrôle du blocage des publicités et vous signaler la présence de mise à jour de l’appli (quelques fois par an). Activez-les si vous voulez rester à jour.</string>
 
     <!-- Support -->
+
+    <!-- Étape optimisation de la batterie (exemption Doze standard d'Android) -->
+    <string name="welcome_battery_header">Restez protégé en arrière-plan</string>
+    <string name="welcome_battery_summary">Android peut mettre en pause le RPV/VPN d’AdAway en arrière-plan pour économiser la batterie, ce qui peut arrêter silencieusement le blocage des publicités. Autorisez AdAway à ignorer l’optimisation de la batterie pour qu’il continue de tourner.</string>
+    <string name="welcome_battery_action">Autoriser</string>
+    <string name="welcome_battery_granted">Autorisé ✓</string>
+    <string name="welcome_battery_footnote_prefix">Vous pourrez toujours changer cela plus tard depuis</string>
+    <string-array name="welcome_battery_footnote_path">
+        <item>Réglages Android</item>
+        <item>Applis</item>
+        <item>AdAway</item>
+        <item>Batterie</item>
+    </string-array>
+
+    <!-- Étape gestionnaire de batterie du constructeur (ColorOS, MIUI, EMUI…) -->
+    <string name="welcome_oem_battery_header">Encore une chose : le gestionnaire de batterie de votre téléphone</string>
+    <string name="welcome_oem_battery_summary">Certaines marques ont leur propre gestionnaire de batterie qui peut aussi bloquer AdAway. Voici quoi vérifier sur la vôtre :</string>
+    <string name="welcome_oem_battery_action">Ouvrir la fiche de l’appli</string>
+    <string name="welcome_oem_battery_open_failed">Impossible d’ouvrir la fiche de l’application. Ouvrez-la manuellement depuis Réglages Android → Applis → AdAway.</string>
+    <string name="welcome_oem_battery_disclaimer">Ce sont des repères généraux, pas un guide exact : le libellé et l’emplacement peuvent varier selon le modèle de téléphone et la version d’Android.</string>
+
+    <string name="welcome_oem_battery_label_oneui">Samsung (One UI)</string>
+    <string-array name="welcome_oem_battery_path_oneui">
+        <item>Fiche de l’appli</item>
+        <item>Batterie</item>
+    </string-array>
+    <string name="welcome_oem_battery_instruction_oneui">Cherchez quelque chose comme « Limites d’utilisation en arrière-plan » › « Applications jamais en veille », puis ajoutez-y AdAway.</string>
+    <string name="welcome_oem_battery_secondary_oneui">Vérifiez aussi s’il existe une « Optimisation automatique » et désactivez « Redémarrer si nécessaire » le cas échéant.</string>
+
+    <string name="welcome_oem_battery_label_miui">Xiaomi / Redmi / POCO (MIUI / HyperOS)</string>
+    <string-array name="welcome_oem_battery_path_miui">
+        <item>Fiche de l’appli</item>
+        <item>Économie de batterie</item>
+    </string-array>
+    <string name="welcome_oem_battery_instruction_miui">Choisissez « Aucune restriction ».</string>
+    <string name="welcome_oem_battery_secondary_miui">Activez aussi « Démarrage automatique » (« Démarrage automatique en arrière-plan » sur les versions récentes).</string>
+
+    <string name="welcome_oem_battery_label_coloros">Oppo / OnePlus / Realme (ColorOS)</string>
+    <string-array name="welcome_oem_battery_path_coloros">
+        <item>Fiche de l’appli</item>
+        <item>Utilisation de la batterie</item>
+    </string-array>
+    <string name="welcome_oem_battery_instruction_coloros">Choisissez « Autoriser l’activité en arrière-plan » (parfois affiché « Sans restriction »).</string>
+    <string name="welcome_oem_battery_secondary_coloros">Cherchez aussi un réglage « Démarrage automatique » pour AdAway (souvent dans Réglages › Applis), pour qu’il puisse redémarrer après un arrêt forcé.</string>
+
+    <string name="welcome_oem_battery_label_emui">Huawei / Honor (EMUI / MagicOS)</string>
+    <string-array name="welcome_oem_battery_path_emui">
+        <item>Fiche de l’appli</item>
+        <item>Batterie</item>
+    </string-array>
+    <string name="welcome_oem_battery_instruction_emui">Cherchez « Lancement des applis », désactivez « Gérer automatiquement », puis activez les 3 options : « Lancement automatique », « Lancement secondaire » et « Fonctionnement en arrière-plan ».</string>
+    <string name="welcome_oem_battery_secondary_emui">Verrouillez aussi AdAway dans les applications récentes (glissez la carte vers le bas jusqu’au cadenas).</string>
+
+    <string name="welcome_oem_battery_label_funtouch">vivo / iQOO (Funtouch / OriginOS)</string>
+    <string-array name="welcome_oem_battery_path_funtouch">
+        <item>Fiche de l’appli</item>
+        <item>Utilisation de la batterie</item>
+    </string-array>
+    <string name="welcome_oem_battery_instruction_funtouch">Cherchez une option de consommation en arrière-plan et choisissez « Ne pas restreindre » (pas « Contrôle intelligent »).</string>
+    <string name="welcome_oem_battery_secondary_funtouch">Cherchez aussi un réglage « Démarrage automatique » pour AdAway, souvent dans Réglages › Applications.</string>
+
+    <string name="welcome_oem_battery_label_generic">Autre marque</string>
+    <string name="welcome_oem_battery_tip_generic">Cherchez dans la fiche de l’appli un réglage de batterie ou d’activité en arrière-plan et assurez-vous qu’AdAway n’est pas restreint.</string>
 
     <!-- Navigation buttons -->
     <string name="welcome_back_button">Retour</string>

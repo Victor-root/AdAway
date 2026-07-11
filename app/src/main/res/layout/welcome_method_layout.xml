@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="20dp">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/contentGuideline"
@@ -19,11 +19,10 @@
 
         <ImageView
             android:id="@+id/headerImageView"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:contentDescription="@string/app_logo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/icon" />
@@ -32,13 +31,12 @@
             android:id="@+id/headerTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/welcome_method_header"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textAppearance="@style/TextAppearance.AdAway.Welcome.Header"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/headerImageView" />
 
@@ -46,14 +44,12 @@
             android:id="@+id/summaryTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:justificationMode="inter_word"
+            android:layout_marginTop="8dp"
             android:text="@string/welcome_method_summary"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AdAway.Welcome.Body"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/headerTextView" />
 
@@ -66,14 +62,13 @@
             android:id="@+id/rootCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
             android:clickable="true"
             android:focusable="true"
             app:cardBackgroundColor="@color/cardBackground"
-            app:cardCornerRadius="32dp"
-            app:contentPadding="16dp"
+            app:cardCornerRadius="24dp"
+            app:contentPadding="12dp"
             app:layout_constraintEnd_toStartOf="@+id/contentGuideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/summaryTextView">
@@ -85,8 +80,8 @@
 
                 <ImageView
                     android:id="@+id/rootMethodImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:contentDescription="@string/welcome_root_method_logo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -95,11 +90,13 @@
 
                 <TextView
                     android:id="@+id/rootMethodTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="6dp"
                     android:text="@string/welcome_root_method_title"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AdAway.Welcome.Body"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rootMethodImageView" />
@@ -108,7 +105,7 @@
                     android:id="@+id/rootListImageView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:contentDescription="@string/welcome_method_pro_logo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rootMethodTextView"
@@ -120,6 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/welcome_root_method_text1"
+                    android:textAppearance="@style/TextAppearance.AdAway.Welcome.Small"
                     app:layout_constraintBottom_toBottomOf="@+id/rootListImageView1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/rootListImageView1"
@@ -129,10 +127,10 @@
                     android:id="@+id/rootListImageView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:contentDescription="@string/welcome_method_pro_logo"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rootListImageView1"
+                    app:layout_constraintTop_toBottomOf="@+id/rootListTextView1"
                     app:srcCompat="@drawable/ic_add_circle_outline_24dp" />
 
                 <TextView
@@ -141,6 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/welcome_root_method_text2"
+                    android:textAppearance="@style/TextAppearance.AdAway.Welcome.Small"
                     app:layout_constraintBottom_toBottomOf="@+id/rootListImageView2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/rootListImageView2"
@@ -150,10 +149,10 @@
                     android:id="@+id/rootListImageView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:contentDescription="@string/welcome_method_con_logo"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rootListImageView2"
+                    app:layout_constraintTop_toBottomOf="@+id/rootListTextView2"
                     app:srcCompat="@drawable/ic_remove_circle_outline_24dp" />
 
                 <TextView
@@ -162,6 +161,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/welcome_root_method_text3"
+                    android:textAppearance="@style/TextAppearance.AdAway.Welcome.Small"
                     app:layout_constraintBottom_toBottomOf="@+id/rootListImageView3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/rootListImageView3"
@@ -176,14 +176,14 @@
             android:id="@+id/vpnCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:clickable="true"
             android:focusable="true"
             app:cardBackgroundColor="@color/cardBackground"
-            app:cardCornerRadius="32dp"
-            app:contentPadding="16dp"
+            app:cardCornerRadius="24dp"
+            app:contentPadding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/contentGuideline"
             app:layout_constraintTop_toBottomOf="@+id/summaryTextView">
@@ -195,8 +195,8 @@
 
                 <ImageView
                     android:id="@+id/vpnMethodImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:contentDescription="@string/welcome_vpn_method_logo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -205,11 +205,13 @@
 
                 <TextView
                     android:id="@+id/vpnMethodTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="6dp"
                     android:text="@string/welcome_vpn_method_title"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AdAway.Welcome.Body"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/vpnMethodImageView" />
@@ -218,7 +220,7 @@
                     android:id="@+id/vpnListimageView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:contentDescription="@string/welcome_method_con_logo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/vpnMethodTextView"
@@ -230,6 +232,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/welcome_vpn_method_text1"
+                    android:textAppearance="@style/TextAppearance.AdAway.Welcome.Small"
                     app:layout_constraintBottom_toBottomOf="@+id/vpnListimageView1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/vpnListimageView1"
@@ -239,10 +242,10 @@
                     android:id="@+id/vpnListImageView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:contentDescription="@string/welcome_method_con_logo"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vpnListimageView1"
+                    app:layout_constraintTop_toBottomOf="@+id/vpnListtextView1"
                     app:srcCompat="@drawable/ic_remove_circle_outline_24dp" />
 
                 <TextView
@@ -251,6 +254,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/welcome_vpn_method_text2"
+                    android:textAppearance="@style/TextAppearance.AdAway.Welcome.Small"
                     app:layout_constraintBottom_toBottomOf="@+id/vpnListImageView2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/vpnListImageView2"
@@ -260,10 +264,10 @@
                     android:id="@+id/vpnListImageView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:contentDescription="@string/welcome_method_pro_logo"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vpnListImageView2"
+                    app:layout_constraintTop_toBottomOf="@+id/vpnListTextView2"
                     app:srcCompat="@drawable/ic_add_circle_outline_24dp" />
 
                 <TextView
@@ -272,6 +276,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/welcome_vpn_method_text3"
+                    android:textAppearance="@style/TextAppearance.AdAway.Welcome.Small"
                     app:layout_constraintBottom_toBottomOf="@+id/vpnListImageView3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/vpnListImageView3"

@@ -210,8 +210,7 @@ public class HomeActivity extends AppCompatActivity {
         this.binding.content.allowedHostCardView.setOnClickListener(v -> startHostListActivity(ALLOWED_HOSTS_TAB));
         this.binding.content.redirectHostCardView.setOnClickListener(v -> startHostListActivity(REDIRECTED_HOSTS_TAB));
         this.binding.content.sourcesCardView.setOnClickListener(this::startHostsSourcesActivity);
-        this.binding.content.checkForUpdateImageView.setOnClickListener(v -> this.homeViewModel.update());
-        this.binding.content.updateImageView.setOnClickListener(v -> this.homeViewModel.sync());
+        this.binding.content.syncSourcesImageView.setOnClickListener(v -> this.homeViewModel.sync());
         this.binding.content.logCardView.setOnClickListener(this::startDnsLogActivity);
         this.binding.content.helpCardView.setOnClickListener(this::startHelpActivity);
         this.binding.content.preferencesCardView.setOnClickListener(this::startPrefsActivity);

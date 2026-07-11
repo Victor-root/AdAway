@@ -164,6 +164,45 @@
     </style>
 
     <!--
+        Filled white pill button used on the plain red welcome background (battery onboarding
+        steps): the default filled MaterialButton background tints to colorPrimary, which is the
+        same red as the page, making it nearly invisible. Disabled state (e.g. "Granted ✓") dims
+        both colors instead of just going flat grey, so it still reads as intentional/done.
+    -->
+    <style name="Widget.AdAway.Button.OnRed" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/welcome_button_background</item>
+        <item name="android:textColor">@color/welcome_button_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="rippleColor">@color/welcomeBackground</item>
+        <item name="elevation">4dp</item>
+    </style>
+
+    <!--
+        Welcome (first-run onboarding) screens: fixed, moderate sizes instead of the huge
+        Display1/Large presets those screens used before, so a normal phone shows the whole step
+        without scrolling. hyphenationFrequency+breakStrategy are the actual backstop against a
+        single long word overflowing its column at a large accessibility font scale — far more
+        predictable than trying to autosize a multi-line ConstraintLayout-chained TextView, which
+        does not reliably report the right wrap_content height in that combination.
+    -->
+    <style name="TextAppearance.AdAway.Welcome.Header" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:breakStrategy">high_quality</item>
+        <item name="android:hyphenationFrequency">full</item>
+    </style>
+
+    <style name="TextAppearance.AdAway.Welcome.Body" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:breakStrategy">high_quality</item>
+        <item name="android:hyphenationFrequency">full</item>
+    </style>
+
+    <style name="TextAppearance.AdAway.Welcome.Small" parent="TextAppearance.AppCompat.Small">
+        <item name="android:breakStrategy">high_quality</item>
+        <item name="android:hyphenationFrequency">full</item>
+    </style>
+
+    <!--
         Rounded-corner shape for the header AdAway logo. Applied to a ShapeableImageView so
         the logo is clipped identically on every device/manufacturer (Android 10 included),
         instead of relying on the per-OEM adaptive-icon mask.
