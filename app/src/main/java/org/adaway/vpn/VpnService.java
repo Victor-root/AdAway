@@ -44,6 +44,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
@@ -62,9 +63,13 @@ import org.adaway.broadcast.Command;
 import org.adaway.broadcast.CommandReceiver;
 import org.adaway.helper.PreferenceHelper;
 import org.adaway.ui.home.HomeActivity;
+import org.adaway.vpn.dns.DnsServerMapper;
 import org.adaway.vpn.worker.VpnWorker;
 
 import java.lang.ref.WeakReference;
+import java.net.InetAddress;
+import java.util.HashSet;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -123,6 +128,18 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
      * network carrying its traffic.
      */
     private NetworkType currentTransport;
+    /**
+     * The <em>effective</em> DNS servers of the network currently carrying the tunnel
+     * ({@link #currentTransport}), as last observed via
+     * {@link NetworkTypeCallback#onLinkPropertiesChanged} and filtered through
+     * {@link DnsServerMapper#getEffectiveDnsServers} to match what the tunnel actually forwards to,
+     * or <code>null</code> when not yet observed for the current transport. Used to detect a
+     * DNS-server change that happens <em>without</em> a transport change (e.g. a DHCP lease renewal
+     * or a same-SSID roam), which {@link #reconcile()} cannot see — so the tunnel is rebuilt to pick
+     * up the new resolver. Only ever touched from the callback handler thread, like the other
+     * network-state fields.
+     */
+    private List<InetAddress> currentTransportDnsServers;
     private final VpnWorker vpnWorker;
 
     /**
@@ -136,7 +153,20 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         this.wifiValidated = false;
         this.cellularAvailable = false;
         this.currentTransport = null;
+        this.currentTransportDnsServers = null;
         this.vpnWorker = new VpnWorker(this);
+    }
+
+    /**
+     * Set the transport the tunnel is currently built for, resetting the observed DNS snapshot so
+     * the next {@link NetworkTypeCallback#onLinkPropertiesChanged} for the new transport is recorded
+     * fresh instead of being compared against the previous transport's (or a stale session's) DNS.
+     *
+     * @param transport The new transport, or <code>null</code> when the tunnel is down.
+     */
+    private void setCurrentTransport(NetworkType transport) {
+        this.currentTransport = transport;
+        this.currentTransportDnsServers = null;
     }
 
     /*
@@ -221,7 +251,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         this.vpnWorker.resetThrottle();
         // Record the transport the tunnel is being built for so the network reconciler only
         // rebuilds it when the default network actually changes transport.
-        this.currentTransport = computeDesiredTransport();
+        setCurrentTransport(computeDesiredTransport());
         this.vpnWorker.start();
         Timber.i("VPN service started.");
     }
@@ -229,7 +259,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
     private void stopVpn() {
         Timber.d("Stopping VPN service…");
         PreferenceHelper.setVpnServiceStatus(this, STOPPED);
-        this.currentTransport = null;
+        setCurrentTransport(null);
         this.vpnWorker.stop();
         stopForeground(true);
         stopSelf();
@@ -347,7 +377,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         this.wifiAvailable = false;
         this.wifiValidated = false;
         this.cellularAvailable = false;
-        this.currentTransport = null;
+        setCurrentTransport(null);
         // Seed the state synchronously from the current networks. The per-transport callbacks
         // fire right after registration and will refine this, but seeding first means startVpn()
         // (which runs before the callbacks get a chance) already knows the transport to build for.
@@ -406,14 +436,14 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
             // No usable network at all: stop the tunnel and wait. A later reconcile() restarts it
             // when connectivity returns.
             if (this.currentTransport != null) {
-                this.currentTransport = null;
+                setCurrentTransport(null);
                 Timber.i("No network available, waiting for network…");
                 waitForNetVpn();
             }
         } else if (this.currentTransport == null) {
             // Connectivity (re)gained while the tunnel was down: bring it up now. Reset the
             // throttler as this is a real connectivity-restored event, not a reconnection storm.
-            this.currentTransport = desired;
+            setCurrentTransport(desired);
             Timber.i("Network available (%s), connecting VPN.", desired);
             this.vpnWorker.resetThrottle();
             reconnect();
@@ -423,7 +453,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
             // forwarding DNS to the old network and every query fails with ENETUNREACH. No
             // throttler reset here so rapid flapping is still damped.
             Timber.i("Default network changed from %s to %s, reconnecting VPN.", this.currentTransport, desired);
-            this.currentTransport = desired;
+            setCurrentTransport(desired);
             reconnect();
         }
         // else: the tunnel is already on the right transport — nothing to do.
@@ -448,6 +478,60 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
             Timber.d("Wi-Fi validation changed: %s", validated);
             reconcile();
         }
+    }
+
+    /**
+     * React to the DNS servers of a network changing.
+     * <p>
+     * {@link #reconcile()} only rebuilds the tunnel when the <em>transport</em> changes, so a DNS
+     * change on the same transport (a DHCP lease renewal pushing a new resolver, a same-SSID roam,
+     * a captive-portal login swapping the DNS) would otherwise leave the tunnel forwarding to a
+     * resolver that may have stopped answering. This detects that case and rebuilds the tunnel,
+     * which re-reads the DNS from the active network.
+     * <p>
+     * It is deliberately conservative to avoid churn: it acts only for the transport actually
+     * carrying the tunnel, ignores the empty lists seen mid-transition, records the first
+     * observation without rebuilding, and rebuilds only when the <em>effective</em> DNS server set
+     * genuinely differs. The effective set is the raw list filtered through the same rule
+     * {@link DnsServerMapper} uses at establish time (IPv6 resolvers are dropped when IPv6 is
+     * disabled), so a routes/MTU-only change or an IPv6 churn the tunnel never forwards to leaves
+     * the set equal and does not rebuild. Every rebuild goes through the worker's connection
+     * throttler, so even a pathologically flapping resolver is damped rather than looping.
+     *
+     * @param type       The transport of the network whose link properties changed.
+     * @param dnsServers The network's current DNS servers.
+     */
+    private void onDnsServersMaybeChanged(NetworkType type, List<InetAddress> dnsServers) {
+        // Only the transport actually carrying the tunnel matters; ignore secondary networks and,
+        // implicitly, everything while the tunnel is down (currentTransport is then null).
+        if (type != this.currentTransport) {
+            return;
+        }
+        // Ignore transient empty lists (seen mid-transition) so a flicker to "no DNS" and back does
+        // not bounce the tunnel; a real resolver change reports a non-empty list.
+        if (dnsServers.isEmpty()) {
+            return;
+        }
+        // Compare the servers the tunnel would actually forward to, not the raw list. DnsServerMapper
+        // drops IPv6 resolvers when IPv6 is disabled (the default), so an IPv6-only churn on a
+        // dual-stack network must not rebuild an IPv4-only tunnel whose effective set is unchanged;
+        // conversely, a drop to a list the tunnel cannot use maps to the public fallback here (never
+        // empty), so losing the last usable resolver is still seen as a change and rebuilt.
+        List<InetAddress> effectiveDnsServers = DnsServerMapper.getEffectiveDnsServers(this, dnsServers);
+        if (this.currentTransportDnsServers == null) {
+            // First observation for this transport: record it, nothing to compare against yet.
+            this.currentTransportDnsServers = effectiveDnsServers;
+            return;
+        }
+        if (new HashSet<>(effectiveDnsServers).equals(new HashSet<>(this.currentTransportDnsServers))) {
+            // Same effective DNS servers (order-independent) — this LinkProperties change was
+            // routes/MTU/etc. or a resolver the tunnel does not forward to.
+            return;
+        }
+        Timber.i("Active %s DNS servers changed (%s -> %s), rebuilding tunnel.",
+                type, this.currentTransportDnsServers, effectiveDnsServers);
+        this.currentTransportDnsServers = effectiveDnsServers;
+        reconnect();
     }
 
     /**
@@ -483,6 +567,14 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
             if (this.monitoredType == WIFI) {
                 setWifiValidated(networkCapabilities.hasCapability(NET_CAPABILITY_VALIDATED));
             }
+        }
+
+        @Override
+        public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
+            // Catches a DNS-server change that keeps the same transport (DHCP renewal, same-SSID
+            // roam, captive-portal login), which reconcile() cannot see. onDnsServersMaybeChanged()
+            // filters this down to a genuine change on the tunnel's own transport before rebuilding.
+            onDnsServersMaybeChanged(this.monitoredType, linkProperties.getDnsServers());
         }
     }
 

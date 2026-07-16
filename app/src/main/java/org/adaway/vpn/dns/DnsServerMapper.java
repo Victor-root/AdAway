@@ -320,7 +320,48 @@ public class DnsServerMapper {
     }
 
 
-    private boolean hasIpV6DnsServers(Context context, Collection<InetAddress> dnsServers) {
+    /**
+     * Compute the DNS servers the tunnel would actually forward to for a raw network DNS list — the
+     * same set {@link #configureVpn} maps at establish time — so callers can tell whether a network
+     * DNS change actually affects the tunnel before rebuilding it. It applies the very same IPv6
+     * rule as {@link #configureVpn}: IPv4 servers are always kept, while IPv6 servers are kept only
+     * when {@link #hasIpV6DnsServers} would add an IPv6 subnet (IPv6 enabled, or a single-server
+     * network), so an IPv6 resolver churn on a dual-stack network does not needlessly rebuild an
+     * IPv4-only tunnel. When the raw list holds nothing the tunnel can use, it returns the public
+     * fallback resolver — exactly what {@link #configureVpn} establishes in that case — so the two
+     * stay in lockstep and a drop to "no usable resolver" is still detected as a change rather than
+     * silently leaving the tunnel pinned to a resolver that is gone.
+     *
+     * @param context    The application context.
+     * @param dnsServers The raw DNS servers reported by the network.
+     * @return The effective DNS servers, in input order; never empty (the public fallback stands in
+     * when the raw list holds only servers the tunnel would drop).
+     */
+    public static List<InetAddress> getEffectiveDnsServers(Context context, List<InetAddress> dnsServers) {
+        boolean keepIpv6 = hasIpV6DnsServers(context, dnsServers);
+        List<InetAddress> effectiveDnsServers = new ArrayList<>();
+        for (InetAddress dnsServer : dnsServers) {
+            if (dnsServer instanceof Inet4Address || keepIpv6) {
+                effectiveDnsServers.add(dnsServer);
+            }
+        }
+        if (effectiveDnsServers.isEmpty()) {
+            // Mirror configureVpn's safety net: with no usable resolver the tunnel forwards to the
+            // public fallback, so report that here too and keep detection in lockstep with establish.
+            effectiveDnsServers.add(getFallbackDnsServer());
+        }
+        return effectiveDnsServers;
+    }
+
+    private static InetAddress getFallbackDnsServer() {
+        try {
+            return InetAddress.getByName(FALLBACK_DNS_SERVER);
+        } catch (UnknownHostException e) {
+            throw new IllegalStateException("Failed to parse hardcoded DNS IP address.", e);
+        }
+    }
+
+    private static boolean hasIpV6DnsServers(Context context, Collection<InetAddress> dnsServers) {
         boolean hasIpv6Server = dnsServers.stream()
                 .anyMatch(server -> server instanceof Inet6Address);
         boolean hasOnlyOnServer = dnsServers.size() == 1;
