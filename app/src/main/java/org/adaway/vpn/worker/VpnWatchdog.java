@@ -25,71 +25,60 @@ import java.net.SocketException;
 import timber.log.Timber;
 
 /**
- * Ensures that the connection is alive and sets various timeouts and delays in response.
+ * Keeps the tunnel healthy by probing the upstream DNS server during idle periods.
  * <p>
- * The implementation is a bit weird: Success and Failure cases are both handled in the timeout
- * case. When a packet is received, we simply store the time.
+ * When {@link #handleTimeout()} fires — meaning {@code poll()} saw no activity for the whole
+ * poll timeout — it sends an empty keep-alive datagram to the upstream DNS server. If the
+ * underlying network is genuinely gone, that send throws and the worker reconnects; otherwise the
+ * probe simply keeps the connection warm and the poll timeout is grown so the next quiet period is
+ * checked less often (backing off 1&nbsp;s → 4&nbsp;s → 16&nbsp;s → … up to ~68&nbsp;min).
  * <p>
- * If poll() times out and we have not seen a packet after we last sent a ping, then we force
- * a reconnect and increase the reconnect delay.
- * <p>
- * If poll() times out and we have seen a packet after we last sent a ping, we increase the
- * poll() time out, causing the next check to run later, and send a ping packet.
+ * Historically the watchdog also forced a reconnect whenever it went a few seconds without seeing
+ * a packet come <em>back</em> after a probe. That was wrong: the keep-alive packet is an empty UDP
+ * datagram that DNS servers never answer, and its reply was never read anyway, so the only real
+ * signal was "did an app on the phone make a DNS query recently". While the phone is idle no app
+ * queries, so the tunnel was torn down and rebuilt every few minutes for no reason (a documented
+ * bug). A tunnel with no traffic is not a dead tunnel — genuine failures are caught by the device
+ * read path, the forward path, and this probe's own send throwing — so idle no longer reconnects.
  */
-
 class VpnWatchdog {
-    // Polling is quadrupled on every success, and values range from 4s to 1h8m.
+    // Poll timeout grows on every idle tick so keep-alive probes get rarer the longer the tunnel
+    // sits quiet: 1s, then 4s, 16s, … up to ~68m. It is never reset by app traffic — while queries
+    // are flowing poll() returns on those events instead of timing out, so no probe is sent at all;
+    // probes only happen once the tunnel has actually been quiet for the whole (growing) interval.
     private static final int POLL_TIMEOUT_START = 1000;
     private static final int POLL_TIMEOUT_END = 4096000;
-    private static final int POLL_TIMEOUT_WAITING = 7000;
     private static final int POLL_TIMEOUT_GROW = 4;
 
-    // Reconnect penalty ranges from 0s to 5s, in increments of 200 ms.
-    private static final int INIT_PENALTY_START = 0;
-    private static final int INIT_PENALTY_END = 5000;
-    private static final int INIT_PENALTY_INC = 200;
-
-    private int initPenalty = INIT_PENALTY_START;
     private int pollTimeout = POLL_TIMEOUT_START;
-
-    // Information about when packets where received.
-    private long lastPacketSent;
-    private long lastPacketReceived;
 
     private boolean enabled;
     private DatagramPacket checkAlivePacket;
 
     VpnWatchdog() {
-        // Set default timestamps
-        this.lastPacketSent = 0;
-        this.lastPacketReceived = 0;
-        // Set disable by default
+        // Disabled by default until initialize() is called with the user preference.
         this.enabled = false;
     }
 
-
     /**
-     * Returns the current poll time out.
+     * Returns the current poll time out, or {@code -1} (poll forever) when disabled.
      */
     int getPollTimeout() {
         if (!this.enabled) {
             return -1;
         }
-        if (this.lastPacketReceived < this.lastPacketSent) {
-            return POLL_TIMEOUT_WAITING;
-        }
         return this.pollTimeout;
     }
 
     /**
-     * Sets the target address ping packets should be sent to.
+     * Sets the target address keep-alive packets should be sent to.
      */
     void setTarget(InetAddress target) {
         this.checkAlivePacket = new DatagramPacket(new byte[0], 0, 0 /* length */, target, 53);
     }
 
     /**
-     * An initialization method. Sleeps the penalty and sends initial packet.
+     * An initialization method. Resets the poll timeout.
      *
      * @param enabled If the watchdog should be enabled.
      */
@@ -97,79 +86,46 @@ class VpnWatchdog {
         Timber.d("initialize: Initializing watchdog");
 
         this.pollTimeout = POLL_TIMEOUT_START;
-        this.lastPacketSent = 0;
         this.enabled = enabled;
 
         if (!this.enabled) {
             Timber.d("initialize: Disabled.");
-            return;
-        }
-
-        if (this.initPenalty > 0) {
-            Timber.d("init penalty: Sleeping for %dms…", this.initPenalty);
-            try {
-                Thread.sleep(this.initPenalty);
-            } catch (InterruptedException exception) {
-                Timber.d("Failed to wait the initial penalty.");
-                Thread.currentThread().interrupt();
-            }
         }
     }
 
     /**
-     * Handles a timeout of poll()
+     * Handles a timeout of poll(): the tunnel has been idle for the whole poll timeout.
+     * <p>
+     * An idle tunnel is healthy, not dead, so this never reconnects on its own. It only grows the
+     * back-off and sends a keep-alive probe; a genuinely unreachable network makes that probe's
+     * send throw, which is what triggers a reconnect.
      *
-     * @throws VpnNetworkException When the watchdog timed out
+     * @throws VpnNetworkException When the keep-alive packet could not be sent.
      */
     void handleTimeout() throws VpnNetworkException {
         if (!this.enabled) {
             return;
         }
-        Timber.d("handleTimeout: Milliseconds elapsed between last receive and sent: %dms", (this.lastPacketReceived - this.lastPacketSent));
-        // Receive really timed out
-        if (this.lastPacketReceived < this.lastPacketSent && this.lastPacketSent != 0) {
-            this.initPenalty += INIT_PENALTY_INC;
-            if (this.initPenalty > INIT_PENALTY_END) {
-                this.initPenalty = INIT_PENALTY_END;
-            }
-            throw new VpnNetworkException("Watchdog timed out");
-        }
-        // We received a packet after sending it, so we can be more confident and grow our wait time
         this.pollTimeout *= POLL_TIMEOUT_GROW;
         if (this.pollTimeout > POLL_TIMEOUT_END) {
             this.pollTimeout = POLL_TIMEOUT_END;
         }
-
         sendPacket();
     }
 
     /**
-     * Handles an incoming packet on a device.
+     * Sends an empty keep-alive packet to the configured target address.
      *
-     * @param packetData The data of the packet
-     */
-    void handlePacket(byte[] packetData) {
-        if (!this.enabled) {
-            return;
-        }
-        Timber.d("handlePacket: Received packet of length %s", packetData.length);
-        this.lastPacketReceived = System.currentTimeMillis();
-    }
-
-    /**
-     * Sends an empty check-alive packet to the configured target address.
-     *
-     * @throws VpnNetworkException If sending failed and we should restart
+     * @throws VpnNetworkException If sending failed and we should reconnect
      */
     void sendPacket() throws VpnNetworkException {
         if (!this.enabled || this.checkAlivePacket == null) {
             return;
         }
-        Timber.d("sendPacket: Sending packet, poll timeout is %d.", this.pollTimeout);
+        Timber.d("sendPacket: Sending keep-alive, poll timeout is %d.", this.pollTimeout);
 
         try (DatagramSocket socket = newDatagramSocket()) {
             socket.send(this.checkAlivePacket);
-            this.lastPacketSent = System.currentTimeMillis();
         } catch (IOException e) {
             throw new VpnNetworkException("Failed to send check-alive packet.", e);
         }
