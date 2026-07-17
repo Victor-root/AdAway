@@ -12,11 +12,17 @@
         navigation bar — makes it clearly visible against solid red on both sides; the top edge
         sits right at the seam with the white content above, where it barely showed. Elevation is
         0: the footer is flat, with no drop shadow above it.
+
+        On Android TV there is no system navigation bar to buffer this container from the literal
+        screen edge, so ListsActivity adds bottom padding to it at runtime there (see isTv() in
+        ListsActivity) to clear the overscan-prone edge; the background here keeps that padding
+        red instead of an empty gap. No-op on mobile since the padding stays zero.
     -->
     <FrameLayout
         android:id="@+id/nav_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">

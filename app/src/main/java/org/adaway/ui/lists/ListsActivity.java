@@ -3,16 +3,21 @@ package org.adaway.ui.lists;
 import static android.content.Intent.ACTION_SEARCH;
 
 import android.app.SearchManager;
+import android.app.UiModeManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.SearchView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -65,6 +70,16 @@ public class ListsActivity extends AppCompatActivity {
          * Set view content.
          */
         setContentView(R.layout.lists_fragment);
+        if (isTv()) {
+            // No system navigation bar exists on TV to buffer the footer from the literal
+            // screen edge, so pad it away from the overscan-prone edge here instead.
+            View navContainer = findViewById(R.id.nav_container);
+            navContainer.setPadding(
+                    navContainer.getPaddingLeft(),
+                    navContainer.getPaddingTop(),
+                    navContainer.getPaddingRight(),
+                    getResources().getDimensionPixelSize(R.dimen.lists_tv_footer_bottom_padding));
+        }
         /*
          * Configure actionbar.
          */
@@ -155,9 +170,14 @@ public class ListsActivity extends AppCompatActivity {
     }
 
     /**
-     * Place the white active-tab indicator on the bottom edge of the given tab. The indicator
-     * spans one tab cell (bar width / item count) and is moved horizontally to the selected
-     * position.
+     * Place the white active-tab indicator on the bottom edge of the given tab, centred under
+     * its actual rendered bounds.
+     * <p>
+     * This deliberately does not assume the bar's width is divided evenly between items
+     * (bar width / item count): BottomNavigationView caps each item's width and centres the
+     * item row when the bar is wider than the items need, which barely ever happens on a phone
+     * but is the common case on a TV screen, and an even-split assumption would then land the
+     * indicator under empty bar space instead of under the tab.
      *
      * @param indicator The indicator view.
      * @param nav       The bottom navigation bar.
@@ -165,18 +185,67 @@ public class ListsActivity extends AppCompatActivity {
      * @param animate   Whether to animate the move (true on user selection, false on initial/layout).
      */
     private void positionIndicator(View indicator, BottomNavigationView nav, int position, boolean animate) {
-        int itemCount = nav.getMenu().size();
-        if (itemCount == 0 || nav.getWidth() == 0) {
+        if (nav.getWidth() == 0) {
             return;
         }
-        int itemWidth = nav.getWidth() / itemCount;
-        // Centre the fixed-width pill within the selected tab cell.
-        float targetX = (float) position * itemWidth + (itemWidth - indicator.getWidth()) / 2f;
+        View itemView = findItemView(nav, position);
+        float targetX;
+        if (itemView != null) {
+            View indicatorParent = (View) indicator.getParent();
+            float itemLeft = getLeftRelativeTo(itemView, indicatorParent);
+            float itemCenterX = itemLeft + itemView.getWidth() / 2f;
+            targetX = itemCenterX - indicator.getWidth() / 2f;
+        } else {
+            // Fallback if BottomNavigationView's internal view hierarchy ever changes shape.
+            int itemCount = nav.getMenu().size();
+            if (itemCount == 0) {
+                return;
+            }
+            int itemWidth = nav.getWidth() / itemCount;
+            targetX = (float) position * itemWidth + (itemWidth - indicator.getWidth()) / 2f;
+        }
         if (animate) {
             indicator.animate().translationX(targetX).setDuration(200).start();
         } else {
             indicator.setTranslationX(targetX);
         }
+    }
+
+    /**
+     * Find the actual rendered view for the tab at the given menu position, walking
+     * BottomNavigationView's internal item container (its sole child). Material does not expose
+     * per-item bounds via public API.
+     */
+    @Nullable
+    private static View findItemView(BottomNavigationView nav, int position) {
+        if (nav.getChildCount() == 0) {
+            return null;
+        }
+        View menuView = nav.getChildAt(0);
+        if (!(menuView instanceof ViewGroup)) {
+            return null;
+        }
+        ViewGroup menuViewGroup = (ViewGroup) menuView;
+        if (position < 0 || position >= menuViewGroup.getChildCount()) {
+            return null;
+        }
+        return menuViewGroup.getChildAt(position);
+    }
+
+    /**
+     * Sum {@code getLeft()} from {@code view} up through its ancestors to {@code ancestor}
+     * (exclusive), giving view's horizontal position in ancestor's coordinate space regardless
+     * of how many view groups sit in between.
+     */
+    private static float getLeftRelativeTo(View view, View ancestor) {
+        float left = 0;
+        View current = view;
+        while (current != null && current != ancestor) {
+            left += current.getLeft();
+            ViewParent parent = current.getParent();
+            current = parent instanceof View ? (View) parent : null;
+        }
+        return left;
     }
 
     @Override
@@ -215,5 +284,10 @@ public class ListsActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isTv() {
+        UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+        return uiModeManager != null && uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 }
