@@ -1,12 +1,17 @@
 package org.adaway.ui.home;
 
 import static org.adaway.model.adblocking.AdBlockMethod.VPN;
+import static org.adaway.ui.lists.ListsActivity.ALLOWED_HOSTS_TAB;
+import static org.adaway.ui.lists.ListsActivity.BLOCKED_HOSTS_TAB;
+import static org.adaway.ui.lists.ListsActivity.REDIRECTED_HOSTS_TAB;
+import static org.adaway.ui.lists.ListsActivity.TAB;
 
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.VpnService;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -24,8 +29,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.adaway.R;
@@ -34,11 +41,14 @@ import org.adaway.helper.PreferenceHelper;
 import org.adaway.helper.ThemeHelper;
 import org.adaway.model.adblocking.AdBlockMethod;
 import org.adaway.model.update.Manifest;
+import org.adaway.ui.help.HelpActivity;
 import org.adaway.ui.hosts.HostsSourcesActivity;
+import org.adaway.ui.lists.ListsActivity;
 import org.adaway.ui.log.TvLogActivity;
 import org.adaway.ui.prefs.PrefsActivity;
 import org.adaway.ui.update.UpdateActivity;
 
+import kotlin.jvm.functions.Function1;
 import timber.log.Timber;
 
 public class TvHomeActivity extends AppCompatActivity {
@@ -49,15 +59,19 @@ public class TvHomeActivity extends AppCompatActivity {
     private TextView statusText;
     private TextView stateDetailText;
     private TextView alwaysOnIndicator;
-    private Button toggleButton;
+    private MaterialButton toggleButton;
     private Button appUpdateButton;
-    private Button updateButton;
-    private Button syncButton;
-    private Button dnsMonitorButton;
-    private Button sourcesButton;
-    private Button persistenceButton;
-    private Button themeButton;
-    private Button settingsButton;
+    private View blockedCardView;
+    private View allowedCardView;
+    private View redirectCardView;
+    private View sourcesCardView;
+    private View syncSourcesIcon;
+    private View dnsMonitorTile;
+    private View helpTile;
+    private View preferencesTile;
+    private View persistenceButton;
+    private View themeButton;
+    private TextView themeText;
     private ProgressBar progressBar;
 
     private ActivityResultLauncher<Intent> prepareVpnLauncher;
@@ -84,13 +98,17 @@ public class TvHomeActivity extends AppCompatActivity {
         alwaysOnIndicator = findViewById(R.id.tv_always_on_indicator);
         toggleButton = findViewById(R.id.btn_toggle);
         appUpdateButton = findViewById(R.id.btn_app_update);
-        updateButton = findViewById(R.id.btn_update);
-        syncButton = findViewById(R.id.btn_sync);
-        dnsMonitorButton = findViewById(R.id.btn_dns_monitor);
-        sourcesButton = findViewById(R.id.btn_sources);
+        blockedCardView = findViewById(R.id.tv_blocked_card);
+        allowedCardView = findViewById(R.id.tv_allowed_card);
+        redirectCardView = findViewById(R.id.tv_redirect_card);
+        sourcesCardView = findViewById(R.id.tv_sources_card);
+        syncSourcesIcon = findViewById(R.id.tv_sync_sources_icon);
+        dnsMonitorTile = findViewById(R.id.tv_tile_dns_monitor);
+        helpTile = findViewById(R.id.tv_tile_help);
+        preferencesTile = findViewById(R.id.tv_tile_preferences);
         persistenceButton = findViewById(R.id.btn_persistence);
         themeButton = findViewById(R.id.btn_theme);
-        settingsButton = findViewById(R.id.btn_settings);
+        themeText = findViewById(R.id.tv_theme_text);
         progressBar = findViewById(R.id.progress_bar);
 
         bindThemeButton();
@@ -101,19 +119,24 @@ public class TvHomeActivity extends AppCompatActivity {
         homeViewModel.getState().observe(this, text -> stateDetailText.setText(text));
         homeViewModel.getPending().observe(this, pending -> progressBar.setVisibility(pending ? View.VISIBLE : View.GONE));
         homeViewModel.getAppManifest().observe(this, this::bindAppUpdateBanner);
+        bindHostCounter();
+        bindSourceCounter();
 
         toggleButton.setOnClickListener(v -> homeViewModel.toggleAdBlocking());
-        updateButton.setOnClickListener(v -> homeViewModel.update());
-        syncButton.setOnClickListener(v -> homeViewModel.sync());
-        dnsMonitorButton.setOnClickListener(v -> startActivity(new Intent(this, TvLogActivity.class)));
-        sourcesButton.setOnClickListener(v -> startActivity(new Intent(this, HostsSourcesActivity.class)));
+        blockedCardView.setOnClickListener(v -> startHostListActivity(BLOCKED_HOSTS_TAB));
+        allowedCardView.setOnClickListener(v -> startHostListActivity(ALLOWED_HOSTS_TAB));
+        redirectCardView.setOnClickListener(v -> startHostListActivity(REDIRECTED_HOSTS_TAB));
+        sourcesCardView.setOnClickListener(v -> startActivity(new Intent(this, HostsSourcesActivity.class)));
+        syncSourcesIcon.setOnClickListener(v -> homeViewModel.sync());
+        dnsMonitorTile.setOnClickListener(v -> startActivity(new Intent(this, TvLogActivity.class)));
+        helpTile.setOnClickListener(v -> startActivity(new Intent(this, HelpActivity.class)));
+        preferencesTile.setOnClickListener(v -> startActivity(new Intent(this, PrefsActivity.class)));
         persistenceButton.setOnClickListener(v -> {
             // Manual open: also flip the "shown" pref so we stop auto-popping the
             // dialog on subsequent VPN activations.
             PreferenceHelper.setTvAlwaysOnVpnHintShown(this, true);
             showAlwaysOnVpnDialog();
         });
-        settingsButton.setOnClickListener(v -> startActivity(new Intent(this, PrefsActivity.class)));
 
         prepareVpnLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK) {
@@ -136,6 +159,54 @@ public class TvHomeActivity extends AppCompatActivity {
     }
 
     /**
+     * Bind the blocked/allowed/redirected counters shown in the stat cards, same
+     * source and formatting as {@code HomeActivity.bindHostCounter()} on mobile.
+     */
+    private void bindHostCounter() {
+        Function1<Integer, CharSequence> stringMapper = count -> Integer.toString(count);
+
+        TextView blockedCountTextView = findViewById(R.id.tv_blocked_count);
+        Transformations.map(homeViewModel.getBlockedHostCount(), stringMapper)
+                .observe(this, blockedCountTextView::setText);
+
+        TextView allowedCountTextView = findViewById(R.id.tv_allowed_count);
+        Transformations.map(homeViewModel.getAllowedHostCount(), stringMapper)
+                .observe(this, allowedCountTextView::setText);
+
+        TextView redirectCountTextView = findViewById(R.id.tv_redirect_count);
+        Transformations.map(homeViewModel.getRedirectHostCount(), stringMapper)
+                .observe(this, redirectCountTextView::setText);
+    }
+
+    /**
+     * Bind the sources card's up-to-date/outdated counts, same source and
+     * formatting as {@code HomeActivity.bindSourceCounter()} on mobile.
+     */
+    private void bindSourceCounter() {
+        Resources resources = getResources();
+
+        TextView upToDateSourcesTextView = findViewById(R.id.tv_up_to_date_sources);
+        homeViewModel.getUpToDateSourceCount().observe(this, count ->
+                upToDateSourcesTextView.setText(resources.getQuantityString(R.plurals.up_to_date_source_label, count, count))
+        );
+
+        TextView outdatedSourcesTextView = findViewById(R.id.tv_outdated_sources);
+        homeViewModel.getOutdatedSourceCount().observe(this, count ->
+                outdatedSourcesTextView.setText(resources.getQuantityString(R.plurals.outdated_source_label, count, count))
+        );
+    }
+
+    /**
+     * Start hosts lists activity on the given tab, same target/extra as
+     * {@code HomeActivity.startHostListActivity()} on mobile.
+     */
+    private void startHostListActivity(int tab) {
+        Intent intent = new Intent(this, ListsActivity.class);
+        intent.putExtra(TAB, tab);
+        startActivity(intent);
+    }
+
+    /**
      * Wire the theme toggle button. The label reflects what tapping will switch
      * TO, based on the effective ui-mode (UI_MODE_NIGHT_YES/NO from the current
      * Configuration). Tapping persists the new value and lets AppCompatDelegate
@@ -144,7 +215,7 @@ public class TvHomeActivity extends AppCompatActivity {
     private void bindThemeButton() {
         boolean isNightNow = (getResources().getConfiguration().uiMode
                 & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
-        themeButton.setText(isNightNow
+        themeText.setText(isNightNow
                 ? R.string.tv_button_theme_light
                 : R.string.tv_button_theme_dark);
         themeButton.setOnClickListener(v -> {
@@ -159,10 +230,20 @@ public class TvHomeActivity extends AppCompatActivity {
     private void updateStatus(boolean isBlocked) {
         statusText.setText(isBlocked ? R.string.tv_status_enabled : R.string.tv_status_disabled);
         toggleButton.setText(isBlocked ? R.string.button_disable_hosts : R.string.button_enable_hosts);
-        int badgeColor = ContextCompat.getColor(this,
-                isBlocked ? R.color.cardEnabledBackground : R.color.cardBackground);
-        statusBadge.setBackgroundTintList(ColorStateList.valueOf(badgeColor));
-        statusIcon.setImageResource(isBlocked ? R.drawable.baseline_check_24 : R.drawable.baseline_block_24);
+        // Same icon language as HomeActivity.notifyAdBlocked() on mobile: pause icon
+        // (tap to stop) while active, power icon (tap to start) while off.
+        toggleButton.setIconResource(isBlocked ? R.drawable.ic_pause_24dp : R.drawable.ic_tv_power_24);
+        toggleButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this,
+                isBlocked ? R.color.primary : R.color.pastelGreyFg)));
+        int badgeBackground = ContextCompat.getColor(this,
+                isBlocked ? R.color.pastelRedBg : R.color.pastelGreyBg);
+        int badgeForeground = ContextCompat.getColor(this,
+                isBlocked ? R.color.pastelRedFg : R.color.pastelGreyFg);
+        statusBadge.setBackgroundTintList(ColorStateList.valueOf(badgeBackground));
+        // Mobile shows its own pause icon while active and the app logo while off (tap
+        // the mascot to start); mirrored here instead of the old block/check icons.
+        statusIcon.setImageResource(isBlocked ? R.drawable.ic_pause_24dp : R.drawable.logo);
+        statusIcon.setImageTintList(ColorStateList.valueOf(badgeForeground));
         // Refresh the passive always-on indicator whenever the VPN flips, since the
         // user might have just toggled the system setting from another screen.
         updateAlwaysOnIndicator();
@@ -294,16 +375,19 @@ public class TvHomeActivity extends AppCompatActivity {
     }
 
     private void bindAppUpdateBanner(@Nullable Manifest manifest) {
+        // Only the left column's own vertical chain is affected by the banner's
+        // visibility (it sits directly below the toggle, above persistence/theme,
+        // all in that same column); the right column's sources card keeps its
+        // static nextFocusUp to the first stat card regardless, since the banner
+        // is not adjacent to it in either column layout.
         if (manifest != null && manifest.updateAvailable) {
             appUpdateButton.setText(getString(R.string.pref_update_install_summary, manifest.version));
             appUpdateButton.setVisibility(View.VISIBLE);
             appUpdateButton.setOnClickListener(v -> startActivity(new Intent(this, UpdateActivity.class)));
             toggleButton.setNextFocusDownId(R.id.btn_app_update);
-            updateButton.setNextFocusUpId(R.id.btn_app_update);
         } else {
             appUpdateButton.setVisibility(View.GONE);
-            toggleButton.setNextFocusDownId(R.id.btn_update);
-            updateButton.setNextFocusUpId(R.id.btn_toggle);
+            toggleButton.setNextFocusDownId(R.id.btn_persistence);
         }
     }
 }

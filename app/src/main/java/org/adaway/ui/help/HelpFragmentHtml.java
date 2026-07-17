@@ -20,6 +20,9 @@
 
 package org.adaway.ui.help;
 
+import android.app.UiModeManager;
+import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.SpannableString;
@@ -78,8 +81,42 @@ public class HelpFragmentHtml extends Fragment {
         View view = inflater.inflate(R.layout.help_fragment, container, false);
         TextView helpTextView = view.findViewById(R.id.helpTextView);
         helpTextView.setText(spanned);
-        helpTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        if (isTv()) {
+            // LinkMovementMethod (and textIsSelectable from the layout) makes this
+            // TextView focusable and lets D-pad up/down move between the HTML's
+            // <a> links instead of scrolling the surrounding ScrollView, and there
+            // is no D-pad-friendly way to open a link here anyway, so on TV this
+            // is a plain scrollable read, not an interactive page.
+            helpTextView.setFocusable(false);
+            helpTextView.setFocusableInTouchMode(false);
+        } else {
+            helpTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        }
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Requesting focus here, not in onCreateView(): this fragment's view can be
+        // created early while its tab is merely adjacent to the selected one (the
+        // ViewPager2 pre-lays-out neighbours for smooth swiping), so a one-time
+        // request at creation either fires before the tab is actually visible or
+        // gets stolen by a later-created neighbour. FragmentStateAdapter only
+        // resumes the fragment behind the currently selected tab, so onResume()
+        // fires exactly when this tab becomes the visible one, every time,
+        // including on swipe-back. Posted so it runs after layout settles.
+        if (isTv()) {
+            View view = getView();
+            if (view != null) {
+                view.post(view::requestFocus);
+            }
+        }
+    }
+
+    private boolean isTv() {
+        UiModeManager uiModeManager = (UiModeManager) requireContext().getSystemService(Context.UI_MODE_SERVICE);
+        return uiModeManager != null && uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 
     private String readHtmlRawFile(@RawRes int resourceId) throws IOException {

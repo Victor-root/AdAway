@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:paddingBottom="24dp"
-    android:scrollbars="none">
+    android:scrollbars="none"
+    android:focusable="true">
 
     <TextView
         android:id="@+id/helpTextView"
