@@ -2,36 +2,28 @@
 
 Thanks for your interest in contributing to **AdAway Community**! 🚀
 
-AdAway Community is an unofficial community-maintained fork of [AdAway](https://github.com/AdAway/AdAway).
-
-The goal is simple: keep the app usable, stable and modern with practical fixes for recent Android versions, VPN stability and Android TV support while upstream activity is limited.
-
 ---
 
 ## 🐛 Before opening an issue
 
-Please check whether your problem is already reported.
+Please check whether your problem is already reported. When reporting a bug, include as many details as possible: the more precise your report, the easier it is to reproduce and fix. 🙏
 
-When reporting a bug, include **as many details as possible**.
-The more precise your report is, the easier it is to reproduce, understand and fix. 🙏
+General details:
+* 📱 Device model, Android version, ROM/manufacturer skin
+* 📺 Device type: phone, tablet, TV or TV box · 🛡️ AdAway mode: VPN or root
+* 🔁 Exact steps to reproduce, what you expected vs. what actually happened
+* 🖼️ Screenshots/recordings, and Logcat logs if the issue still happens
 
-Useful details:
+If it's a VPN issue, also mention:
+* 🔄 Does it start/stop by itself, restart after manual disable, or loop reconnecting?
+* 📶 Does it happen after a network change (Wi-Fi/mobile/Ethernet)? Always-on VPN or another VPN app active?
+* 🔋 Battery optimizations disabled for the app? 🧭 Do UI/notification/Quick Settings tile stay in sync?
+* 🆚 Happens on official AdAway too, or only Community?
 
-* 📱 Device model
-* 🤖 Android version
-* 🧩 ROM / manufacturer skin
-* 📺 Device type: phone, tablet, TV or TV box
-* 🛡️ AdAway mode: VPN mode or root mode
-* 🌐 Network type: Wi-Fi, mobile data or Ethernet
-* 🚀 Autostart enabled or disabled
-* 🔋 Battery/background restrictions
-* 🔁 Exact steps to reproduce the issue
-* ✅ What you expected to happen
-* ❌ What actually happened
-* 🔄 Whether the VPN restarts after manual disable
-* 🧭 Whether UI / notification / Quick Settings tile stay coherent
-* 🖼️ Screenshots or screen recordings if useful
-* 📜 Logcat logs if the issue still happens
+If it's an Android TV issue, also mention:
+* 📺 TV/box model and Android TV/Google TV version
+* 🎮 Does remote/D-pad navigation work, and does the app show in the launcher?
+* 🔐 Does the VPN permission prompt appear correctly? 📋 Does the DNS monitor work?
 
 Useful Logcat filters:
 
@@ -46,120 +38,42 @@ AdBlockingTileService
 
 ---
 
-## 🛡️ Reporting VPN issues
-
-For VPN stability bugs, please describe:
-
-* 🔁 Does the VPN start by itself?
-* 🛑 Does the VPN stop by itself?
-* 🔄 Does the VPN enter a reconnect loop?
-* 📶 Does it happen after Wi-Fi / mobile data / Ethernet changes?
-* 🔐 Is Always-on VPN enabled?
-* 🧩 Is another VPN app installed or active?
-* 🔋 Are battery optimizations disabled for AdAway Community?
-* 🆚 Does the issue happen on official AdAway, AdAway Community, or both?
-
-The more context you provide, the less guesswork is needed.
-
----
-
-## 📺 Reporting Android TV issues
-
-For Android TV bugs, please include:
-
-* 📺 TV / box model
-* 🤖 Android TV / Google TV version
-* 🎮 Remote type if relevant
-* 🏠 Whether the app appears in the launcher
-* ⬆️⬇️ Whether D-pad navigation works
-* 🔐 Whether the VPN permission prompt appears correctly
-* 📋 Whether the DNS monitor works
-* 🌐 Whether the device uses Wi-Fi or Ethernet
-
-Android TV setups vary a lot, so device-specific details are very useful.
-
----
-
 ## 🔧 Pull requests
 
-Pull requests are welcome! 🎉
-
-Please keep them focused and easy to review.
+Pull requests are welcome! 🎉 Please keep each one focused on a single, clear change: one bug fix, one feature, one cleanup.
 
 Good pull requests:
+* 🎯 fix one clear problem, and avoid unrelated refactors
+* 📱 keep mobile behavior working · 📺 keep Android TV behavior working
+* 🛡️ avoid breaking VPN mode · #️⃣ avoid breaking root mode
+* 🧪 include tests when practical, and explain what was tested manually
 
-* 🎯 fix one clear problem
-* 🧹 avoid unrelated refactors
-* 📱 keep mobile behavior working
-* 📺 keep Android TV behavior working
-* 🛡️ avoid breaking VPN mode
-* #️⃣ avoid breaking root mode
-* 🧪 include tests when practical
-* ✅ explain what was tested manually
-
-Please avoid mixing unrelated changes in the same pull request.
+Please avoid mixing unrelated changes into the same pull request. Opening several PRs, though, is very welcome if that's what it takes to keep each one focused: working on three unrelated fixes? Three small PRs are much easier (and faster) to review than one big one, and there's no limit on how many you can open at once.
 
 Examples:
-
 * ✅ good: VPN restart fix
 * ✅ good: Android TV layout fix
 * ✅ good: translation fix
-* ⚠️ not ideal: VPN fix + UI redesign + dependency bump + donation changes in one PR
-
-Small, focused PRs are much easier to review and merge.
-
----
-
-## 🧑‍💻 Coding guidelines
-
-Try to follow the style already used in the project.
-
-Before submitting changes, run what you can:
-
-```bash
-./gradlew test
-./gradlew assembleDebug
-```
-
-On Windows:
-
-```powershell
-.\gradlew.bat test
-.\gradlew.bat assembleDebug
-```
-
-If the build or tests fail because of your local environment, mention it clearly.
-
-Useful things to mention in a PR:
-
-* 🧪 tests run
-* 📱 device used for manual testing
-* 🤖 Android version
-* 📺 whether Android TV was tested
-* 🛡️ whether VPN mode was tested
-* #️⃣ whether root mode was tested, if relevant
+* ✅ also good: the three above, as three separate PRs from the same person
+* ⚠️ not ideal: VPN fix + UI redesign + dependency bump + donation changes, all in one PR
 
 ---
 
-## 📦 APK updater
+## 🤖 Contributing with AI assistance
 
-The old APK self-updater UI is hidden in AdAway Community for now because it originally pointed to official AdAway infrastructure.
+Using AI tools (Claude, ChatGPT, Copilot, etc.) to contribute is **totally welcome**: it's not a problem, it's not frowned upon, it's actually encouraged.
 
-Host source / block-list updates are still part of the app and should not be confused with APK updates.
+That doesn't mean "one prompt, one PR" though: no vibe coding, where you fire off a prompt and open a PR with whatever comes out without understanding or checking it. Stay in the driver's seat: understand the problem, guide the AI, review and iterate on what it produces. It isn't perfect, and code that looks right may not be, so everything needs to be tested in detail before submitting: "it compiles" is not a test.
 
-If you work on app updates, please keep the Community fork separate from the official AdAway update infrastructure.
+When you prompt a fix, explicitly ask for a **surgical**, targeted change to the exact problem: no unsolicited refactors or cleanup. A small, clean diff is easier to get with a good prompt, and easier to review.
 
-Future updater work should ideally use AdAway Community GitHub releases.
+No issue letting the AI write the PR title and description, as long as it stays **readable by a human**: what problem it solves, what the fix does, without code-level detail (that's for me to see in review). Also mention whether the PR was AI-assisted, for transparency, and if you can, briefly describe your AI workflow (tool used, how you verified it): optional, but it helps calibrate the review.
 
----
+**🧪 Testing is by far the most important part of a PR, even more so with AI.** VPN behavior on Android is finicky (manufacturer, battery management, Doze, network): a stability bug can take days to show up, so 5 minutes of use proves nothing.
 
-## 🧹 Donations / sponsorship links
-
-Donation and sponsor references have been removed from the app UI in this fork.
-
-Please do not reintroduce donation dialogs, sponsor buttons, crypto QR codes or similar funding UI without prior discussion.
-
-Credits and license notices must remain. ❤️
+For any VPN-related change, budget at least **a full week of real daily use** before opening the PR. In the Testing section, include:
+* 📱 Device, Android version, VPN or root, mobile or TV
+* 📅 Real duration and conditions: days of daily use, network changes encountered, phone reboots
 
 ---
 
