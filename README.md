@@ -1,8 +1,4 @@
 # ![AdAway logo](app/src/main/res/mipmap-mdpi/icon.png) AdAway Community
-
-> ⚠️ **Unofficial community-maintained fork of AdAway**  
-> A practical community fork focused on keeping AdAway usable on recent Android versions, with mobile VPN stability fixes and Android TV support.
-
 <div align="center">
 
 [![Latest release](https://img.shields.io/github/v/release/Victor-root/AdAway-Community?style=for-the-badge&logo=github&label=release)](https://github.com/Victor-root/AdAway-Community/releases)
@@ -26,7 +22,7 @@ This fork is **not affiliated with, endorsed by, or signed by** the official AdA
 <p align="center"><strong>📱 Mobile</strong></p>
 <p align="center">
   <img
-    src="https://github.com/user-attachments/assets/21fcbf4f-8024-4496-900d-ae44ce72c7c8"
+    src="https://github.com/user-attachments/assets/96ec14cc-c16b-40f4-91fb-6ad999e3e4f3"
     width="360"
     alt="AdAway Community — mobile home screen"
   />
@@ -35,7 +31,7 @@ This fork is **not affiliated with, endorsed by, or signed by** the official AdA
 <p align="center"><strong>📺 Android TV</strong></p>
 <p align="center">
   <img
-    src="https://github.com/user-attachments/assets/2246a2da-337d-45e2-8f3c-95628f8790fa"
+    src="https://github.com/user-attachments/assets/76e795e3-8f9d-4e99-bf6b-3f6c45b18b34"
     width="720"
     alt="AdAway Community — Android TV home screen"
   />
@@ -63,25 +59,6 @@ The goal is simple:
 This is not a hostile fork and not a claim of ownership over the original project.
 
 If the official project becomes actively maintained again and equivalent fixes are merged/released, this fork may be deprecated, archived, or re-aligned with upstream.
-
----
-
-## 🆕 Current community version
-
-Current community version:
-
-`6.5.5-c`
-
-The `c` stands for **Community**.
-
-This version includes:
-
-- 📱 mobile VPN stability fixes;
-- 📺 Android TV integration;
-- 🎨 light theme polished with a vivid red matching the dark theme;
-- 🐛 reliability fixes (ANR, VPN DNS forwarder, allow-list parsing, quick-settings tile leak, and more);
-- 🔒 debug preferences hidden on release builds;
-- 🔧 version naming separated from the official AdAway releases.
 
 ---
 

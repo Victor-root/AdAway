@@ -11,10 +11,4 @@
          The scroll content only needs to clear the FAB crest (barHeight+bumpHeight+fabRadius = 64dp), so the
          reserved bottom space is kept tight (70dp) to free vertical room for the cards on small screens. -->
     <dimen name="home_bottom_bar_height">70dp</dimen>
-    <!-- Android TV has no on-screen system navigation bar to buffer ListsActivity's footer from
-         the literal screen edge, and TVs commonly crop content near that edge (overscan). Applied
-         as bottom padding (not margin) on nav_container so the red footer background still runs
-         flush to the edge, matching mobile's look, while the tab content and indicator sit clear
-         of the crop zone. 48dp matches Android TV's traditional vertical overscan-safe margin. -->
-    <dimen name="lists_tv_footer_bottom_padding">48dp</dimen>
 </resources>

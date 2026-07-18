@@ -3,9 +3,7 @@ package org.adaway.ui.lists;
 import static android.content.Intent.ACTION_SEARCH;
 
 import android.app.SearchManager;
-import android.app.UiModeManager;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -70,16 +68,6 @@ public class ListsActivity extends AppCompatActivity {
          * Set view content.
          */
         setContentView(R.layout.lists_fragment);
-        if (isTv()) {
-            // No system navigation bar exists on TV to buffer the footer from the literal
-            // screen edge, so pad it away from the overscan-prone edge here instead.
-            View navContainer = findViewById(R.id.nav_container);
-            navContainer.setPadding(
-                    navContainer.getPaddingLeft(),
-                    navContainer.getPaddingTop(),
-                    navContainer.getPaddingRight(),
-                    getResources().getDimensionPixelSize(R.dimen.lists_tv_footer_bottom_padding));
-        }
         /*
          * Configure actionbar.
          */
@@ -284,10 +272,5 @@ public class ListsActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private boolean isTv() {
-        UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
-        return uiModeManager != null && uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 }
