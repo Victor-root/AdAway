@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,24 +39,19 @@ public class AboutFragment extends Fragment {
         setLink(view, R.id.about_issues_link, "https://github.com/Victor-root/AdAway-Community/issues");
         setLink(view, R.id.about_releases_link, "https://github.com/Victor-root/AdAway-Community/releases");
         setLink(view, R.id.about_upstream_link, "https://github.com/AdAway/AdAway");
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Requesting focus here, not in onViewCreated(): this fragment's view can be
-        // created early while its tab is merely adjacent to the selected one (the
-        // ViewPager2 pre-lays-out neighbours for smooth swiping), so a one-time
-        // request at creation either fires before the tab is actually visible or
-        // gets stolen by a later-created neighbour. FragmentStateAdapter only
-        // resumes the fragment behind the currently selected tab, so onResume()
-        // fires exactly when this tab becomes the visible one, every time,
-        // including on swipe-back. Posted so it runs after layout settles.
         if (isTv(requireContext())) {
-            View view = getView();
-            if (view != null) {
-                view.post(view::requestFocus);
-            }
+            // This screen's tab strip (HelpActivity) sends focus down into this
+            // ScrollView on D-pad down; mirror that back once scrolled to the top,
+            // instead of leaving up to fall through to default focus search.
+            view.setOnKeyListener((v, keyCode, event) -> {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_UP && event.getAction() == KeyEvent.ACTION_DOWN
+                        && !view.canScrollVertically(-1)) {
+                    HelpActivity.focusSelectedTab(requireActivity());
+                    return true;
+                }
+                return false;
+            });
         }
     }
 
