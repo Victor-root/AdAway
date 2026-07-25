@@ -175,7 +175,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
 
     @Override
     public void onCreate() {
-        Timber.d("Creating VPN service…");
+        Timber.i("Creating VPN service…");
         registerNetworkCallback();
     }
 
@@ -194,6 +194,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
                 stopSelf(startId);
                 return START_NOT_STICKY;
             }
+            Timber.i("Sticky resurrection: the system restarted the VPN service after a kill.");
         }
         Command command = intent == null ?
                 START :
@@ -213,9 +214,35 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
 
     @Override
     public void onDestroy() {
-        Timber.d("Destroying VPN service…");
+        Timber.i("Destroying VPN service…");
         unregisterNetworkCallback();
         Timber.d("Destroyed VPN service.");
+    }
+
+    @Override
+    public void onRevoke() {
+        // The system revoked the VPN. Two very different causes land here, told apart by
+        // whether this app still holds the VPN consent:
+        // - Consent lost (prepare() != null): the user granted the slot to another VPN
+        //   app (WireGuard…). Record user intent OFF and disarm the recovery paths:
+        //   fighting for the slot back would be hostile, and Android would refuse the
+        //   silent re-grab anyway.
+        // - Consent kept: the system revoked on its own (OEM battery manager /
+        //   hibernation, seen on ColorOS). The user never asked for this, so keep the
+        //   user intent ON: the heartbeat and app-open recovery bring the VPN back.
+        // Either way, go through the full stop path: it stops the worker (the default
+        // onRevoke was a bare stopSelf() that left the worker looping on a dead tunnel),
+        // persists the stopped status and broadcasts it, so the UI and the in-memory
+        // model reflect the real state instead of staying stuck on "running".
+        boolean slotTakenByAnotherApp = prepare(this) != null;
+        if (slotTakenByAnotherApp) {
+            Timber.i("VPN revoked: another VPN app took the slot. Recording user intent OFF and stopping.");
+            PreferenceHelper.setVpnServiceUserEnabled(this, false);
+            VpnServiceHeartbeat.stop(this);
+        } else {
+            Timber.i("VPN revoked by the system while still authorized (OEM kill/policy). Stopping; recovery paths stay armed.");
+        }
+        stopVpn();
     }
 
     /*

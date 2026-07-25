@@ -44,6 +44,7 @@ import org.adaway.ui.log.LogActivity;
 import org.adaway.ui.prefs.PrefsActivity;
 import org.adaway.ui.update.UpdateActivity;
 import org.adaway.ui.welcome.WelcomeActivity;
+import org.adaway.vpn.VpnServiceControls;
 
 import kotlin.jvm.functions.Function1;
 import timber.log.Timber;
@@ -75,6 +76,10 @@ public class HomeActivity extends AppCompatActivity {
         NotificationHelper.clearUpdateNotifications(this);
         org.adaway.broadcast.UpdateReceiver.clearInstallToast(this);
         Timber.i("Starting main activity");
+        // Opening the app is the first moment recovery is possible after an OEM
+        // battery-manager force-stop (which blocks sticky resurrection, the heartbeat
+        // and broadcasts until then), so restart the VPN here if it was killed.
+        VpnServiceControls.resurrectIfKilledExternally(this);
         this.binding = HomeActivityBinding.inflate(getLayoutInflater());
         setContentView(this.binding.getRoot());
 

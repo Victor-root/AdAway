@@ -47,6 +47,7 @@ import org.adaway.ui.lists.ListsActivity;
 import org.adaway.ui.log.TvLogActivity;
 import org.adaway.ui.prefs.PrefsActivity;
 import org.adaway.ui.update.UpdateActivity;
+import org.adaway.vpn.VpnServiceControls;
 
 import kotlin.jvm.functions.Function1;
 import timber.log.Timber;
@@ -88,6 +89,11 @@ public class TvHomeActivity extends AppCompatActivity {
         if (PreferenceHelper.getAdBlockMethod(this) == AdBlockMethod.UNDEFINED) {
             PreferenceHelper.setAbBlockMethod(this, VPN);
         }
+
+        // Opening the app is the first moment recovery is possible after an OEM
+        // battery-manager force-stop (which blocks sticky resurrection, the heartbeat
+        // and broadcasts until then), so restart the VPN here if it was killed.
+        VpnServiceControls.resurrectIfKilledExternally(this);
 
         ((TextView) findViewById(R.id.tv_version)).setText("v" + getCurrentVersionName());
 
