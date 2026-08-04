@@ -18,6 +18,7 @@ If it's a VPN issue, also mention:
 * 🔄 Does it start/stop by itself, restart after manual disable, or loop reconnecting?
 * 📶 Does it happen after a network change (Wi-Fi/mobile/Ethernet)? Always-on VPN or another VPN app active?
 * 🔋 Battery optimizations disabled for the app? 🧭 Do UI/notification/Quick Settings tile stay in sync?
+* 🔌 Autostart at boot ("Enable at startup") on or off?
 * 🆚 Happens on official AdAway too, or only Community?
 
 If it's an Android TV issue, also mention:

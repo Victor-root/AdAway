@@ -268,8 +268,8 @@ public class TvHomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // User may have just toggled Always-on VPN in system settings (or via ADB)
-        // — refresh the indicator when we come back to the foreground.
+        // User may have just toggled Always-on VPN in system settings (or via ADB):
+        // refresh the indicator when we come back to the foreground.
         if (alwaysOnIndicator != null) {
             updateAlwaysOnIndicator();
         }

@@ -83,7 +83,7 @@ public final class VpnServiceControls {
      * Restart the VPN if it was killed behind the user's back (OEM battery manager
      * force-stop). A force-stopped app cannot self-heal: Android blocks its sticky
      * resurrection, WorkManager jobs (heartbeat) and broadcasts until the user opens the
-     * app again — so the home screens call this on open, which is the first moment
+     * app again. So the home screens call this on open, which is the first moment
      * recovery is possible again.
      * <p>
      * No-op when the ad-block method is not VPN, when the user has explicitly disabled

@@ -65,7 +65,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/summaryTextView" />
 
-        <!-- Single tip for the detected brand only (or the generic fallback, if none matched) —
+        <!-- Single tip for the detected brand only (or the generic fallback, if none matched),
              filled in code. No brand picker: just what applies to this phone. -->
         <androidx.cardview.widget.CardView
             android:id="@+id/oemTipCardView"

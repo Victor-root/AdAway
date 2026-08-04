@@ -37,7 +37,7 @@ class VpnConnectionThrottler {
      * tunnel teardowns, …). It must NOT punish an explicit user action: when the user
      * taps the home toggle, the Quick Settings tile, or the notification "Resume"
      * button, the worker is restarted intentionally and we want the tunnel to come
-     * up immediately — not in 75 to 128 seconds.
+     * up immediately, not in 75 to 128 seconds.
      */
     void reset() {
         this.time = 0;

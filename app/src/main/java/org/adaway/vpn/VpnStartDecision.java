@@ -15,7 +15,7 @@ public final class VpnStartDecision {
      *
      * @param userEnabled whether the user has explicitly asked for the VPN to be on.
      * @return {@code true} if the caller may start the service, {@code false} if it must
-     * not — the user has explicitly turned the VPN off and any silent restart is a bug.
+     * not: the user has explicitly turned the VPN off and any silent restart is a bug.
      */
     public static boolean mayBackgroundStart(boolean userEnabled) {
         return userEnabled;

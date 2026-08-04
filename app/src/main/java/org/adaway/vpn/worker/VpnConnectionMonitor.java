@@ -140,13 +140,13 @@ public class VpnConnectionMonitor {
      * tunnel every 10s in a restart loop. Checking for presence also transparently handles the
      * interface being renumbered (e.g. {@code tun0} → {@code tun1}) on a rebuild.
      *
-     * @return <code>true</code> if a tunnel interface is present — or if the tunnel has not
+     * @return <code>true</code> if a tunnel interface is present, or if the tunnel has not
      * been initialized yet, or if the interfaces could not be probed at all (transient error);
      * <code>false</code> only when the device positively reports no tunnel interface AND the
      * tunnel had been successfully initialized.
      */
     private boolean isVpnInterfacePresent() {
-        // Not yet initialized for this VPN session — the worker is still in the throttle
+        // Not yet initialized for this VPN session: the worker is still in the throttle
         // wait before establishing the tunnel. Skip the check to avoid a false "no tunnel"
         // detection that would immediately trigger another restart.
         if (this.networkInterface == null) {

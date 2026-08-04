@@ -100,7 +100,7 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
      * is force-closed so the worker loop can tell the resulting read failure (EBADF on the
      * blocking device read) apart from a genuine network error: on a stop it must exit
      * cleanly instead of reconnecting. Without this, pausing the VPN closed the tunnel, the
-     * blocked native read threw EBADF, and the loop "reconnected" — bringing the VPN back up
+     * blocked native read threw EBADF, and the loop "reconnected", bringing the VPN back up
      * right after the user paused it (so the first tap appeared to do nothing).
      */
     private final AtomicBoolean stopping;
@@ -146,8 +146,8 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
     /**
      * Reset the connection throttler so that the next {@link #start()} establishes the
      * tunnel without delay. Use this on explicit user actions (tile, notification,
-     * home toggle, autostart at boot) so the throttler — which is meant to damp
-     * automatic reconnection storms — does not punish the user with a 60-128s wait.
+     * home toggle, autostart at boot) so the throttler, which is meant to damp
+     * automatic reconnection storms, does not punish the user with a 60-128s wait.
      */
     public void resetThrottle() {
         this.connectionThrottler.reset();
@@ -282,7 +282,7 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
             int numberOfEvents = Os.poll(polls, this.vpnWatchDog.getPollTimeout());
             // No events means the tunnel was idle for the whole poll timeout. That is a normal,
             // healthy state (no app is resolving anything right now), so the watchdog only sends a
-            // keep-alive probe here — it no longer treats idle as a dead connection.
+            // keep-alive probe here; it no longer treats idle as a dead connection.
             if (numberOfEvents == 0) {
                 this.vpnWatchDog.handleTimeout();
                 return true;

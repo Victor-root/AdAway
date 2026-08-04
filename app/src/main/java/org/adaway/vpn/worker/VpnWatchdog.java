@@ -27,8 +27,8 @@ import timber.log.Timber;
 /**
  * Keeps the tunnel healthy by probing the upstream DNS server during idle periods.
  * <p>
- * When {@link #handleTimeout()} fires — meaning {@code poll()} saw no activity for the whole
- * poll timeout — it sends an empty keep-alive datagram to the upstream DNS server. If the
+ * When {@link #handleTimeout()} fires, meaning {@code poll()} saw no activity for the whole
+ * poll timeout, it sends an empty keep-alive datagram to the upstream DNS server. If the
  * underlying network is genuinely gone, that send throws and the worker reconnects; otherwise the
  * probe simply keeps the connection warm and the poll timeout is grown so the next quiet period is
  * checked less often (backing off 1&nbsp;s → 4&nbsp;s → 16&nbsp;s → … up to ~68&nbsp;min).
@@ -38,12 +38,12 @@ import timber.log.Timber;
  * datagram that DNS servers never answer, and its reply was never read anyway, so the only real
  * signal was "did an app on the phone make a DNS query recently". While the phone is idle no app
  * queries, so the tunnel was torn down and rebuilt every few minutes for no reason (a documented
- * bug). A tunnel with no traffic is not a dead tunnel — genuine failures are caught by the device
- * read path, the forward path, and this probe's own send throwing — so idle no longer reconnects.
+ * bug). A tunnel with no traffic is not a dead tunnel (genuine failures are caught by the device
+ * read path, the forward path, and this probe's own send throwing), so idle no longer reconnects.
  */
 class VpnWatchdog {
     // Poll timeout grows on every idle tick so keep-alive probes get rarer the longer the tunnel
-    // sits quiet: 1s, then 4s, 16s, … up to ~68m. It is never reset by app traffic — while queries
+    // sits quiet: 1s, then 4s, 16s, … up to ~68m. It is never reset by app traffic: while queries
     // are flowing poll() returns on those events instead of timing out, so no probe is sent at all;
     // probes only happen once the tunnel has actually been quiet for the whole (growing) interval.
     private static final int POLL_TIMEOUT_START = 1000;

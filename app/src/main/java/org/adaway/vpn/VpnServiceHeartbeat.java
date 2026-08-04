@@ -46,7 +46,7 @@ public class VpnServiceHeartbeat extends Worker {
         // Gate on the persisted user intent, not the runtime status: the runtime status is
         // self-healed to STOPPED by VpnServiceControls.isRunning() when the process was
         // killed externally, which is precisely the situation this heartbeat must recover
-        // from — gating on it would disable the recovery it exists for.
+        // from. Gating on it would disable the recovery it exists for.
         boolean userEnabled = PreferenceHelper.getVpnServiceUserEnabled(context);
         if (VpnStartDecision.mayBackgroundStart(userEnabled)
                 && !VpnServiceControls.isVpnServiceAlive(context)) {

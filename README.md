@@ -24,7 +24,7 @@ This fork is **not affiliated with, endorsed by, or signed by** the official AdA
   <img
     src="https://github.com/user-attachments/assets/96ec14cc-c16b-40f4-91fb-6ad999e3e4f3"
     width="360"
-    alt="AdAway Community — mobile home screen"
+    alt="AdAway Community mobile home screen"
   />
 </p>
 
@@ -33,7 +33,7 @@ This fork is **not affiliated with, endorsed by, or signed by** the official AdA
   <img
     src="https://github.com/user-attachments/assets/76e795e3-8f9d-4e99-bf6b-3f6c45b18b34"
     width="720"
-    alt="AdAway Community — Android TV home screen"
+    alt="AdAway Community Android TV home screen"
   />
 </p>
 
@@ -88,6 +88,37 @@ Main VPN-related changes:
 - ✅ keep the welcome/setup flow working on first launch;
 - 🧪 add focused testable decision logic for VPN start behavior.
 
+<details>
+<summary><strong>✅ Tested</strong></summary>
+
+Current mobile testing:
+
+- Oppo Reno 13 Pro;
+- Android 16 / ColorOS;
+- AdAway VPN mode;
+- daily usage for multiple weeks.
+
+Observed result on mobile:
+
+- ✅ VPN no longer restarted by itself after manual disable;
+- ✅ VPN stayed stable during normal background usage;
+- ✅ no visible VPN restart/reconnect loop during daily use;
+- ✅ Quick Settings tile stayed coherent;
+- ✅ app UI, Android VPN key icon and VPN state stayed consistent;
+- ✅ Wi-Fi / mobile data changes did not cause unwanted VPN restarts;
+- ✅ local-network IoT connectivity stayed stable;
+- ✅ Ecovacs Home robot vacuum stayed reachable through the patched VPN.
+
+Android TV testing:
+
+- ✅ Android TV UI launches correctly;
+- ✅ TV home screen is usable with a remote;
+- ✅ core TV navigation works on my setup.
+
+More device feedback is welcome.
+
+</details>
+
 ---
 
 ## 📺 Android TV support
@@ -119,108 +150,52 @@ Known points where more feedback is useful:
 
 ---
 
-## ✅ Tested
+## ⬆️ Updating AdAway Community
 
-Current mobile testing:
+There are three ways to update AdAway Community:
 
-- Oppo Reno 13 Pro;
-- Android 16 / ColorOS;
-- AdAway VPN mode;
-- daily usage for multiple weeks.
+### 1. Built-in updater
 
-Observed result on mobile:
+AdAway Community can check for new releases directly from the app.
 
-- ✅ VPN no longer restarted by itself after manual disable;
-- ✅ VPN stayed stable during normal background usage;
-- ✅ no visible VPN restart/reconnect loop during daily use;
-- ✅ Quick Settings tile stayed coherent;
-- ✅ app UI, Android VPN key icon and VPN state stayed consistent;
-- ✅ Wi-Fi / mobile data changes did not cause unwanted VPN restarts;
-- ✅ local-network IoT connectivity stayed stable;
-- ✅ Ecovacs Home robot vacuum stayed reachable through the patched VPN.
+When an update is available, follow the update prompt to download and install it without having to visit GitHub manually.
 
-Android TV testing:
+### 2. Omnify
 
-- ✅ Android TV UI launches correctly;
-- ✅ TV home screen is usable with a remote;
-- ✅ core TV navigation works on my setup.
+[<img src="docs/badges/get-it-on-omnify.svg" alt="Get it on Omnify" height="56">](https://github.com/Victor-root/Omnify)
 
-More device feedback is welcome.
+Omnify can add AdAway Community directly from its GitHub repository, track new releases and offer future updates alongside the rest of your apps.
 
----
+You can also open this repository in your browser, tap **Share**, and choose **Omnify** to pre-fill the repository automatically.
 
-## 📦 Download
+### 3. Manual download from GitHub
 
-Unofficial community builds are available here:
+Download the latest APK from the [Releases page](https://github.com/Victor-root/AdAway-Community/releases) and install it over your current AdAway Community installation.
 
-https://github.com/Victor-root/AdAway-Community/releases
+All Community releases are signed with the same signing key, so future updates keep your existing settings and data.
 
----
-
-## ⚠️ Installation notes
-
-This APK is signed with my own signing key.
-
-Because of that, it **cannot be installed as an update over the official AdAway build**.
-
-You need to uninstall the official AdAway app before installing this APK.
-
-⚠️ Uninstalling the official app may remove local settings.  
-Check your configuration before doing it.
-
-Future AdAway Community updates should install normally as long as they are signed with the same Community signing key.
+The first time you install an APK through your browser, file manager or Omnify, Android may ask you to allow that app to install unknown applications.
 
 ---
 
 ## 🧪 Feedback
 
-Feedback is welcome, especially for:
+Feedback is welcome, especially for VPN-mode stability, Android TV behavior and recent Android/OEM compatibility issues.
 
-- VPN-mode instability;
-- recent Android compatibility issues;
-- Android TV behavior;
-- D-pad / remote navigation;
-- network changes;
-- Quick Settings tile / notification state synchronization.
-
-Please include as many details as possible. The more precise the report is, the easier it is to reproduce, understand and fix the issue.
-
-Useful details when reporting feedback:
-
-- device model;
-- Android version;
-- ROM / manufacturer skin;
-- phone, tablet, TV or TV box;
-- VPN mode or root mode;
-- Wi-Fi, mobile data or Ethernet;
-- autostart enabled or disabled;
-- battery/background restrictions;
-- exact steps to reproduce the issue;
-- what you expected to happen;
-- what actually happened;
-- whether the VPN restarts after manual disable;
-- whether UI / notification / Quick Settings tile stay coherent;
-- screenshots or screen recordings if useful;
-- Logcat logs if the issue still happens.
-
-For Logcat, useful filters may include:
-
-- `AdAway`
-- `VpnService`
-- `VpnModel`
-- `VpnWorker`
-- `VpnConnectionMonitor`
-- `AdBlockingTileService`
+See [CONTRIBUTING.md](CONTRIBUTING.md) for what to include in a report so it's as easy as possible to reproduce and fix.
 
 ---
 
 ## 🌍 Translations
 
-**AdAway Community** speaks **65 languages** 🗣️ — entirely thanks to the community of volunteer translators. 💜
+**AdAway Community** speaks **65 languages** 🗣️, entirely thanks to the community of volunteer translators. 💜
 
-Spotted a missing string or an awkward wording? Contributions to start a new language or improve an existing one are always welcome — every little bit helps! 🙌
+Spotted a missing string or an awkward wording? Contributions to start a new language or improve an existing one are always welcome: every little bit helps! 🙌
 
-> **Legend** — 🟩 `80–100%` · 🟨 `50–79%` · 🟧 `25–49%` · 🟥 `0–24%`
+<details>
+<summary><strong>📊 Translation progress</strong></summary>
+
+> **Legend**: 🟩 `80–100%` · 🟨 `50–79%` · 🟧 `25–49%` · 🟥 `0–24%`
 
 | Language | Progress | Done |
 |:---------|:---------|-----:|
@@ -290,6 +265,8 @@ Spotted a missing string or an awkward wording? Contributions to start a new lan
 | 🇱🇰 Sinhala | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **5%** |
 | 🇵🇭 Tagalog | 🟥⬜⬜⬜⬜⬜⬜⬜⬜⬜ | **5%** |
 
+</details>
+
 ---
 
 ## 🧱 Requirements
@@ -316,18 +293,6 @@ AdAway uses these permissions:
 
 ---
 
-## 🧾 Legal / license compliance
-
-AdAway Community is based on AdAway and remains licensed under the GPLv3+.
-
-This fork keeps the original license and credits.
-
-When distributing APK builds, the corresponding source code is made available through this repository and its release tags/commits.
-
-This fork does not claim to be the official AdAway project.
-
----
-
 ## 🤝 Credits
 
 AdAway was created and maintained by the official AdAway project contributors.
@@ -345,6 +310,8 @@ https://github.com/sunmasters/Adaway-For-TV
 
 ## ⚖️ License
 
-AdAway is licensed under the GPLv3+.
+AdAway Community is licensed under the GPLv3+, the same license as the original AdAway project.
+
+When distributing APK builds, the corresponding source code is made available through this repository and its release tags/commits.
 
 See [LICENSE.md](LICENSE.md) for the full license text.

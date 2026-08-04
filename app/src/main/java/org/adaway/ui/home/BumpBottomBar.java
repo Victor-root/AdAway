@@ -15,7 +15,7 @@ import org.adaway.R;
 /**
  * Bottom bar background drawn as a single continuous shape: a broad, gentle wave that
  * rises across most of the width to a wide rounded crest under the floating action
- * button, then settles back down — i.e. one long {@code ___/‾‾‾‾‾\___} swell rather than
+ * button, then settles back down, i.e. one long {@code ___/‾‾‾‾‾\___} swell rather than
  * a tight dome.
  * <p>
  * The silhouette is one closed {@link Path}. The swell is built from two cubic Béziers
@@ -44,7 +44,7 @@ public class BumpBottomBar extends FrameLayout {
     private static final float SHADOW_RADIUS_DP = 8f;   // shadow spread
     private static final float SHADOW_DY_DP = 4f;       // shadow downward offset
     private static final float TOP_PAD_DP = 6f;         // breathing room above the crest for the shadow
-    private static final int SHADOW_COLOR = 0x44000000; // 27% black — soft but visible
+    private static final int SHADOW_COLOR = 0x44000000; // 27% black, soft but visible
     private static final float STROKE_WIDTH_DP = 1f;    // top-edge border thickness
 
     private final Paint fillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);

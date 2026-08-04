@@ -64,7 +64,7 @@ public class UpdateReceiver extends BroadcastReceiver {
             }
             prefs.edit().remove(PREF_INSTALL_TOAST_TIMESTAMP).apply();
             String message = appContext.getString(R.string.notification_app_installed_title)
-                    + " — "
+                    + ": "
                     + appContext.getString(R.string.notification_app_installed_text);
             Toast.makeText(appContext, message, Toast.LENGTH_LONG).show();
             NotificationHelper.showAppInstalledNotification(appContext);

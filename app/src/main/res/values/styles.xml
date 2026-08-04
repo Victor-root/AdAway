@@ -93,7 +93,7 @@
         <item name="colorPrimaryDark">?colorPrimary</item>
         <!--
             Explicit statusBarColor declared here (the shared parent, not on Theme.AdAway itself):
-            values-night/styles.xml redeclares Theme.AdAway with only colorPrimaryDark — in dark
+            values-night/styles.xml redeclares Theme.AdAway with only colorPrimaryDark; in dark
             mode Android replaces the whole light-mode Theme.AdAway declaration rather than merging
             it, so any item only set on the light Theme.AdAway (this used to include statusBarColor
             attempts) is lost in dark mode there. Base.AdAway itself has no night-qualified override,
@@ -120,7 +120,7 @@
         "Your lists" screen (Blocked/Allowed/Redirected): its footer is red, so the system
         navigation bar is coloured to match it, closing the seam between the app UI and the
         system bar. White navigation bar icons (windowLightNavigationBar=false) contrast well
-        against red in both light and dark mode, so a single declaration covers both — @color/
+        against red in both light and dark mode, so a single declaration covers both: @color/
         primary already resolves to the right shade per theme via values-night/colors.xml.
     -->
     <style name="Theme.AdAway.Lists" parent="Theme.AdAway">
@@ -204,7 +204,7 @@
         Welcome (first-run onboarding) screens: fixed, moderate sizes instead of the huge
         Display1/Large presets those screens used before, so a normal phone shows the whole step
         without scrolling. hyphenationFrequency+breakStrategy are the actual backstop against a
-        single long word overflowing its column at a large accessibility font scale — far more
+        single long word overflowing its column at a large accessibility font scale, far more
         predictable than trying to autosize a multi-line ConstraintLayout-chained TextView, which
         does not reliably report the right wrap_content height in that combination.
     -->

@@ -19,12 +19,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A tiny, self-bounding diagnostic log that persists important events to a file on disk so the
- * user can export them later — even after the VPN service has been killed by the system (which
+ * user can export them later, even after the VPN service has been killed by the system (which
  * would otherwise take any in-memory log down with it).
  * <p>
  * Only {@code INFO} and above are captured (see {@link DiagnosticLogTree}), so the file stays
  * small and readable: no per-packet DNS spam, just lifecycle events, network transitions,
- * warnings and errors — exactly what is needed to diagnose why the VPN stopped.
+ * warnings and errors, exactly what is needed to diagnose why the VPN stopped.
  * <p>
  * Recording is opt-in and off by default (see {@link #isEnabled()}): nothing is written to disk
  * until the user turns on "Record diagnostic log" in the VPN preferences.
@@ -116,7 +116,7 @@ public final class DiagnosticLog {
      * Read the whole captured log (backup followed by the active file, oldest events first).
      * <p>
      * This blocks until every previously queued write has been flushed, so it must be called
-     * from a background thread — never the main thread.
+     * from a background thread, never the main thread.
      *
      * @return The captured log, or an empty string if nothing has been captured (or on error).
      */

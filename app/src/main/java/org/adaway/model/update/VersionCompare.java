@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * <p>
  * Parses each version into the list of integer segments it contains (any sequence of
  * digits, separators ignored), then compares element by element. Works for tags like
- * {@code 6.5.1-c}, {@code v6.5.1}, {@code 6.5.10-c} — no per-segment numeric limit.
+ * {@code 6.5.1-c}, {@code v6.5.1}, {@code 6.5.10-c} (no per-segment numeric limit).
  */
 public final class VersionCompare {
     private static final Pattern SEGMENT = Pattern.compile("\\d+");
@@ -46,7 +46,7 @@ public final class VersionCompare {
             try {
                 segments.add(Integer.parseInt(matcher.group()));
             } catch (NumberFormatException ignored) {
-                // Segment too large for int — treat as 0 rather than crash.
+                // Segment too large for int: treat as 0 rather than crash.
             }
         }
         if (segments.isEmpty()) {

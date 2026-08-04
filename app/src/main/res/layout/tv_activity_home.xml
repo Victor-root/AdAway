@@ -151,7 +151,7 @@
                  math reserves exactly enough headroom above the crest for a 56dp
                  FAB-sized child (fabRadiusPx = 28dp radius), and it renders on a
                  software layer for the shadow, which composites strictly within
-                 those measured bounds — clipChildren has no effect there, so the
+                 those measured bounds; clipChildren has no effect there, so the
                  badge below is sized to that same 56dp rather than fought with
                  clipping flags. -->
             <org.adaway.ui.home.BumpBottomBar

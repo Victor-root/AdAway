@@ -25,7 +25,7 @@ import org.adaway.databinding.WelcomeBatteryLayoutBinding;
  * This class is a fragment to request the standard Android battery optimization exemption
  * (the "Doze" allowlist) for AdAway, so its VPN service is not paused in the background.
  * <p>
- * This is the official, documented Android mechanism — a separate, undocumented layer that many
+ * This is the official, documented Android mechanism. A separate, undocumented layer that many
  * phone brands add on top of it is covered by {@link WelcomeOemBatteryFragment} next.
  * <p>
  * This step is informational only: whether the user grants the request or not, setup can always
@@ -52,7 +52,7 @@ public class WelcomeBatteryFragment extends WelcomeFragment {
     @Override
     public void onResume() {
         super.onResume();
-        // The user may grant this from Android Settings directly and come back — reflect it.
+        // The user may grant this from Android Settings directly and come back. Reflect it.
         refreshState();
     }
 

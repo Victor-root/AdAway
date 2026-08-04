@@ -62,7 +62,7 @@
     <string name="welcome_oem_battery_summary">Some phone brands have their own battery manager that can also block AdAway. Here\'s what to check on yours:</string>
     <string name="welcome_oem_battery_action">Open app info</string>
     <string name="welcome_oem_battery_open_failed">Could not open the app info screen. Open it manually from Android Settings → Apps → AdAway.</string>
-    <string name="welcome_oem_battery_disclaimer">These are general pointers, not an exact guide — the wording and location can vary by phone model and Android version.</string>
+    <string name="welcome_oem_battery_disclaimer">These are general pointers, not an exact guide: the wording and location can vary by phone model and Android version.</string>
 
     <string name="welcome_oem_battery_label_oneui">Samsung (One UI)</string>
     <string-array name="welcome_oem_battery_path_oneui">

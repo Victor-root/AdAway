@@ -150,7 +150,7 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
         // Render the log in a custom view (a fixed-height ScrollView) instead of setMessage(): a
         // very long log made the dialog's own button row grow past the screen and forced the
         // user to scroll through the BUTTONS to find them. With a custom view, only this content
-        // area scrolls — the Share/Copy/OK button bar stays outside it and always visible.
+        // area scrolls; the Share/Copy/OK button bar stays outside it and always visible.
         View view = LayoutInflater.from(context).inflate(R.layout.pref_vpn_diagnostic_log_dialog, null);
         TextView textView = view.findViewById(R.id.diagnosticLogText);
         textView.setText(message);

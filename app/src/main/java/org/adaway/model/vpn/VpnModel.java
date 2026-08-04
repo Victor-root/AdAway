@@ -95,7 +95,7 @@ public class VpnModel extends AdBlockModel {
         this.blockCache.evictAll();
         boolean userEnabled = PreferenceHelper.getVpnServiceUserEnabled(this.context);
         if (!VpnStartDecision.mayBackgroundStart(userEnabled)) {
-            Timber.i("VpnModel.applyIfActive: skipping VPN start — user has disabled the VPN.");
+            Timber.i("VpnModel.applyIfActive: skipping VPN start; user has disabled the VPN.");
             // Keep displayed state honest.
             this.applied.postValue(VpnServiceControls.isRunning(this.context));
             return;
@@ -187,7 +187,7 @@ public class VpnModel extends AdBlockModel {
                         break;
                     default:
                         // STARTING / STOPPING / RECONNECTING / WAITING_FOR_NETWORK don't
-                        // change applied state — service is still considered active.
+                        // change applied state; service is still considered active.
                         break;
                 }
             }

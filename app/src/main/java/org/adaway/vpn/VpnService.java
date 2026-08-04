@@ -109,8 +109,8 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
     /**
      * Whether the available Wi-Fi network has validated internet connectivity
      * ({@link android.net.NetworkCapabilities#NET_CAPABILITY_VALIDATED}). Android only promotes
-     * Wi-Fi to the default (active) network — the one that actually carries the tunnel's traffic
-     * and whose DNS the {@link org.adaway.vpn.dns.DnsServerMapper} resolves — once it is
+     * Wi-Fi to the default (active) network, the one that actually carries the tunnel's traffic
+     * and whose DNS the {@link org.adaway.vpn.dns.DnsServerMapper} resolves, once it is
      * validated. Switching the tunnel to Wi-Fi before then would bind it to a DNS server that is
      * not yet reachable.
      */
@@ -122,7 +122,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
     /**
      * The transport the running tunnel is currently built for, or <code>null</code> when the VPN
      * is stopped (no network). The tunnel is rebuilt only when the transport Android would route
-     * through actually changes — not when a secondary network merely appears or disappears (e.g.
+     * through actually changes, not when a secondary network merely appears or disappears (e.g.
      * the cellular radio flickering on Oppo / ColorOS power-saving devices while Wi-Fi stays the
      * default). This is the single source of truth that keeps the tunnel's DNS in sync with the
      * network carrying its traffic.
@@ -135,7 +135,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
      * {@link DnsServerMapper#getEffectiveDnsServers} to match what the tunnel actually forwards to,
      * or <code>null</code> when not yet observed for the current transport. Used to detect a
      * DNS-server change that happens <em>without</em> a transport change (e.g. a DHCP lease renewal
-     * or a same-SSID roam), which {@link #reconcile()} cannot see — so the tunnel is rebuilt to pick
+     * or a same-SSID roam), which {@link #reconcile()} cannot see, so the tunnel is rebuilt to pick
      * up the new resolver. Only ever touched from the callback handler thread, like the other
      * network-state fields.
      */
@@ -185,7 +185,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         // Null intent means the system is resurrecting the service via START_STICKY.
         // https://developer.android.com/reference/android/app/Service#START_STICKY
         // If the user has explicitly disabled the VPN since we last ran, refuse the
-        // resurrection — otherwise Android can silently bring the VPN back on its own
+        // resurrection; otherwise Android can silently bring the VPN back on its own
         // (see issues #4022 / #4234).
         if (intent == null) {
             boolean userEnabled = PreferenceHelper.getVpnServiceUserEnabled(this);
@@ -274,7 +274,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         // This path is reached only via an explicit START intent (user click, notif
         // action, autostart, sticky resurrection that survived the user-intent gate).
         // The throttler is meant to dampen reconnection storms, NOT to delay user
-        // actions — reset it so the tunnel comes up immediately.
+        // actions: reset it so the tunnel comes up immediately.
         this.vpnWorker.resetThrottle();
         // Record the transport the tunnel is being built for so the network reconciler only
         // rebuilds it when the default network actually changes transport.
@@ -317,7 +317,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
                     // startForeground() can be denied by AppOps when the process is killed
                     // and restarted by the OEM system (e.g. battery manager). Force a clean
                     // stop so the UI reflects the real state instead of staying stuck on "pause".
-                    Timber.e(e, "startForeground denied — forcing VPN stop.");
+                    Timber.e(e, "startForeground denied, forcing VPN stop.");
                     PreferenceHelper.setVpnServiceStatus(this, STOPPED);
                     Intent stoppedIntent = new Intent(VPN_UPDATE_STATUS_INTENT);
                     stoppedIntent.putExtra(VPN_UPDATE_STATUS_EXTRA, STOPPED);
@@ -428,7 +428,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
      * Determine which transport the tunnel should be built for, mirroring how Android chooses the
      * default (active) network: Wi-Fi is preferred over cellular, but only once it has validated
      * internet connectivity. Before Wi-Fi validates, Android keeps routing through cellular, so
-     * the tunnel must too — otherwise its DNS (resolved from the active network) would not match
+     * the tunnel must too; otherwise its DNS (resolved from the active network) would not match
      * the network actually carrying the traffic.
      *
      * @return The transport to build the tunnel for, or <code>null</code> if no network is available.
@@ -452,7 +452,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
      * Reconcile the tunnel with the current default network.
      * <p>
      * This is the single decision point for every network change. It rebuilds the tunnel only
-     * when the transport Android routes through actually changes — never on a mere secondary
+     * when the transport Android routes through actually changes, never on a mere secondary
      * network appearing or disappearing (e.g. the cellular radio flickering on ColorOS / Oppo
      * power-saving devices while Wi-Fi stays the default), which keeps the tunnel stable and the
      * status-bar VPN icon from blinking.
@@ -476,14 +476,14 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
             reconnect();
         } else if (desired != this.currentTransport) {
             // The default network switched transport (e.g. cellular ↔ Wi-Fi). The tunnel's DNS is
-            // resolved from the active network, so rebuild it to match — otherwise it keeps
+            // resolved from the active network, so rebuild it to match; otherwise it keeps
             // forwarding DNS to the old network and every query fails with ENETUNREACH. No
             // throttler reset here so rapid flapping is still damped.
             Timber.i("Default network changed from %s to %s, reconnecting VPN.", this.currentTransport, desired);
             setCurrentTransport(desired);
             reconnect();
         }
-        // else: the tunnel is already on the right transport — nothing to do.
+        // else: the tunnel is already on the right transport. Nothing to do.
     }
 
     private void setNetworkAvailable(NetworkType type, boolean available) {
@@ -551,7 +551,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
             return;
         }
         if (new HashSet<>(effectiveDnsServers).equals(new HashSet<>(this.currentTransportDnsServers))) {
-            // Same effective DNS servers (order-independent) — this LinkProperties change was
+            // Same effective DNS servers (order-independent): this LinkProperties change was
             // routes/MTU/etc. or a resolver the tunnel does not forward to.
             return;
         }
@@ -589,7 +589,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         @Override
         public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
             // Only Wi-Fi validation drives the tunnel decision: Android promotes Wi-Fi to the
-            // default network once it validates. Cellular validation is irrelevant — cellular is
+            // default network once it validates. Cellular validation is irrelevant: cellular is
             // only ever the fallback when Wi-Fi is not usable.
             if (this.monitoredType == WIFI) {
                 setWifiValidated(networkCapabilities.hasCapability(NET_CAPABILITY_VALIDATED));

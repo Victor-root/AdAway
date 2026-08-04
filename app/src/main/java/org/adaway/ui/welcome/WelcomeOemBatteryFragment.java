@@ -25,12 +25,12 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * This class is a fragment guiding the user to their phone brand's own battery manager — a
+ * This class is a fragment guiding the user to their phone brand's own battery manager, a
  * separate, undocumented layer that many OEMs (ColorOS, MIUI, EMUI, One UI…) add on top of
  * Android's standard battery optimization (see {@link WelcomeBatteryFragment}), and which can
  * still silently stop AdAway's VPN even after that standard exemption is granted.
  * <p>
- * There is no public Android API to request or even read this OEM-specific state — it is entirely
+ * There is no public Android API to request or even read this OEM-specific state: it is entirely
  * proprietary to each manufacturer, so this step opens the app info screen (the one reliably
  * consistent entry point across skins) and shows a single tip for the brand detected from
  * {@link Build#MANUFACTURER}/{@link Build#BRAND}, falling back to generic guidance if the brand

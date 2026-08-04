@@ -321,14 +321,14 @@ public class DnsServerMapper {
 
 
     /**
-     * Compute the DNS servers the tunnel would actually forward to for a raw network DNS list — the
-     * same set {@link #configureVpn} maps at establish time — so callers can tell whether a network
+     * Compute the DNS servers the tunnel would actually forward to for a raw network DNS list, the
+     * same set {@link #configureVpn} maps at establish time, so callers can tell whether a network
      * DNS change actually affects the tunnel before rebuilding it. It applies the very same IPv6
      * rule as {@link #configureVpn}: IPv4 servers are always kept, while IPv6 servers are kept only
      * when {@link #hasIpV6DnsServers} would add an IPv6 subnet (IPv6 enabled, or a single-server
      * network), so an IPv6 resolver churn on a dual-stack network does not needlessly rebuild an
      * IPv4-only tunnel. When the raw list holds nothing the tunnel can use, it returns the public
-     * fallback resolver — exactly what {@link #configureVpn} establishes in that case — so the two
+     * fallback resolver, exactly what {@link #configureVpn} establishes in that case, so the two
      * stay in lockstep and a drop to "no usable resolver" is still detected as a change rather than
      * silently leaving the tunnel pinned to a resolver that is gone.
      *

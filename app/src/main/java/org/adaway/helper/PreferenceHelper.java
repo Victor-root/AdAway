@@ -253,8 +253,8 @@ public final class PreferenceHelper {
      * <p>
      * This is distinct from the runtime service status: it tracks what the user has asked
      * for, not whether the Android service is currently running. Background paths (host
-     * updates, connection monitor, sticky resurrection) must use this signal — never the
-     * runtime status — to decide whether to (re)start the VPN.
+     * updates, connection monitor, sticky resurrection) must use this signal, never the
+     * runtime status, to decide whether to (re)start the VPN.
      * <p>
      * When unset (existing installs / first read), this falls back to the persisted runtime
      * status to avoid breaking users who already had the VPN running.

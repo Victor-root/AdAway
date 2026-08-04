@@ -1,24 +1,45 @@
 # Changelog
 
-## [6.5.5-c] - 2026-06-12
+## [6.6.0-c] - 2026-08-04
+
+### ➕ Added
+
+* 🛠️ Add a "Reset VPN" option in Preferences to rebuild a stuck tunnel on demand
+* 🩺 Add an opt-in, exportable diagnostic log for troubleshooting VPN issues
+* 📡 Rebuild the VPN tunnel automatically when the network's DNS servers change
+* 🌐 Add support for Android 13+ per-app language preferences
+* 🔋 Add battery-optimization steps to first-run setup, with guidance for OEM battery managers (Samsung, Xiaomi, ColorOS, Huawei, vivo)
 
 ### 🔄 Changed
 
-* 🎨 Replace the faded light-theme rose with a vivid red (`#C62828`), a hair lighter than the dark theme red (`#B71C1C`) so both modes match while keeping each tuned to its background
-* ⬜ Make the text sitting on red headers white via the Material on-primary colour — the home header (app name, description, version) was dark and barely legible on the red background in light mode; the welcome screen titles/summaries get the same treatment
-* 🔒 Hide the Debug preferences category on release builds — developer tooling (telemetry toggle, debug log switch) is no longer shown to end users; it stays visible on debug builds
+* 🎨 Replace the faded light-theme rose with a vivid red, matching the dark theme
+* ⬜ Make text on red headers white for legibility in light mode
+* 🔒 Hide the Debug preferences category on release builds
+* 🎨 Redesign the home screen: pastel stat cards, wave-shaped bottom bar, Material 3 switches and dialogs
+* 🔴 Redesign the Blocked/Allowed/Redirected bottom bar with a red footer and a sliding white indicator
+* 📖 Overhaul the Help section: rewritten FAQ/Problems tabs, dropped outdated content, added VPN and battery troubleshooting
+* 🔀 Merge the Sources card's check and download buttons into one sync action
+* 📺 Rebuild the Android TV home screen for parity with mobile
+* 🏷️ Auto-name release APKs to match the GitHub release convention
+* 🔤 Complete translations for this release's new strings
 
 ### 🐛 Fixed
 
-* 🛡️ Fix ANR loop on the welcome screen when a mouse is connected (via scrcpy or Bluetooth): `Shell.getShell()` was blocking the main thread while waiting for the root shell, starving Android's input dispatcher (5 s timeout) and triggering repeated "App not responding" dialogs — moved to the asynchronous callback overload so the check runs off the main thread
-* 📐 Fix welcome screen method cards being clipped on tablets and in landscape orientation: the previous layout used portrait-only fixed-percentage heights and an empty `Barrier`, causing card content to overflow; replaced with a `NestedScrollView` so content is never cut off in any orientation
-* 💾 Fix file-descriptor leak in the VPN DNS forwarder: the `ParcelFileDescriptor` wrapping the UDP socket was never closed, exhausting file descriptors under sustained DNS load
-* 📡 Fix VPN DNS forwarder sending the full 1024-byte buffer instead of only the bytes actually received from the upstream resolver
-* 🏷️ Fix allow-list entries being silently dropped when a hosts source line carries an inline `# comment` at any position beyond column 1
-* 🔔 Fix quick-settings tile leaking a `LiveData` observer every time the tile is opened and closed
-* 🔗 Fix `ArrayIndexOutOfBoundsException` on malformed Gist source URLs (fewer than 3 path segments)
-* 📂 Fix crash when `ContentResolver.openInputStream` returns `null` for a local file hosts source instead of throwing — now raises a handled `IOException`
-* ⚡ Fix potential double-initialisation of the `AppExecutors` singleton under concurrent access (missing `volatile` + double-checked lock)
+* 🛡️ Fix an ANR loop on the welcome screen when a mouse is connected via scrcpy or Bluetooth
+* 💾 Fix a file-descriptor leak and an oversized-reply bug in the VPN DNS forwarder
+* 🏷️ Fix allow-list entries being dropped when a hosts source line has an inline comment
+* 🔔 Fix the quick-settings tile leaking an observer every time it's opened
+* 🔗 Fix crashes on malformed Gist source URLs and unreadable local file hosts sources
+* ⚡ Fix a rare double-initialisation race in the app's executor pool
+* ⏸️ Fix pausing the VPN sometimes needing two taps to actually stop
+* 🔁 Fix the VPN restarting itself or losing its status icon on some devices (ColorOS) and during rapid network switching
+* 📶 Fix DNS briefly failing when Wi-Fi comes back while on cellular data
+* 🐕 Fix the "Monitor connection" option reconnecting the VPN even on a stable network
+* 🚑 Fix the VPN not recovering after being force-killed by an OEM battery manager
+* 💥 Fix a crash toggling light/dark theme on the Blocked/Allowed/Redirected screens
+* 💥 Fix the redesigned Android TV home screen crashing on launch
+* 🎮 Fix unpredictable D-pad focus on the Android TV home and Help screens
+* 🎨 Various small UI fixes: clipped welcome cards, mismatched status/navigation bar colors, hard-to-read app bar titles, cramped spacing, onboarding screen contrast, a mispositioned TV tab indicator, and the TV launcher banner's off-brand red
 
 ## [6.5.1-c] - 2026-05-16
 
@@ -39,7 +60,7 @@
 * 📥 Download the update APK silently in the background, without the system DownloadManager notification cluttering the status bar
 * 🗑️ Automatically purge the downloaded APK from the cache after the update is installed, on the next app launch
 * 🧩 Polish the update screen: restyled outlined update button, cleaner constraint layout so the progress bar and changelog flow naturally during install
-* 📺 Show a post-install toast + notification ("AdAway updated — Relaunch the app") on devices where the system installer's "Open" button silently fails (typically Android TV / Shield); skipped automatically when the app actually opens within 5 seconds of the install
+* 📺 Show a post-install toast + notification ("AdAway updated: Relaunch the app") on devices where the system installer's "Open" button silently fails (typically Android TV / Shield); skipped automatically when the app actually opens within 5 seconds of the install
 
 ### 🐛 Fixed
 

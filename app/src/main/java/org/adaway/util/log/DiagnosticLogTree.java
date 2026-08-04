@@ -14,8 +14,8 @@ import timber.log.Timber;
 /**
  * A {@link Timber.Tree} that persists {@code INFO} and above to the exportable {@link
  * DiagnosticLog}. Lower priorities (the high-frequency {@code DEBUG}/{@code VERBOSE} packet trace)
- * are dropped by the priority gate, and the per-query DNS result trace — which is logged at
- * {@code INFO} but is just as noisy — is dropped by message prefix (see
+ * are dropped by the priority gate, and the per-query DNS result trace, which is logged at
+ * {@code INFO} but is just as noisy, is dropped by message prefix (see
  * {@link #DNS_QUERY_TRACE_PREFIX}), so the on-disk log stays small and meaningful.
  *
  * @author AdAway Community
@@ -30,7 +30,7 @@ public final class DiagnosticLogTree extends Timber.Tree {
             DateTimeFormatter.ofPattern("MM-dd HH:mm:ss", Locale.US);
     /**
      * Prefix of the per-DNS-query result trace ("… DNS Name x blocked!/allowed/redirected"),
-     * which the DNS proxies log at {@code INFO} for <em>every single query</em> — many per
+     * which the DNS proxies log at {@code INFO} for <em>every single query</em>, many per
      * second. Persisting those would flood the bounded diagnostic file and push the meaningful
      * lifecycle/error events out of it. The blocked/allowed domains are already inspectable via
      * the dedicated DNS log ("Journal DNS"), so they are dropped here. DNS <em>error</em> traces

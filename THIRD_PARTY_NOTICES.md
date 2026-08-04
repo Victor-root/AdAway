@@ -1,7 +1,9 @@
-# Licenses
+# Third-Party Notices
 
 AdAway is licensed under the GPLv3+.  
 The file [LICENSE.md](LICENSE.md) includes the full license text.
+
+This file lists the licenses of third-party components bundled with AdAway.
 
 ## AdAway Application
 
