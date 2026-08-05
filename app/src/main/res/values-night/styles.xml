@@ -14,12 +14,12 @@
 
         <item name="android:statusBarColor">?colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorSurface</item>
-        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowLightNavigationBar">@bool/navigationBarIsLight</item>
     </style>
 
-    <!-- Preferences theme (dark): navigation bar follows the surface like the home screen. -->
-    <style name="Theme.AdAway.Prefs" parent="Base.AdAway.Prefs">
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
-        <item name="android:windowLightNavigationBar">false</item>
-    </style>
+    <!--
+        Theme.AdAway.Prefs has no night variant any more: its navigation bar now comes from
+        Base.AdAway, whose declaration already resolves per mode, so redeclaring it here
+        would only risk the two drifting apart again.
+    -->
 </resources>
