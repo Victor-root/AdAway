@@ -162,7 +162,7 @@ When an update is available, follow the update prompt to download and install it
 
 ### 2. Omnify
 
-[<img src="docs/badges/get-it-on-omnify.svg" alt="Get it on Omnify" height="56">](https://github.com/Victor-root/Omnify)
+[<img src="docs/badges/get-it-on-omnify.svg" alt="Get it on Omnify" height="56">](https://victor-root.github.io/Omnify/)
 
 Omnify can add AdAway Community directly from its GitHub repository, track new releases and offer future updates alongside the rest of your apps.
 
