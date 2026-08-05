@@ -76,7 +76,7 @@
       'shots.h2': 'See it running',
       'shots.lead': 'These follow the theme of this page. Switch it in the top bar and they switch with it.',
       'shots.1': 'Home screen: block on or off in one tap, with live counters.',
-      'shots.2': 'Your lists: blocked, allowed and redirected hosts.',
+      'shots.2': 'Hosts sources: the blocklists feeding the app, refreshed on their own.',
       'shots.3': 'DNS log: what your apps actually resolve, in real time.',
       'shots.4': 'The Android TV home screen, built for a remote.',
 
@@ -100,7 +100,6 @@
       'foot.contribute': 'Contribute',
       'foot.upstream': 'Upstream',
       'foot.official': 'Official AdAway',
-      'foot.tvwork': 'Android TV work',
       'foot.license': 'Licensed under the GPLv3+, like the original AdAway. Created and maintained by the AdAway project contributors; this fork is not affiliated with or endorsed by them.'
     },
 
@@ -170,7 +169,7 @@
       'shots.h2': "L'application en action",
       'shots.lead': 'Elles suivent le thème de cette page. Changez-le dans la barre du haut et elles changent avec.',
       'shots.1': "Écran d'accueil : blocage activé ou non en un geste, avec les compteurs en direct.",
-      'shots.2': 'Vos listes : hôtes bloqués, autorisés et redirigés.',
+      'shots.2': "Sources de hosts : les listes de blocage qui alimentent l'app, mises à jour toutes seules.",
       'shots.3': 'Journal DNS : ce que vos applications résolvent réellement, en temps réel.',
       'shots.4': "L'écran d'accueil Android TV, conçu pour la télécommande.",
 
@@ -194,7 +193,6 @@
       'foot.contribute': 'Contribuer',
       'foot.upstream': 'Projet amont',
       'foot.official': 'AdAway officiel',
-      'foot.tvwork': 'Travail Android TV',
       'foot.license': "Distribué sous licence GPLv3+, comme AdAway d'origine. Créé et maintenu par les contributeurs du projet AdAway ; ce fork n'est ni affilié ni approuvé par eux."
     }
   };

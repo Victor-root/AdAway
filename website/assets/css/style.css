@@ -371,32 +371,30 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .shot{margin:0}
 .shot figcaption{margin-top:18px;text-align:center;color:var(--fg-dim);font-size:.88rem;max-width:34ch;margin-left:auto;margin-right:auto}
 
-.phone{
-  position:relative;border-radius:34px;padding:9px;
-  background:var(--surface);border:1px solid var(--line);
-  box-shadow:0 34px 70px -32px rgba(0,0,0,.5);
-  aspect-ratio:9/19.5;overflow:hidden;
+/* The captures already carry their own device frame (phone bezel, TV stand),
+   so the page adds no chrome of its own: a second frame around the first
+   looks doubled, and cropping to a fixed aspect ratio would eat into the
+   bezel. The image sets its own height, which also keeps the layout correct
+   whatever size the captures are re-exported at. */
+.phone,.tvframe{position:relative}
+.phone img,.tvframe img{
+  width:100%;height:auto;
+  filter:drop-shadow(0 26px 40px rgba(0,0,0,.45));
 }
-.phone img{width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:26px;background:var(--surface-2)}
-
 .shot-tv{margin-top:44px}
-.tvframe{
-  border-radius:18px;padding:10px;background:var(--surface);border:1px solid var(--line);
-  box-shadow:0 34px 70px -32px rgba(0,0,0,.5);aspect-ratio:16/9;overflow:hidden;
-  max-width:920px;margin:0 auto;
-}
-.tvframe img{width:100%;height:100%;object-fit:cover;border-radius:11px;background:var(--surface-2)}
+.tvframe{max-width:920px;margin:0 auto}
 
 /* theme-paired screenshots: instant swap, never animated */
 [data-theme="dark"] .s-light,[data-theme="light"] .s-dark{display:none}
 
-/* graceful state when a screenshot has not been added yet */
+/* graceful state when a screenshot has not been added yet: it has to carry
+   its own ratio, since there is no framed box reserving the space now */
 .shot-missing{
-  display:grid;place-items:center;width:100%;height:100%;border-radius:26px;
+  display:grid;place-items:center;width:100%;aspect-ratio:9/19.5;border-radius:22px;
   background:repeating-linear-gradient(45deg,var(--surface-2),var(--surface-2) 12px,var(--bg-alt) 12px,var(--bg-alt) 24px);
   color:var(--fg-dim);font-family:var(--mono);font-size:.72rem;text-align:center;padding:16px;
 }
-.tvframe .shot-missing{border-radius:11px}
+.tvframe .shot-missing{aspect-ratio:16/9;border-radius:11px}
 
 /* install */
 .gets{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}

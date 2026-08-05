@@ -123,11 +123,7 @@ More device feedback is welcome.
 
 ## 📺 Android TV support
 
-This fork also includes Android TV support, based on community work from:
-
-https://github.com/sunmasters/Adaway-For-TV
-
-Thanks to the author of that fork for the original Android TV work.
+This fork also includes Android TV support, written for this fork and maintained in the same codebase as the mobile app.
 
 Current TV-related features:
 
@@ -301,10 +297,6 @@ Official project:
 https://github.com/AdAway/AdAway | Official website: https://adaway.org
 
 Thanks to the original author, past maintainers, current maintainers, translators, hosts list maintainers and all contributors who made AdAway possible.
-
-Special thanks also to the Android TV community fork work that helped bootstrap the TV integration:
-
-https://github.com/sunmasters/Adaway-For-TV
 
 ---
 
