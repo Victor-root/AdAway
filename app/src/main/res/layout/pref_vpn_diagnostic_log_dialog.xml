@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Custom content view for the diagnostic log dialog (see PrefsVpnFragment#showDiagnosticLog).
+    Custom content view for the diagnostic log dialog (see VpnPrefsBinder#showDiagnosticLog).
 
     Using setMessage() with a very long string made the MaterialAlertDialog's own button bar
     grow past the screen height on a long log, forcing the user to scroll through the buttons

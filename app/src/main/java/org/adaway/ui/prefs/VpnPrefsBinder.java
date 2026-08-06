@@ -1,10 +1,11 @@
 package org.adaway.ui.prefs;
 
+import static org.adaway.ui.prefs.PrefsActivity.PREFERENCE_NOT_FOUND;
+
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -12,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
-import androidx.annotation.NonNull;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -25,25 +25,29 @@ import org.adaway.util.AppExecutors;
 import org.adaway.util.log.DiagnosticLog;
 import org.adaway.vpn.VpnServiceControls;
 
-import static org.adaway.ui.prefs.PrefsActivity.PREFERENCE_NOT_FOUND;
-import static org.adaway.util.Constants.PREFS_NAME;
-
 /**
- * This fragment is the preferences fragment for VPN ad blocker.
+ * Wires up the VPN ad blocker section of {@link PrefsMainFragment}.
+ * <p>
+ * These settings used to live on a sub-screen of their own, behind an entry the user had to
+ * open first. They are now part of the main preferences screen, so this holds the behaviour
+ * that screen's fragment used to carry, keeping the fragment itself readable.
  *
  * @author Bruce BUJON (bruce.bujon(at)gmail(dot)com)
  */
-public class PrefsVpnFragment extends PreferenceFragmentCompat {
+final class VpnPrefsBinder {
+    private final PreferenceFragmentCompat fragment;
     private ActivityResultLauncher<Intent> startActivityLauncher;
 
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        // Configure preferences
-        getPreferenceManager().setSharedPreferencesName(PREFS_NAME);
-        addPreferencesFromResource(R.xml.preferences_vpn);
-        // Register for activity
+    VpnPrefsBinder(PreferenceFragmentCompat fragment) {
+        this.fragment = fragment;
+    }
+
+    /**
+     * Register the activity launcher and bind every action of the section. Must be called while
+     * the fragment is being created, since registering a launcher later is not allowed.
+     */
+    void bind() {
         registerForStartActivity();
-        // Bind pref actions
         bindExcludedSystemApps();
         bindExcludedUserApps();
         bindResetVpn();
@@ -52,22 +56,21 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
         bindClearDiagnosticLog();
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        PrefsActivity.setAppBarTitle(this, R.string.pref_vpn_title);
+    private <T extends Preference> T require(int keyResId) {
+        T preference = this.fragment.findPreference(this.fragment.getString(keyResId));
+        assert preference != null : PREFERENCE_NOT_FOUND;
+        return preference;
     }
 
     private void registerForStartActivity() {
-        this.startActivityLauncher = registerForActivityResult(
+        this.startActivityLauncher = this.fragment.registerForActivityResult(
                 new StartActivityForResult(),
                 result -> restartVpn()
         );
     }
 
     private void bindExcludedSystemApps() {
-        ListPreference excludeUserAppsPreferences = findPreference(getString(R.string.pref_vpn_excluded_system_apps_key));
-        assert excludeUserAppsPreferences != null : PREFERENCE_NOT_FOUND;
+        ListPreference excludeUserAppsPreferences = require(R.string.pref_vpn_excluded_system_apps_key);
         excludeUserAppsPreferences.setOnPreferenceChangeListener((preference, newValue) -> {
             restartVpn();
             return true;
@@ -75,9 +78,8 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
     }
 
     private void bindExcludedUserApps() {
-        Context context = requireContext();
-        Preference excludeUserAppsPreferences = findPreference(getString(R.string.pref_vpn_excluded_user_apps_key));
-        assert excludeUserAppsPreferences != null : PREFERENCE_NOT_FOUND;
+        Context context = this.fragment.requireContext();
+        Preference excludeUserAppsPreferences = require(R.string.pref_vpn_excluded_user_apps_key);
         excludeUserAppsPreferences.setOnPreferenceClickListener(preference -> {
             Intent intent = new Intent(context, PrefsVpnExcludedAppsActivity.class);
             this.startActivityLauncher.launch(intent);
@@ -86,9 +88,8 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
     }
 
     private void bindResetVpn() {
-        Context context = requireContext();
-        Preference resetPreference = findPreference(getString(R.string.pref_vpn_reset_key));
-        assert resetPreference != null : PREFERENCE_NOT_FOUND;
+        Context context = this.fragment.requireContext();
+        Preference resetPreference = require(R.string.pref_vpn_reset_key);
         resetPreference.setOnPreferenceClickListener(preference -> {
             // Tear down and re-establish the tunnel so the DNS configuration is read again.
             // This recovers from a tunnel stuck in a broken state (e.g. established with no
@@ -104,7 +105,7 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
     }
 
     private void restartVpn() {
-        Context context = requireContext();
+        Context context = this.fragment.requireContext();
         if (VpnServiceControls.isRunning(context)) {
             VpnServiceControls.stop(context);
             VpnServiceControls.start(context);
@@ -112,9 +113,8 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
     }
 
     private void bindDiagnosticLogEnabled() {
-        Context context = requireContext();
-        Preference preference = findPreference(getString(R.string.pref_vpn_diagnostic_log_enabled_key));
-        assert preference != null : PREFERENCE_NOT_FOUND;
+        Context context = this.fragment.requireContext();
+        Preference preference = require(R.string.pref_vpn_diagnostic_log_enabled_key);
         preference.setOnPreferenceChangeListener((p, newValue) -> {
             // The preference widget persists the new value itself; update the cached in-memory
             // flag too so recording starts/stops on the very next log line, not after a restart.
@@ -124,9 +124,8 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
     }
 
     private void bindDiagnosticLog() {
-        Context context = requireContext();
-        Preference preference = findPreference(getString(R.string.pref_vpn_diagnostic_log_key));
-        assert preference != null : PREFERENCE_NOT_FOUND;
+        Context context = this.fragment.requireContext();
+        Preference preference = require(R.string.pref_vpn_diagnostic_log_key);
         preference.setOnPreferenceClickListener(p -> {
             // Reading the log touches disk and blocks until pending writes flush, so do it off
             // the main thread, then come back to show the dialog.
@@ -141,12 +140,14 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
 
     private void showDiagnosticLog(String log) {
         // The read is asynchronous: the fragment may have been detached in the meantime.
-        if (!isAdded()) {
+        if (!this.fragment.isAdded()) {
             return;
         }
-        Context context = requireContext();
+        Context context = this.fragment.requireContext();
         boolean empty = log == null || log.trim().isEmpty();
-        CharSequence message = empty ? getString(R.string.pref_vpn_diagnostic_log_empty) : previewOf(log);
+        CharSequence message = empty
+                ? this.fragment.getString(R.string.pref_vpn_diagnostic_log_empty)
+                : previewOf(log);
         // Render the log in a custom view (a fixed-height ScrollView) instead of setMessage(): a
         // very long log made the dialog's own button row grow past the screen and forced the
         // user to scroll through the BUTTONS to find them. With a custom view, only this content
@@ -180,12 +181,13 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
     }
 
     private void copyLog(String log) {
-        Context context = requireContext();
+        Context context = this.fragment.requireContext();
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboard == null) {
             return;
         }
-        clipboard.setPrimaryClip(ClipData.newPlainText(getString(R.string.pref_vpn_diagnostic_log), log));
+        clipboard.setPrimaryClip(ClipData.newPlainText(
+                this.fragment.getString(R.string.pref_vpn_diagnostic_log), log));
         Toast.makeText(context, R.string.pref_vpn_diagnostic_log_copied, Toast.LENGTH_SHORT).show();
     }
 
@@ -193,18 +195,17 @@ public class PrefsVpnFragment extends PreferenceFragmentCompat {
         // pref_vpn_diagnostic_log_share_title (not the short button label) is used here: the
         // subject/chooser title can be descriptive since it is not competing for space with two
         // other dialog buttons.
-        String title = getString(R.string.pref_vpn_diagnostic_log_share_title);
+        String title = this.fragment.getString(R.string.pref_vpn_diagnostic_log_share_title);
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, title);
         intent.putExtra(Intent.EXTRA_TEXT, log);
-        startActivity(Intent.createChooser(intent, title));
+        this.fragment.startActivity(Intent.createChooser(intent, title));
     }
 
     private void bindClearDiagnosticLog() {
-        Context context = requireContext();
-        Preference preference = findPreference(getString(R.string.pref_vpn_diagnostic_log_clear_key));
-        assert preference != null : PREFERENCE_NOT_FOUND;
+        Context context = this.fragment.requireContext();
+        Preference preference = require(R.string.pref_vpn_diagnostic_log_clear_key);
         preference.setOnPreferenceClickListener(p -> {
             DiagnosticLog.getInstance(context).clear();
             Toast.makeText(context, R.string.pref_vpn_diagnostic_log_cleared, Toast.LENGTH_SHORT).show();

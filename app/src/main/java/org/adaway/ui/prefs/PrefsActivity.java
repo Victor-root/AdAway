@@ -79,9 +79,10 @@ public class PrefsActivity extends AppCompatActivity implements PreferenceFragme
         );
         Bundle args = pref.getExtras();
         fragment.setArguments(args);
-        // See https://developer.android.com/guide/topics/ui/settings/organize-your-settings#java
-        //noinspection deprecation
-        fragment.setTargetFragment(caller, 0);
+        // The caller used to be recorded on the new fragment with setTargetFragment, copied from
+        // an older revision of Android's settings guide. Nothing ever read it back, and the
+        // method is deprecated, so it is gone: the sub-screens receive what they need through
+        // their arguments.
         // Replace the existing Fragment with the new Fragment
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(

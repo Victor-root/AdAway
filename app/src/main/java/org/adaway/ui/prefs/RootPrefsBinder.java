@@ -9,7 +9,6 @@ import static org.adaway.model.root.ShellUtils.isWritable;
 import static org.adaway.model.root.ShellUtils.remountPartition;
 import static org.adaway.ui.prefs.PrefsActivity.PREFERENCE_NOT_FOUND;
 import static org.adaway.util.Constants.ANDROID_SYSTEM_ETC_HOSTS;
-import static org.adaway.util.Constants.PREFS_NAME;
 import static org.adaway.util.WebServerUtils.TEST_URL;
 import static org.adaway.util.WebServerUtils.copyCertificate;
 import static org.adaway.util.WebServerUtils.getWebServerState;
@@ -21,16 +20,13 @@ import static org.adaway.util.WebServerUtils.stopWebServer;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build.VERSION_CODES;
-import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
-import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
@@ -40,6 +36,7 @@ import com.google.common.net.InetAddresses;
 
 import org.adaway.R;
 import org.adaway.helper.PreferenceHelper;
+import org.adaway.model.adblocking.AdBlockMethod;
 import org.adaway.ui.dialog.MissingAppDialog;
 import org.adaway.util.AppExecutors;
 
@@ -52,15 +49,21 @@ import java.net.InetAddress;
 import timber.log.Timber;
 
 /**
- * This fragment is the preferences fragment for root ad blocker.
+ * Wires up the root ad blocker section of {@link PrefsMainFragment}.
+ * <p>
+ * These settings used to live on a sub-screen of their own, behind an entry the user had to
+ * open first. They are now part of the main preferences screen, so this holds the behaviour
+ * that screen's fragment used to carry, keeping the fragment itself readable.
  *
  * @author Bruce BUJON (bruce.bujon(at)gmail(dot)com)
  */
-public class PrefsRootFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+final class RootPrefsBinder {
     /**
      * The webserver certificate mime type.
      */
     private static final String CERTIFICATE_MIME_TYPE = "application/x-x509-ca-cert";
+
+    private final PreferenceFragmentCompat fragment;
     /**
      * The launcher to start open hosts file activity.
      */
@@ -70,50 +73,54 @@ public class PrefsRootFragment extends PreferenceFragmentCompat implements Share
      */
     private ActivityResultLauncher<String> prepareCertificateLauncher;
 
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        // Configure preferences
-        getPreferenceManager().setSharedPreferencesName(PREFS_NAME);
-        addPreferencesFromResource(R.xml.preferences_root);
-        // Register for activities
+    RootPrefsBinder(PreferenceFragmentCompat fragment) {
+        this.fragment = fragment;
+    }
+
+    /**
+     * Register the activity launchers and bind every action of the section. Must be called while
+     * the fragment is being created, since registering a launcher later is not allowed.
+     */
+    void bind() {
         registerForOpenHostActivity();
         registerForPrepareCertificateActivity();
-        // Bind pref actions
         bindOpenHostsFile();
         bindRedirection();
         bindWebServerPrefAction();
         bindWebServerTest();
         bindWebServerCertificate();
-        // Update current state
-        updateWebServerState();
-        // Register as listener
-        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        // Probing the local web server costs a background request and a short wait, so only do
+        // it when these settings actually apply. On VPN mode the whole section is dimmed.
+        if (isRootMethodActive()) {
+            updateWebServerState();
+        }
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        PrefsActivity.setAppBarTitle(this, R.string.pref_root_title);
+    /**
+     * Whether root is the ad blocking method in use, which is when this section applies.
+     *
+     * @return <code>true</code> in root mode.
+     */
+    private boolean isRootMethodActive() {
+        return PreferenceHelper.getAdBlockMethod(this.fragment.requireContext()) == AdBlockMethod.ROOT;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Update current state
-        updateWebServerState();
+    /**
+     * Refresh the reported web server state, on resume like the former screen did.
+     */
+    void onResume() {
+        if (isRootMethodActive()) {
+            updateWebServerState();
+        }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        // Unregister as listener
-        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        Context context = requireContext();
-        // Restart web server on icon change
+    /**
+     * Restart the web server when its icon setting changes, so the change takes effect at once.
+     *
+     * @param key The preference key that changed.
+     */
+    void onSharedPreferenceChanged(String key) {
+        Context context = this.fragment.requireContext();
         if (context.getString(R.string.pref_webserver_icon_key).equals(key) && isWebServerRunning()) {
             stopWebServer();
             startWebServer(context);
@@ -121,27 +128,33 @@ public class PrefsRootFragment extends PreferenceFragmentCompat implements Share
         }
     }
 
+    private <T extends Preference> T require(int keyResId) {
+        T preference = this.fragment.findPreference(this.fragment.getString(keyResId));
+        assert preference != null : PREFERENCE_NOT_FOUND;
+        return preference;
+    }
+
     private void registerForOpenHostActivity() {
-        this.openHostsFileLauncher = registerForActivityResult(new StartActivityForResult(), result -> {
-            try {
-                File hostFile = new File(ANDROID_SYSTEM_ETC_HOSTS).getCanonicalFile();
-                remountPartition(hostFile, READ_ONLY);
-            } catch (IOException e) {
-                Timber.e(e, "Failed to get hosts canonical file.");
-            }
-        });
+        this.openHostsFileLauncher = this.fragment.registerForActivityResult(
+                new StartActivityForResult(), result -> {
+                    try {
+                        File hostFile = new File(ANDROID_SYSTEM_ETC_HOSTS).getCanonicalFile();
+                        remountPartition(hostFile, READ_ONLY);
+                    } catch (IOException e) {
+                        Timber.e(e, "Failed to get hosts canonical file.");
+                    }
+                });
     }
 
     private void registerForPrepareCertificateActivity() {
-        this.prepareCertificateLauncher = registerForActivityResult(
+        this.prepareCertificateLauncher = this.fragment.registerForActivityResult(
                 new ActivityResultContracts.CreateDocument(CERTIFICATE_MIME_TYPE),
                 this::prepareWebServerCertificate
         );
     }
 
     private void bindOpenHostsFile() {
-        Preference openHostsFilePreference = findPreference(getString(R.string.pref_open_hosts_key));
-        assert openHostsFilePreference != null : PREFERENCE_NOT_FOUND;
+        Preference openHostsFilePreference = require(R.string.pref_open_hosts_key);
         openHostsFilePreference.setOnPreferenceClickListener(this::openHostsFile);
     }
 
@@ -155,28 +168,26 @@ public class PrefsRootFragment extends PreferenceFragmentCompat implements Share
             if (remount) {
                 this.openHostsFileLauncher.launch(intent);
             } else {
-                startActivity(intent);
+                this.fragment.startActivity(intent);
             }
             return true;
         } catch (IOException e) {
             Timber.e(e, "Failed to get hosts canonical file.");
         } catch (ActivityNotFoundException e) {
-            MissingAppDialog.showTextEditorMissingDialog(getContext());
+            MissingAppDialog.showTextEditorMissingDialog(this.fragment.getContext());
             return false;
         }
         return false;
     }
 
     private void bindRedirection() {
-        Context context = requireContext();
+        Context context = this.fragment.requireContext();
         boolean ipv6Enabled = PreferenceHelper.getEnableIpv6(context);
-        Preference ipv4RedirectionPreference = findPreference(getString(R.string.pref_redirection_ipv4_key));
-        assert ipv4RedirectionPreference != null : PREFERENCE_NOT_FOUND;
+        Preference ipv4RedirectionPreference = require(R.string.pref_redirection_ipv4_key);
         ipv4RedirectionPreference.setOnPreferenceChangeListener(
                 (preference, newValue) -> validateRedirection(Inet4Address.class, (String) newValue)
         );
-        Preference ipv6RedirectionPreference = findPreference(getString(R.string.pref_redirection_ipv6_key));
-        assert ipv6RedirectionPreference != null : PREFERENCE_NOT_FOUND;
+        Preference ipv6RedirectionPreference = require(R.string.pref_redirection_ipv6_key);
         ipv6RedirectionPreference.setEnabled(ipv6Enabled);
         ipv6RedirectionPreference.setOnPreferenceChangeListener(
                 (preference, newValue) -> validateRedirection(Inet6Address.class, (String) newValue)
@@ -192,16 +203,15 @@ public class PrefsRootFragment extends PreferenceFragmentCompat implements Share
             valid = false;
         }
         if (!valid) {
-            Toast.makeText(requireContext(), R.string.pref_redirection_invalid, LENGTH_SHORT).show();
+            Toast.makeText(this.fragment.requireContext(), R.string.pref_redirection_invalid, LENGTH_SHORT).show();
         }
         return valid;
     }
 
     private void bindWebServerPrefAction() {
-        Context context = requireContext();
+        Context context = this.fragment.requireContext();
         // Start web server when preference is enabled
-        SwitchPreferenceCompat webServerEnabledPref = findPreference(getString(R.string.pref_webserver_enabled_key));
-        assert webServerEnabledPref != null : PREFERENCE_NOT_FOUND;
+        SwitchPreferenceCompat webServerEnabledPref = require(R.string.pref_webserver_enabled_key);
         webServerEnabledPref.setOnPreferenceChangeListener((preference, newValue) -> {
             if (newValue.equals(true)) {
                 // Start web server
@@ -218,21 +228,19 @@ public class PrefsRootFragment extends PreferenceFragmentCompat implements Share
     }
 
     private void bindWebServerTest() {
-        Preference webServerTest = findPreference(getString(R.string.pref_webserver_test_key));
-        assert webServerTest != null : PREFERENCE_NOT_FOUND;
+        Preference webServerTest = require(R.string.pref_webserver_test_key);
         webServerTest.setOnPreferenceClickListener(preference -> {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(TEST_URL));
-            startActivity(intent);
+            this.fragment.startActivity(intent);
             return true;
         });
     }
 
     private void bindWebServerCertificate() {
-        Preference webServerTest = findPreference(getString(R.string.pref_webserver_certificate_key));
-        assert webServerTest != null : PREFERENCE_NOT_FOUND;
-        webServerTest.setOnPreferenceClickListener(preference -> {
+        Preference webServerCertificate = require(R.string.pref_webserver_certificate_key);
+        webServerCertificate.setOnPreferenceClickListener(preference -> {
             if (SDK_INT < VERSION_CODES.R) {
-                installCertificate(requireContext());
+                installCertificate(this.fragment.requireContext());
             } else {
                 this.prepareCertificateLauncher.launch("adaway-webserver-certificate.crt");
             }
@@ -246,8 +254,8 @@ public class PrefsRootFragment extends PreferenceFragmentCompat implements Share
             return;
         }
         Timber.d("Certificate URI: %s", uri);
-        copyCertificate(requireActivity(), uri);
-        new MaterialAlertDialogBuilder(requireContext())
+        copyCertificate(this.fragment.requireActivity(), uri);
+        new MaterialAlertDialogBuilder(this.fragment.requireContext())
                 .setCancelable(true)
                 .setTitle(R.string.pref_webserver_certificate_dialog_title)
                 .setMessage(R.string.pref_webserver_certificate_dialog_content)
@@ -256,15 +264,14 @@ public class PrefsRootFragment extends PreferenceFragmentCompat implements Share
                         (dialog, which) -> {
                             dialog.dismiss();
                             Intent intent = new Intent(ACTION_SECURITY_SETTINGS);
-                            startActivity(intent);
+                            this.fragment.startActivity(intent);
                         })
                 .create()
                 .show();
     }
 
     private void updateWebServerState() {
-        Preference webServerTest = findPreference(getString(R.string.pref_webserver_test_key));
-        assert webServerTest != null : PREFERENCE_NOT_FOUND;
+        Preference webServerTest = require(R.string.pref_webserver_test_key);
         webServerTest.setSummary(R.string.pref_webserver_state_checking);
         AppExecutors executors = AppExecutors.getInstance();
         executors.networkIO().execute(() -> {
