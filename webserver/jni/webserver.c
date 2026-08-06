@@ -4,6 +4,7 @@
 #include <signal.h>
 #include <android/log.h>
 #include <errno.h>
+#include <limits.h>
 #include "mongoose/mongoose.h"
 
 #define THIS_FILE "WebServer"
@@ -20,8 +21,8 @@ static volatile sig_atomic_t s_sig_num = 0;
 struct settings {
     bool init;
     struct mg_tls_opts tls_opts;
-    char test_path[100];
-    char icon_path[100];
+    char test_path[PATH_MAX];
+    char icon_path[PATH_MAX];
     bool icon;
     bool debug;
 };
@@ -104,20 +105,20 @@ struct settings parse_cli_parameters(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "--resources") == 0 && i < argc - 1) {
             char *resource_path = argv[++i];
-            // Initialize TLS options
-            char cert_path[100];
-            char key_path[100];
-            strcpy(cert_path, resource_path);
-            strcat(cert_path, "/localhost-2410.crt");
-            strcpy(key_path, resource_path);
-            strcat(key_path, "/localhost-2410.key");
+            // Build every path with snprintf rather than strcpy/strcat: this process runs as
+            // root, and the previous version would have written past the end of these fixed
+            // buffers for a long enough resource path.
+            char cert_path[PATH_MAX];
+            char key_path[PATH_MAX];
+            if (snprintf(cert_path, sizeof(cert_path), "%s/localhost-2410.crt", resource_path) >= (int) sizeof(cert_path) ||
+                snprintf(key_path, sizeof(key_path), "%s/localhost-2410.key", resource_path) >= (int) sizeof(key_path) ||
+                snprintf(s.icon_path, sizeof(s.icon_path), "%s/icon.svg", resource_path) >= (int) sizeof(s.icon_path) ||
+                snprintf(s.test_path, sizeof(s.test_path), "%s/test.html", resource_path) >= (int) sizeof(s.test_path)) {
+                __android_log_print(ANDROID_LOG_FATAL, THIS_FILE, "Resource path is too long.");
+                return s;
+            }
             s.tls_opts.cert = mg_file_read(&mg_fs_posix, cert_path);
             s.tls_opts.key = mg_file_read(&mg_fs_posix, key_path);
-            // Initialize resource paths
-            strcpy(s.icon_path, resource_path);
-            strcat(s.icon_path, "/icon.svg");
-            strcpy(s.test_path, resource_path);
-            strcat(s.test_path, "/test.html");
             s.init = true;
         } else if (strcmp(argv[i], "--icon") == 0) {
             s.icon = true;

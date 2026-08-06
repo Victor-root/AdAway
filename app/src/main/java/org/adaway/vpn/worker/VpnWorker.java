@@ -227,6 +227,15 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
                 Timber.w(e, "Network exception in vpn thread, reconnecting…");
                 // If an exception was thrown, notify status and try again
                 this.vpnService.notifyVpnStatus(RECONNECTING_NETWORK_ERROR);
+            } catch (RuntimeException e) {
+                // Anything unexpected used to escape this loop and kill the thread outright,
+                // which left the tunnel down while the notification, the tile and the home
+                // screen all kept reporting it as running. Stop deliberately instead, so the
+                // STOPPED status below is actually sent and the state the user sees is true.
+                // Deliberately not retried: an unknown failure is not something to loop on,
+                // and the heartbeat restarts the VPN if the user still wants it on.
+                Timber.e(e, "Unexpected error in vpn thread, stopping.");
+                break;
             }
         }
         this.vpnService.notifyVpnStatus(STOPPED);
@@ -351,6 +360,15 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
             dnsSocket = new DatagramSocket();
             // Packets to be sent to the real DNS server will need to be protected from the VPN
             this.vpnService.protect(dnsSocket);
+            // Bind the socket to the resolver we are about to query, AFTER protect() so the route
+            // lookup does not go through the tunnel. The socket is used for this single query and
+            // then closed, so this costs nothing and makes the kernel drop any datagram coming
+            // from another address: without it, receive() below accepts a reply from anyone who
+            // can reach this ephemeral port, and the response is then handed back to the calling
+            // app as if the real resolver had answered. connect() reports a failure as a
+            // SocketException, which is an IOException, so it takes the exact same path as a
+            // failing send() already did.
+            dnsSocket.connect(outPacket.getSocketAddress());
             dnsSocket.send(outPacket);
             // Enqueue DNS query
             this.dnsQueryQueue.addQuery(dnsSocket, callback);

@@ -2,6 +2,7 @@ package org.adaway.model.backup;
 
 import org.adaway.db.entity.HostListItem;
 import org.adaway.db.entity.HostsSource;
+import org.adaway.util.RegexUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,9 +49,16 @@ final class BackupFormat {
 
     static HostsSource sourceFromJson(JSONObject sourceObject) throws JSONException {
         HostsSource source = new HostsSource();
-        source.setLabel(sourceObject.getString(SOURCE_LABEL_ATTRIBUTE));
+        // A backup file can come from anyone. Both of these end up written verbatim into the
+        // generated hosts file, which in root mode is installed as /system/etc/hosts, so a
+        // value carrying a line break would inject arbitrary host entries there.
+        String label = sourceObject.getString(SOURCE_LABEL_ATTRIBUTE);
+        if (containsLineBreak(label)) {
+            throw new JSONException("Invalid source label: " + label);
+        }
+        source.setLabel(label);
         String url = sourceObject.getString(SOURCE_URL_ATTRIBUTE);
-        if (!HostsSource.isValidUrl(url)) {
+        if (!HostsSource.isValidUrl(url) || containsLineBreak(url)) {
             throw new JSONException("Invalid source URL: "+url);
         }
         source.setUrl(url);
@@ -73,12 +81,34 @@ final class BackupFormat {
 
     static HostListItem hostFromJson(JSONObject hostObject) throws JSONException {
         HostListItem host = new HostListItem();
-        host.setHost(hostObject.getString(HOST_ATTRIBUTE));
+        // Same trust boundary as sourceFromJson: these two land in the hosts file, so they are
+        // held to the same format the app enforces when the user types them in by hand.
+        // Wildcards are accepted because allowed entries legitimately use them.
+        String hostname = hostObject.getString(HOST_ATTRIBUTE);
+        if (!RegexUtils.isValidWildcardHostname(hostname)) {
+            throw new JSONException("Invalid host name: " + hostname);
+        }
+        host.setHost(hostname);
         if (hostObject.has(REDIRECT_ATTRIBUTE)) {
-            host.setRedirection(hostObject.getString(REDIRECT_ATTRIBUTE));
+            String redirection = hostObject.getString(REDIRECT_ATTRIBUTE);
+            if (!RegexUtils.isValidIP(redirection)) {
+                throw new JSONException("Invalid redirection: " + redirection);
+            }
+            host.setRedirection(redirection);
         }
         host.setEnabled(hostObject.getBoolean(ENABLED_ATTRIBUTE));
         host.setSourceId(USER_SOURCE_ID);
         return host;
+    }
+
+    /**
+     * Check whether a value carries a line break, which would let it inject additional lines
+     * into the generated hosts file.
+     *
+     * @param value The value to check.
+     * @return <code>true</code> if the value contains a carriage return or a line feed.
+     */
+    private static boolean containsLineBreak(String value) {
+        return value != null && (value.indexOf('\n') >= 0 || value.indexOf('\r') >= 0);
     }
 }

@@ -10,6 +10,8 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.app.UiModeManager;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.VpnService;
@@ -86,7 +88,11 @@ public class TvHomeActivity extends AppCompatActivity {
         org.adaway.broadcast.UpdateReceiver.clearInstallToast(this);
         setContentView(R.layout.tv_activity_home);
 
-        if (PreferenceHelper.getAdBlockMethod(this) == AdBlockMethod.UNDEFINED) {
+        // Defaulting to VPN skips the onboarding flow, which is the right call on a TV (the
+        // welcome screens are not remote friendly) but not anywhere else. This Activity is
+        // exported, so without the TV check any app could start it on a phone and silently
+        // decide the ad-blocking method for a user who has not been asked yet.
+        if (isRunningOnTv() && PreferenceHelper.getAdBlockMethod(this) == AdBlockMethod.UNDEFINED) {
             PreferenceHelper.setAbBlockMethod(this, VPN);
         }
 
@@ -395,5 +401,16 @@ public class TvHomeActivity extends AppCompatActivity {
             appUpdateButton.setVisibility(View.GONE);
             toggleButton.setNextFocusDownId(R.id.btn_persistence);
         }
+    }
+
+    /**
+     * Check whether this Activity is actually running on a television.
+     *
+     * @return <code>true</code> on a TV, <code>false</code> anywhere else.
+     */
+    private boolean isRunningOnTv() {
+        UiModeManager uiModeManager = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
+        return uiModeManager != null
+                && uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 }

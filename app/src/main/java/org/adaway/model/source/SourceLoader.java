@@ -15,6 +15,7 @@ import org.adaway.db.entity.ListType;
 import org.adaway.util.RegexUtils;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -22,6 +23,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,6 +40,21 @@ class SourceLoader {
     private static final String TAG = "SourceLoader";
     private static final String END_OF_QUEUE_MARKER = "#EndOfQueueMarker";
     private static final int INSERT_BATCH_SIZE = 100;
+    /**
+     * Bound on the reader and parser hand-off queues. Large enough that the stages never starve
+     * each other on a normal source, small enough that an oversized one cannot be buffered whole
+     * into memory.
+     */
+    private static final int QUEUE_CAPACITY = 10_000;
+    /**
+     * How long a stage waits to hand over its end-of-queue marker before giving up.
+     */
+    private static final long MARKER_TIMEOUT_SECONDS = 60;
+    /**
+     * Upper bound on a single source load, so a stalled stage fails the sync instead of leaving
+     * the caller blocked on it forever.
+     */
+    private static final long LOAD_TIMEOUT_MINUTES = 30;
     private static final String HOSTS_PARSER = "^\\s*([^#\\s]+)\\s+([^#\\s]+).*$";
     static final Pattern HOSTS_PARSER_PATTERN = Pattern.compile(HOSTS_PARSER);
 
@@ -46,13 +64,13 @@ class SourceLoader {
         this.source = hostsSource;
     }
 
-    void parse(BufferedReader reader, HostListItemDao hostListItemDao) {
+    void parse(BufferedReader reader, HostListItemDao hostListItemDao) throws IOException {
         // Clear current hosts
         hostListItemDao.clearSourceHosts(this.source.getId());
         // Create batch
         int parserCount = 3;
-        LinkedBlockingQueue<String> hostsLineQueue = new LinkedBlockingQueue<>();
-        LinkedBlockingQueue<HostListItem> hostsListItemQueue = new LinkedBlockingQueue<>();
+        LinkedBlockingQueue<String> hostsLineQueue = new LinkedBlockingQueue<>(QUEUE_CAPACITY);
+        LinkedBlockingQueue<HostListItem> hostsListItemQueue = new LinkedBlockingQueue<>(QUEUE_CAPACITY);
         SourceReader sourceReader = new SourceReader(reader, hostsLineQueue, parserCount);
         ItemInserter inserter = new ItemInserter(hostsListItemQueue, hostListItemDao, parserCount);
         ExecutorService executorService = Executors.newFixedThreadPool(
@@ -65,15 +83,48 @@ class SourceLoader {
         }
         Future<Integer> inserterFuture = executorService.submit(inserter);
         try {
-            Integer inserted = inserterFuture.get();
+            Integer inserted = inserterFuture.get(LOAD_TIMEOUT_MINUTES, TimeUnit.MINUTES);
             Timber.i("%s host list items inserted.", inserted);
         } catch (ExecutionException e) {
             Timber.w(e, "Failed to parse hosts sources.");
+        } catch (TimeoutException e) {
+            inserterFuture.cancel(true);
+            Timber.w(e, "Timed out loading hosts source.");
         } catch (InterruptedException e) {
             Timber.w(e, "Interrupted while parsing sources.");
             Thread.currentThread().interrupt();
         }
         executorService.shutdown();
+        // The read failing part way through used to be logged and forgotten: the source was
+        // left holding whatever arrived before the break, then stamped as successfully synced,
+        // so a download cut short (a hostile network only has to reset the connection) silently
+        // disabled that source until something else forced a refresh. Report it instead, so the
+        // caller treats it as the failed sync it is and retries later.
+        Throwable readFailure = sourceReader.failure;
+        if (readFailure != null) {
+            throw new IOException("Failed to read the whole hosts source.", readFailure);
+        }
+    }
+
+    /**
+     * Enqueue an end-of-queue marker, which the downstream stage needs in order to terminate.
+     * Waits, because the queues are bounded, but never indefinitely: if the stage that should be
+     * draining has already died there would be nobody to make room, and blocking forever would
+     * hang the sync instead of failing it.
+     *
+     * @param queue The bounded queue to put into.
+     * @param value The marker to enqueue.
+     * @param <T>   The queue element type.
+     */
+    private static <T> void putMarker(BlockingQueue<T> queue, T value) {
+        try {
+            if (!queue.offer(value, MARKER_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
+                Timber.w("Timed out handing over the end of queue marker.");
+            }
+        } catch (InterruptedException e) {
+            Timber.w(e, "Interrupted while handing over the end of queue marker.");
+            Thread.currentThread().interrupt();
+        }
     }
 
     private static class SourceReader implements Runnable {
@@ -87,19 +138,39 @@ class SourceLoader {
             this.parserCount = parserCount;
         }
 
+        /**
+         * The failure that interrupted the read, if any. Recorded so {@link #parse} can refuse
+         * to treat a partially read source as a complete one.
+         */
+        private volatile Throwable failure;
+
         @Override
         public void run() {
             try {
-                this.reader.lines().forEach(this.queue::add);
+                // put() rather than add(): the queue is bounded now, so the reader waits for the
+                // parsers instead of pulling the whole file into memory ahead of them. An
+                // oversized source used to be materialised entirely as Strings, then again as
+                // items in the next queue, which is an out-of-memory kill a hostile blocklist
+                // host could trigger on its own.
+                String line;
+                while ((line = this.reader.readLine()) != null) {
+                    this.queue.put(line);
+                }
+            } catch (InterruptedException e) {
+                Timber.w(e, "Interrupted while reading hosts source.");
+                this.failure = e;
+                Thread.currentThread().interrupt();
             } catch (Throwable t) {
                 Timber.w(t, "Failed to read hosts source.");
+                this.failure = t;
             } finally {
                 // Send end of queue marker to parsers
                 for (int i = 0; i < this.parserCount; i++) {
-                    this.queue.add(END_OF_QUEUE_MARKER);
+                    putMarker(this.queue, END_OF_QUEUE_MARKER);
                 }
             }
         }
+
     }
 
     private static class HostListItemParser implements Runnable {
@@ -127,14 +198,18 @@ class SourceLoader {
                         // Send end of queue marker to inserter
                         HostListItem endItem = new HostListItem();
                         endItem.setHost(line);
-                        this.itemQueue.add(endItem);
+                        // Must reach the inserter even if this thread is interrupted, or the
+                        // inserter waits forever for a completion marker that never arrives.
+                        putMarker(this.itemQueue, endItem);
                     } // Check comments
                     else if (line.isEmpty() || line.charAt(0) == '#') {
                         Timber.d("Skip comment: %s.", line);
                     } else {
                         HostListItem item = allowedList ? parseAllowListItem(line) : parseHostListItem(line);
                         if (item != null && isRedirectionValid(item) && isHostValid(item)) {
-                            this.itemQueue.add(item);
+                            // put(), not add(): the queue is bounded, so add() would throw once
+                            // the inserter falls behind.
+                            this.itemQueue.put(item);
                         }
                     }
                 } catch (InterruptedException e) {

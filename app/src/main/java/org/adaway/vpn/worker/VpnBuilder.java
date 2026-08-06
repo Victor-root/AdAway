@@ -48,8 +48,10 @@ public final class VpnBuilder {
      * @param service         The VPN service to create interface.
      * @param dnsServerMapper The DNS server mapper used to configure VPN address and routes.
      * @return The VPN interface.
+     * @throws VpnNetworkException If the tunnel could not be established, typically because VPN
+     *                             consent was revoked while it was being built.
      */
-    public static ParcelFileDescriptor establish(VpnService service, DnsServerMapper dnsServerMapper) {
+    public static ParcelFileDescriptor establish(VpnService service, DnsServerMapper dnsServerMapper) throws VpnNetworkException {
         Timber.d("Establishing VPN…");
         VpnService.Builder builder = service.new Builder();
         // Configure VPN address and DNS servers
@@ -77,6 +79,13 @@ public final class VpnBuilder {
                         FLAG_CANCEL_CURRENT | FLAG_IMMUTABLE
                 ))
                 .establish();
+        if (pfd == null) {
+            // Documented behaviour when the app is no longer prepared as the VPN, e.g. consent
+            // was revoked or another VPN app took the slot. Reported as a network exception so
+            // the worker takes its existing reconnect path instead of dereferencing null and
+            // dying with the tunnel silently down while the UI still shows it running.
+            throw new VpnNetworkException("Failed to establish the VPN interface.");
+        }
         Timber.i("VPN established.");
         return pfd;
     }

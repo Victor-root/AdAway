@@ -72,10 +72,7 @@ public class UpdateModel {
             Timber.i("Skipping APK cleanup; install pending.");
             return;
         }
-        File apkFile = new File(this.context.getExternalCacheDir(), APK_FILE_NAME);
-        if (apkFile.exists() && apkFile.delete()) {
-            Timber.i("Cleaned up previous APK download.");
-        }
+        ApkInstaller.clearDownloads(this.context);
     }
 
     /**

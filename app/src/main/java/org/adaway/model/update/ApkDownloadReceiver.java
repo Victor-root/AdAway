@@ -4,22 +4,16 @@ import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-
-import androidx.core.content.FileProvider;
-
-import java.io.File;
+import android.database.Cursor;
 
 import timber.log.Timber;
 
 /**
  * Receives the {@link DownloadManager#ACTION_DOWNLOAD_COMPLETE} broadcast for the APK
- * download queued by {@link UpdateModel} and launches the system package installer
- * via a {@link FileProvider} URI.
+ * download queued by {@link UpdateModel} and hands the result to {@link ApkInstaller},
+ * which verifies it before the system package installer ever sees it.
  */
 public class ApkDownloadReceiver extends BroadcastReceiver {
-    private static final String APK_MIME_TYPE = "application/vnd.android.package-archive";
-
     private final long downloadId;
 
     public ApkDownloadReceiver(long downloadId) {
@@ -32,27 +26,34 @@ public class ApkDownloadReceiver extends BroadcastReceiver {
         if (this.downloadId != id) {
             return;
         }
-        File apkFile = new File(context.getExternalCacheDir(), UpdateModel.APK_FILE_NAME);
-        if (!apkFile.exists()) {
-            Timber.w("APK file is missing after download (id=%d).", id);
+        // ACTION_DOWNLOAD_COMPLETE also fires for a download that failed or was interrupted,
+        // leaving a partial file behind. Without this check that truncated file was handed
+        // straight to the installer.
+        if (!isDownloadSuccessful(context, id)) {
+            Timber.w("Download %d did not complete successfully; discarding it.", id);
+            ApkInstaller.clearDownloads(context);
             return;
         }
-        Uri apkUri = FileProvider.getUriForFile(
-                context,
-                context.getPackageName() + ".fileprovider",
-                apkFile);
-        installApk(context, apkUri);
+        ApkInstaller.verifyAndInstall(context, ApkInstaller.getStagedApk(context));
     }
 
-    private void installApk(Context context, Uri apkUri) {
-        Intent install = new Intent(Intent.ACTION_VIEW)
-                .setDataAndType(apkUri, APK_MIME_TYPE)
-                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        try {
-            context.startActivity(install);
+    private boolean isDownloadSuccessful(Context context, long id) {
+        DownloadManager downloadManager = context.getSystemService(DownloadManager.class);
+        if (downloadManager == null) {
+            return false;
+        }
+        try (Cursor cursor = downloadManager.query(new DownloadManager.Query().setFilterById(id))) {
+            if (cursor == null || !cursor.moveToFirst()) {
+                return false;
+            }
+            int statusColumn = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
+            if (statusColumn < 0) {
+                return false;
+            }
+            return cursor.getInt(statusColumn) == DownloadManager.STATUS_SUCCESSFUL;
         } catch (Exception e) {
-            Timber.e(e, "Failed to launch APK installer.");
+            Timber.w(e, "Could not read the download status.");
+            return false;
         }
     }
 }

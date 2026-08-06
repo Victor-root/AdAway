@@ -471,6 +471,12 @@ public class SourceModel {
             }
         } catch (IOException e) {
             throw new IOException("Error while reading hosts file from " + hostsFileUrl + ".", e);
+        } catch (SecurityException e) {
+            // The document provider can revoke the persisted grant, or be uninstalled, long
+            // after the user picked the file. That throws from openInputStream, and being
+            // unchecked it used to escape into the background executor and take the process
+            // down. Report it as a failed source like any other.
+            throw new IOException("Lost read access to hosts file " + hostsFileUrl + ".", e);
         }
     }
 
@@ -479,8 +485,9 @@ public class SourceModel {
      *
      * @param hostsSource The host source to parse.
      * @param reader      The host source reader.
+     * @throws IOException If the source could not be read in full.
      */
-    private void parseSourceInputStream(HostsSource hostsSource, BufferedReader reader) {
+    private void parseSourceInputStream(HostsSource hostsSource, BufferedReader reader) throws IOException {
         setState(R.string.status_parse_source, hostsSource.getLabel());
         long startTime = System.currentTimeMillis();
         new SourceLoader(hostsSource).parse(reader, this.hostListItemDao);

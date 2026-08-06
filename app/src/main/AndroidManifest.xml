@@ -46,11 +46,18 @@
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
 
+    <!--
+        No participation in Android's backup infrastructure: nothing about this app leaves the
+        device on its own. Preferences and user rules used to be uploaded to Google Drive via
+        the Android Backup Service. Preferences and rules can still be exported and restored
+        deliberately, from Preferences > Backup and restore, to a file the user chooses.
+        allowBackup=false covers Google Drive backup; dataExtractionRules additionally opts out
+        of the device-to-device transfer that Android 12 and above perform independently of it.
+    -->
     <application
         android:name=".AdAwayApplication"
-        android:allowBackup="true"
-        android:backupAgent=".model.backup.AppBackupAgent"
-        android:fullBackupOnly="false"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:localeConfig="@xml/locales_config"

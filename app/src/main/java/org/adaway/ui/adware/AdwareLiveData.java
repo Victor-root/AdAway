@@ -129,7 +129,7 @@ class AdwareLiveData extends LiveData<List<AdwareInstall>> {
             Timber.v("[%s] %s", type, componentName);
             for (String adPackagePrefix : AD_PACKAGE_PREFIXES) {
                 if (componentName.startsWith(adPackagePrefix)) {
-                    Timber.i("Detected ad framework prefix %s in package %s as %s %s", adPackagePrefix, packageName, type, componentName);
+                    Timber.d("Detected ad framework prefix %s in package %s as %s %s", adPackagePrefix, packageName, type, componentName);
                     return true;
                 }
             }

@@ -37,6 +37,17 @@ public final class DiagnosticLogTree extends Timber.Tree {
      * ("Discarding invalid packet", "Failed to query…") do not match this prefix and are kept.
      */
     private static final String DNS_QUERY_TRACE_PREFIX = "handleDnsRequest: DNS Name ";
+    /**
+     * The other per-query traces that carry the resolved host name. The prefix above only caught
+     * the three result traces, so a failing query still wrote the host name into a log built to
+     * be shared, contradicting what the preference promises the user. Failures are still visible
+     * in the log, just without naming the host.
+     */
+    private static final String[] HOST_NAME_TRACE_PREFIXES = {
+            "Failed to get inet address for host ",
+            "Failed to query DNS Name ",
+            "No address was found for DNS Name ",
+    };
 
     private final DiagnosticLog log;
 
@@ -62,6 +73,14 @@ public final class DiagnosticLogTree extends Timber.Tree {
         if (message.startsWith(DNS_QUERY_TRACE_PREFIX)) {
             return;
         }
+        // Drop the remaining traces naming a resolved host: this log is meant to be shared, and
+        // the preference states it never records browsing history.
+        for (String prefix : HOST_NAME_TRACE_PREFIXES) {
+            if (message.startsWith(prefix)) {
+                this.log.append(redactedLine(priority, tag, prefix));
+                return;
+            }
+        }
         try {
             String line = LocalDateTime.now().format(TIMESTAMP_FORMAT) +
                     ' ' + priorityChar(priority) +
@@ -74,6 +93,21 @@ public final class DiagnosticLogTree extends Timber.Tree {
         } catch (RuntimeException e) {
             // Logging must never crash the app.
         }
+    }
+
+    /**
+     * Keep the fact that a query failed, drop the host it was for.
+     *
+     * @param priority The log priority.
+     * @param tag      The log tag.
+     * @param prefix   The matched prefix, kept as is.
+     * @return The log line with the host name replaced by a placeholder.
+     */
+    private static String redactedLine(int priority, @Nullable String tag, String prefix) {
+        return LocalDateTime.now().format(TIMESTAMP_FORMAT) +
+                ' ' + priorityChar(priority) +
+                '/' + (tag == null ? "" : tag) +
+                ": " + prefix + "(host hidden)";
     }
 
     private static char priorityChar(int priority) {

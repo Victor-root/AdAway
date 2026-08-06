@@ -12,13 +12,13 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 
 import io.noties.markwon.Markwon;
 import org.adaway.R;
 import org.adaway.databinding.UpdateActityBinding;
 import org.adaway.helper.ThemeHelper;
+import org.adaway.model.update.ApkInstaller;
 import org.adaway.model.update.Manifest;
 import org.adaway.model.update.UpdateModel;
 
@@ -93,20 +93,9 @@ public class UpdateActivity extends AppCompatActivity {
         if (!activity.getPackageManager().canRequestPackageInstalls()) {
             return false;
         }
-        File apkFile = new File(activity.getExternalCacheDir(), UpdateModel.APK_FILE_NAME);
-        if (!apkFile.exists()) {
-            Timber.w("APK file missing on install resume.");
-            return false;
-        }
-        Uri apkUri = FileProvider.getUriForFile(
-                activity,
-                activity.getPackageName() + ".fileprovider",
-                apkFile);
-        Intent install = new Intent(Intent.ACTION_VIEW)
-                .setDataAndType(apkUri, "application/vnd.android.package-archive")
-                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        activity.startActivity(install);
-        return true;
+        // Verified before install: the staged APK sat on shared storage while the user was in
+        // the Settings screen, so it cannot be trusted just because it is there.
+        return ApkInstaller.verifyAndInstall(activity, ApkInstaller.getStagedApk(activity));
     }
 
     private void bindListeners() {
@@ -139,8 +128,8 @@ public class UpdateActivity extends AppCompatActivity {
     }
 
     private void launchInstaller() {
-        File apkFile = new File(getExternalCacheDir(), UpdateModel.APK_FILE_NAME);
-        if (!apkFile.exists()) {
+        File apkFile = ApkInstaller.getStagedApk(this);
+        if (apkFile == null || !apkFile.exists()) {
             Timber.w("APK file not found after download.");
             return;
         }
@@ -162,14 +151,7 @@ public class UpdateActivity extends AppCompatActivity {
             startActivity(settings);
             return;
         }
-        Uri apkUri = FileProvider.getUriForFile(
-                this,
-                getPackageName() + ".fileprovider",
-                apkFile);
-        Intent install = new Intent(Intent.ACTION_VIEW)
-                .setDataAndType(apkUri, "application/vnd.android.package-archive")
-                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivity(install);
+        ApkInstaller.verifyAndInstall(this, apkFile);
     }
 
     private void markUpToDate(Manifest manifest) {
@@ -186,14 +168,10 @@ public class UpdateActivity extends AppCompatActivity {
 
     private void startUpdate(View view) {
         this.binding.updateButton.setVisibility(GONE);
-        // If a previous attempt left the APK on disk (e.g. the user denied the
-        // "install unknown apps" permission and is now retrying), skip the
-        // download and jump straight to the install flow.
-        File apkFile = new File(getExternalCacheDir(), UpdateModel.APK_FILE_NAME);
-        if (apkFile.exists()) {
-            launchInstaller();
-            return;
-        }
+        // Always fetch a fresh copy. A file left on shared storage is not evidence that we
+        // downloaded it, so reusing it let anything that could write there decide what the
+        // installer was handed.
+        ApkInstaller.clearDownloads(this);
         this.binding.downloadProgressBar.setVisibility(VISIBLE);
         this.updateViewModel.update();
     }

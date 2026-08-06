@@ -25,6 +25,7 @@ import org.adaway.vpn.VpnStartDecision;
 import org.adaway.vpn.VpnStatus;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -38,8 +39,20 @@ import timber.log.Timber;
 public class VpnModel extends AdBlockModel {
     private final HostEntryDao hostEntryDao;
     private final LruCache<String, HostEntry> blockCache;
+    /**
+     * Maximum number of host names kept in the DNS log. The set is fed by the packet thread,
+     * so an unbounded one grows with every distinct host resolved.
+     */
+    private static final int MAX_LOGGED_HOSTS = 8192;
+
+    /**
+     * The recorded host names, newest last. Written from the VPN packet thread and read from
+     * the UI thread, so every access is guarded by the set's own monitor: copying it while a
+     * packet was being handled used to throw ConcurrentModificationException, which killed the
+     * whole process and with it the tunnel.
+     */
     private final LinkedHashSet<String> logs;
-    private boolean recordingLogs;
+    private volatile boolean recordingLogs;
     private int requestCount;
 
     /**
@@ -131,12 +144,16 @@ public class VpnModel extends AdBlockModel {
 
     @Override
     public List<String> getLogs() {
-        return new ArrayList<>(this.logs);
+        synchronized (this.logs) {
+            return new ArrayList<>(this.logs);
+        }
     }
 
     @Override
     public void clearLogs() {
-        this.logs.clear();
+        synchronized (this.logs) {
+            this.logs.clear();
+        }
     }
 
     /**
@@ -155,9 +172,18 @@ public class VpnModel extends AdBlockModel {
             Timber.d("Host cache miss rate: %s.", missRate);
             this.requestCount = 0;
         }
-        // Add host to logs
+        // Add host to logs. Nothing is locked while recording is off, which is the default,
+        // so the per-query path is untouched for everyone not looking at the DNS log.
         if (this.recordingLogs) {
-            this.logs.add(host);
+            synchronized (this.logs) {
+                if (this.logs.size() >= MAX_LOGGED_HOSTS && !this.logs.contains(host)) {
+                    // Insertion ordered, so the first element is the oldest host recorded.
+                    Iterator<String> iterator = this.logs.iterator();
+                    iterator.next();
+                    iterator.remove();
+                }
+                this.logs.add(host);
+            }
         }
         // Check cache
         return this.blockCache.get(host);

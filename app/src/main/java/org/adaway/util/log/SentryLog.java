@@ -2,6 +2,7 @@ package org.adaway.util.log;
 
 import static io.sentry.SentryLevel.ERROR;
 import static io.sentry.SentryLevel.INFO;
+import static io.sentry.SentryLevel.WARNING;
 
 import android.app.Application;
 
@@ -43,11 +44,18 @@ public final class SentryLog {
      */
     public static void setEnabled(Application application, boolean enabled) {
         if (enabled) {
-            // Initialize sentry client manually and bind it to logging
+            // Initialize sentry client manually and bind it to logging.
+            // Breadcrumbs start at WARNING, not INFO: the VPN logs every resolved host name at
+            // INFO, so an INFO threshold attached the user's recent browsing to every report.
             SentryAndroid.init(application, options -> {
-                options.addIntegration(new SentryTimberIntegration(ERROR, INFO));
+                options.addIntegration(new SentryTimberIntegration(ERROR, WARNING));
                 options.addIntegration(new FragmentLifecycleIntegration(application, true, false));
             });
+        } else {
+            // Turning the preference off used to do nothing at all: an already initialized
+            // client kept reporting for the rest of the process life. Close it so the switch
+            // takes effect immediately, as the user expects.
+            Sentry.close();
         }
     }
 

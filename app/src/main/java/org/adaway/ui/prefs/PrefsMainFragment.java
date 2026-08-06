@@ -83,6 +83,14 @@ public class PrefsMainFragment extends PreferenceFragmentCompat {
         if (debugCategory != null) {
             debugCategory.setVisible(false);
         }
+        // The telemetry switch lives in that category, so hiding it also takes away the only way
+        // to turn telemetry back off. It defaults to off, but a restored backup carries the
+        // preference across, which would leave a release user uploading reports with no control
+        // over it. Force it off whenever the switch is out of reach.
+        if (PreferenceHelper.getTelemetryEnabled(requireContext())) {
+            PreferenceHelper.setTelemetryEnabled(requireContext(), false);
+            SentryLog.setEnabled(requireActivity().getApplication(), false);
+        }
     }
 
     private void bindTelemetryPrefAction() {

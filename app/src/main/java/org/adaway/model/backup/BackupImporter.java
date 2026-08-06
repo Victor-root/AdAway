@@ -11,6 +11,7 @@ import org.adaway.db.AppDatabase;
 import org.adaway.db.dao.HostListItemDao;
 import org.adaway.db.dao.HostsSourceDao;
 import org.adaway.db.entity.HostListItem;
+import org.adaway.db.entity.HostsSource;
 import org.adaway.db.entity.ListType;
 import org.adaway.util.AppExecutors;
 import org.json.JSONArray;
@@ -115,14 +116,29 @@ public final class BackupImporter {
     private static void importSourceBackup(HostsSourceDao hostsSourceDao, JSONArray sources) throws JSONException {
         for (int index = 0; index < sources.length(); index++) {
             JSONObject sourceObject = sources.getJSONObject(index);
-            hostsSourceDao.insert(sourceFromJson(sourceObject));
+            HostsSource source;
+            try {
+                source = sourceFromJson(sourceObject);
+            } catch (JSONException e) {
+                // Skip the entry rather than abandoning the whole restore: one rejected value
+                // must not cost the user every other entry in their backup.
+                Timber.w(e, "Skipping invalid source entry %d.", index);
+                continue;
+            }
+            hostsSourceDao.insert(source);
         }
     }
 
     private static void importListBackup(HostListItemDao hostListItemDao, ListType type, JSONArray hosts) throws JSONException {
         for (int index = 0; index < hosts.length(); index++) {
             JSONObject hostObject = hosts.getJSONObject(index);
-            HostListItem host = hostFromJson(hostObject);
+            HostListItem host;
+            try {
+                host = hostFromJson(hostObject);
+            } catch (JSONException e) {
+                Timber.w(e, "Skipping invalid %s entry %d.", type, index);
+                continue;
+            }
             host.setType(type);
             Optional<Integer> id = hostListItemDao.getHostId(host.getHost());
             if (id.isPresent()) {
