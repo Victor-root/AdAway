@@ -18,9 +18,6 @@
     <string name="pref_backup_restore">Sauvegarder/restaurer les règles de blocage</string>
     <!-- Debug category -->
     <string name="pref_debug_category">Débogage</string>
-    <string name="pref_enable_telemetry">Envoyer des relevés de plantage</string>
-    <string name="pref_enable_telemetry_summary">Signaler à Sentry (sentry.io)</string>
-    <string name="pref_enable_telemetry_disabled_summary">N’est pas pris en charge dans cette version</string>
     <string name="pref_enable_debug">Journalisation détaillée</string>
     <string name="pref_enable_debug_summary">Les changements prendront effet après redémarrage de l’appli</string>
 </resources>

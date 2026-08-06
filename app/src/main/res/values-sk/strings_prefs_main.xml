@@ -18,9 +18,6 @@
     <string name="pref_backup_restore">Zálohovať / obnoviť pravidlá blokovania</string>
     <!-- Debug category -->
     <string name="pref_debug_category">Odstraňovanie chýb</string>
-    <string name="pref_enable_telemetry">Odoslať hlásenie o zlyhaní</string>
-    <string name="pref_enable_telemetry_summary">Nahlásiť na Sentry (sentry.io)</string>
-    <string name="pref_enable_telemetry_disabled_summary">Toto zostavenie nie je podporované</string>
     <string name="pref_enable_debug">Podrobné zaznamenávanie</string>
     <string name="pref_enable_debug_summary">Aplikáciu je potrebné reštartovať</string>
 </resources>

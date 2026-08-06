@@ -351,48 +351,6 @@ public final class PreferenceHelper {
         );
     }
 
-    public static boolean getTelemetryEnabled(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(
-                Constants.PREFS_NAME,
-                Context.MODE_PRIVATE
-        );
-        return prefs.getBoolean(
-                context.getString(R.string.pref_enable_telemetry_key),
-                context.getResources().getBoolean(R.bool.pref_enable_telemetry_def)
-        );
-    }
-
-    public static void setTelemetryEnabled(Context context, boolean enabled) {
-        SharedPreferences prefs = context.getSharedPreferences(
-                Constants.PREFS_NAME,
-                Context.MODE_PRIVATE
-        );
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(context.getString(R.string.pref_enable_telemetry_key), enabled);
-        editor.apply();
-    }
-
-    public static boolean getDisplayTelemetryConsent(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(
-                Constants.PREFS_NAME,
-                Context.MODE_PRIVATE
-        );
-        return prefs.getBoolean(
-                context.getString(R.string.pref_display_telemetry_consent_key),
-                context.getResources().getBoolean(R.bool.pref_display_telemetry_consent_def)
-        );
-    }
-
-    public static void setDisplayTelemetryConsent(Context context, boolean displayTelemetryConsent) {
-        SharedPreferences prefs = context.getSharedPreferences(
-                Constants.PREFS_NAME,
-                Context.MODE_PRIVATE
-        );
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(context.getString(R.string.pref_display_telemetry_consent_key), displayTelemetryConsent);
-        editor.apply();
-    }
-
     public static String getVpnExcludedSystemApps(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(
                 Constants.PREFS_NAME,

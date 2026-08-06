@@ -18,9 +18,6 @@
     <string name="pref_backup_restore">Sichern / Wiederherstellen Ihrer Listen</string>
     <!-- Debug category -->
     <string name="pref_debug_category">Fehlerdiagnose</string>
-    <string name="pref_enable_telemetry">Absturzberichte aktivieren</string>
-    <string name="pref_enable_telemetry_summary">Der Anwendung erlauben, Fehler und Absturzberichte an Sentry (sentry.io) zu senden.</string>
-    <string name="pref_enable_telemetry_disabled_summary">Nicht unterstützt in dieser Version</string>
     <string name="pref_enable_debug">Ausführliche Protokollierung aktivieren</string>
     <string name="pref_enable_debug_summary">Zum Anwenden ist ein Neustart der App erforderlich.</string>
 </resources>

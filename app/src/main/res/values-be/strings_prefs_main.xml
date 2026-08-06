@@ -18,9 +18,6 @@
     <string name="pref_backup_restore">Рэзервовая копія / аднаўленне правілаў блакавання</string>
     <!-- Debug category -->
     <string name="pref_debug_category">Рэжым адладкі</string>
-    <string name="pref_enable_telemetry">Адпраўляць справаздачы аб памылках</string>
-    <string name="pref_enable_telemetry_summary">Адпраўляць у Sentry (sentry.io)</string>
-    <string name="pref_enable_telemetry_disabled_summary">Не падтрымліваецца ў гэтай зборцы</string>
     <string name="pref_enable_debug">Журнал адладкі</string>
     <string name="pref_enable_debug_summary">Для прымянення патрабуецца перазапуск праграмы</string>
 </resources>

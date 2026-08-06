@@ -1,1 +1,1 @@
-include ':app', ':sentrystub', ':tcpdump', ':webserver'
+include ':app', ':tcpdump', ':webserver'

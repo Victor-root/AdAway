@@ -18,9 +18,6 @@
     <string name="pref_backup_restore">قواعد حظر النسخ الاحتياطي / الاستعادة</string>
     <!-- Debug category -->
     <string name="pref_debug_category">التصحيح</string>
-    <string name="pref_enable_telemetry">إرسال تقارير الأعطال</string>
-    <string name="pref_enable_telemetry_summary">إرسال تقارير الأعطال إلى Sentry (sentry.io)</string>
-    <string name="pref_enable_telemetry_disabled_summary">غير مدعوم في هذا الإصدار</string>
     <string name="pref_enable_debug">تسجيل التقارير المفصل</string>
     <string name="pref_enable_debug_summary">إعادة التشغيل مطلوبة لتطبيق الإعدادات</string>
 </resources>

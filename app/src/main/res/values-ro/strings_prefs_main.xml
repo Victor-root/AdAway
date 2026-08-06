@@ -18,9 +18,6 @@
     <string name="pref_backup_restore">Salvare / restabilire copie de rezervă pentru regulile de blocare</string>
     <!-- Debug category -->
     <string name="pref_debug_category">Depanare</string>
-    <string name="pref_enable_telemetry">Trimitere raport erori</string>
-    <string name="pref_enable_telemetry_summary">Raportează către Sentry (sentry.io)</string>
-    <string name="pref_enable_telemetry_disabled_summary">Nesuportat în această versiune</string>
     <string name="pref_enable_debug">Depanare cu jurnal în timp real</string>
     <string name="pref_enable_debug_summary">Este necesară repornirea aplicației pentru aplicare</string>
 </resources>

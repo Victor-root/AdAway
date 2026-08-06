@@ -49,13 +49,6 @@
         app:key="@string/pref_debug_category_key"
         app:title="@string/pref_debug_category">
         <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_enable_telemetry_def"
-            app:icon="@drawable/outline_cloud_upload_24"
-            app:key="@string/pref_enable_telemetry_key"
-            app:singleLineTitle="false"
-            app:summary="@string/pref_enable_telemetry_summary"
-            app:title="@string/pref_enable_telemetry" />
-        <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_enable_debug_def"
             app:icon="@drawable/ic_bug_report_24dp"
             app:key="@string/pref_enable_debug_key"

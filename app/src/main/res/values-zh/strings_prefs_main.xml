@@ -18,9 +18,6 @@
     <string name="pref_backup_restore">备份/还原屏蔽规则</string>
     <!-- Debug category -->
     <string name="pref_debug_category">调试</string>
-    <string name="pref_enable_telemetry">启用崩溃报告</string>
-    <string name="pref_enable_telemetry_summary">允许本应用程序向 Sentry（sentry.io）发送错误与崩溃报告。</string>
-    <string name="pref_enable_telemetry_disabled_summary">此版本不支持</string>
     <string name="pref_enable_debug">启用详细日志</string>
     <string name="pref_enable_debug_summary">具体的日志级别为 verbose，需重启 AdAway 才能使此设置生效。</string>
 </resources>

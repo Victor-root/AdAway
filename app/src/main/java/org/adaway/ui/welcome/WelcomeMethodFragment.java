@@ -29,7 +29,6 @@ import com.topjohnwu.superuser.Shell;
 import org.adaway.R;
 import org.adaway.databinding.WelcomeMethodLayoutBinding;
 import org.adaway.helper.PreferenceHelper;
-import org.adaway.util.log.SentryLog;
 
 /**
  * This class is a fragment to setup the ad blocking method.
@@ -97,7 +96,6 @@ public class WelcomeMethodFragment extends WelcomeFragment {
     }
 
     private void notifyRootEnabled() {
-        SentryLog.recordBreadcrumb("Enable root ad-blocking method");
         PreferenceHelper.setAbBlockMethod(requireContext(), ROOT);
         this.binding.rootCardView.setCardBackgroundColor(this.cardEnabledColor);
         this.binding.vpnCardView.setCardBackgroundColor(this.cardColor);
@@ -120,7 +118,6 @@ public class WelcomeMethodFragment extends WelcomeFragment {
     }
 
     private void notifyVpnEnabled() {
-        SentryLog.recordBreadcrumb("Enable vpn ad-blocking method");
         PreferenceHelper.setAbBlockMethod(requireContext(), VPN);
         this.binding.rootCardView.setCardBackgroundColor(this.cardColor);
         this.binding.vpnCardView.setCardBackgroundColor(this.cardEnabledColor);

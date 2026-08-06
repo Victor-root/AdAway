@@ -12,7 +12,6 @@ import androidx.preference.PreferenceFragmentCompat;
 import org.adaway.R;
 import org.adaway.helper.PreferenceHelper;
 import org.adaway.model.adblocking.AdBlockMethod;
-import org.adaway.util.log.SentryLog;
 
 import static org.adaway.model.adblocking.AdBlockMethod.ROOT;
 import static org.adaway.model.adblocking.AdBlockMethod.VPN;
@@ -33,7 +32,6 @@ public class PrefsMainFragment extends PreferenceFragmentCompat {
         // Bind pref actions
         bindThemePrefAction();
         bindAdBlockMethod();
-        bindTelemetryPrefAction();
         hideDebugCategoryOnReleaseBuild();
     }
 
@@ -71,8 +69,8 @@ public class PrefsMainFragment extends PreferenceFragmentCompat {
 
     /**
      * Hide the whole debug category on a release build. The category only holds
-     * developer tooling (telemetry and debug logging), so it is irrelevant to
-     * end users. A release APK is not flagged debuggable, which is what we test.
+     * developer tooling (debug logging), so it is irrelevant to end users.
+     * A release APK is not flagged debuggable, which is what we test.
      */
     private void hideDebugCategoryOnReleaseBuild() {
         boolean debuggable = (requireContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
@@ -82,27 +80,6 @@ public class PrefsMainFragment extends PreferenceFragmentCompat {
         PreferenceCategory debugCategory = findPreference(getString(R.string.pref_debug_category_key));
         if (debugCategory != null) {
             debugCategory.setVisible(false);
-        }
-        // The telemetry switch lives in that category, so hiding it also takes away the only way
-        // to turn telemetry back off. It defaults to off, but a restored backup carries the
-        // preference across, which would leave a release user uploading reports with no control
-        // over it. Force it off whenever the switch is out of reach.
-        if (PreferenceHelper.getTelemetryEnabled(requireContext())) {
-            PreferenceHelper.setTelemetryEnabled(requireContext(), false);
-            SentryLog.setEnabled(requireActivity().getApplication(), false);
-        }
-    }
-
-    private void bindTelemetryPrefAction() {
-        Preference enableTelemetryPref = findPreference(getString(R.string.pref_enable_telemetry_key));
-        assert enableTelemetryPref != null : PREFERENCE_NOT_FOUND;
-        enableTelemetryPref.setOnPreferenceChangeListener((preference, newValue) -> {
-            SentryLog.setEnabled(requireActivity().getApplication(), (boolean) newValue);
-            return true;
-        });
-        if (SentryLog.isStub()) {
-            enableTelemetryPref.setEnabled(false);
-            enableTelemetryPref.setSummary(R.string.pref_enable_telemetry_disabled_summary);
         }
     }
 }

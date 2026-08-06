@@ -18,9 +18,6 @@
     <string name="pref_backup_restore">پشتیبان گیری / بازیابی از قوانین مسدود کردن</string>
     <!-- Debug category -->
     <string name="pref_debug_category">عیب یابی</string>
-    <string name="pref_enable_telemetry">ارسال گزارش خرابی</string>
-    <string name="pref_enable_telemetry_summary">گزارش به نگهبان (sentry.io)</string>
-    <string name="pref_enable_telemetry_disabled_summary">در این نسخه پشتیبانی نمی شود</string>
     <string name="pref_enable_debug">ثبت نام کامل</string>
     <string name="pref_enable_debug_summary">برای انجام به خاموش و روشن کردن گوشی نیاز است</string>
 </resources>

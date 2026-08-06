@@ -18,9 +18,6 @@
     <string name="pref_backup_restore">Engelleme kurallarını yedekle/geri yükle</string>
     <!-- Debug category -->
     <string name="pref_debug_category">Hata ayıklama</string>
-    <string name="pref_enable_telemetry">Kilitlenme raporlarını etkinleştir</string>
-    <string name="pref_enable_telemetry_summary">Uygulamanın Sentry\'ye (sentry.io) hata ve kilitlenme raporları göndermesine izin verin.</string>
-    <string name="pref_enable_telemetry_disabled_summary">Bu derlemede desteklenmiyor</string>
     <string name="pref_enable_debug">Ayrıntılı günlük kaydını etkinleştir</string>
     <string name="pref_enable_debug_summary">Ayarları etkinleştirmek için AdAway\'ı yeniden başlatın.</string>
 </resources>

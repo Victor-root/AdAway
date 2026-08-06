@@ -18,9 +18,6 @@
     <string name="pref_backup_restore">Kopia zapasowa / przywracanie zasad blokowania</string>
     <!-- Debug category -->
     <string name="pref_debug_category">Debugowanie</string>
-    <string name="pref_enable_telemetry">Wysyłaj raporty o awariach</string>
-    <string name="pref_enable_telemetry_summary">Zgłoś raport do Sentry (sentry.io)</string>
-    <string name="pref_enable_telemetry_disabled_summary">Nieobsługiwany w tej wersji</string>
     <string name="pref_enable_debug">Pełne rejestrowanie</string>
     <string name="pref_enable_debug_summary">Aby zastosować, konieczne jest ponowne uruchomienie aplikacji</string>
 </resources>

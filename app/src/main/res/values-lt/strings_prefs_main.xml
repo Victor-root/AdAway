@@ -18,9 +18,6 @@
     <string name="pref_backup_restore">Padaryti atsarginę kopiją / atkurti blokavimo taisykles</string>
     <!-- Debug category -->
     <string name="pref_debug_category">Derinti</string>
-    <string name="pref_enable_telemetry">Siūsti klaidų įrašus</string>
-    <string name="pref_enable_telemetry_summary">Pateikti sargybai (sentry.io)</string>
-    <string name="pref_enable_telemetry_disabled_summary">Nepalaikoma šios programos versijoje</string>
     <string name="pref_enable_debug">Platus įrašų saugojimas</string>
     <string name="pref_enable_debug_summary">Reikia paleisti iš naujo AdAway, kad veiktų nustatymai.</string>
 </resources>

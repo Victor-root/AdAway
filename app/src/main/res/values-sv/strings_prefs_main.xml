@@ -18,9 +18,6 @@
     <string name="pref_backup_restore">Säkerhetskopiera / återställ blockregler</string>
     <!-- Debug category -->
     <string name="pref_debug_category">Felsökning</string>
-    <string name="pref_enable_telemetry">Skicka kraschrapport</string>
-    <string name="pref_enable_telemetry_summary">Rapportera till Sentry (sentry.io)</string>
-    <string name="pref_enable_telemetry_disabled_summary">Stöds inte i denna versionen</string>
     <string name="pref_enable_debug">Utökad loggning</string>
     <string name="pref_enable_debug_summary">Appen måste startas om för att verkställas</string>
 </resources>
