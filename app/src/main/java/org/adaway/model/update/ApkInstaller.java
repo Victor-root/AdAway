@@ -93,6 +93,10 @@ public final class ApkInstaller {
      * @return <code>true</code> if the archive matches the running app, <code>false</code> for
      * any mismatch, and for any error, since an APK that cannot be verified must not be trusted.
      */
+    // Two deprecations here, both deliberate: GET_SIGNATURES is the only way to read signing
+    // information below Android 9, which is why it is picked by the version check below, and the
+    // PackageInfoFlags overloads that replace the int-flag calls only exist from Android 13 on.
+    @SuppressWarnings("deprecation")
     static boolean isSignedLikeInstalledApp(Context context, File apk) {
         try {
             PackageManager packageManager = context.getPackageManager();

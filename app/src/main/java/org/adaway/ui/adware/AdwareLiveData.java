@@ -76,6 +76,9 @@ class AdwareLiveData extends LiveData<List<AdwareInstall>> {
      * @param pm The package manager.
      * @return The found adware package information.
      */
+    // getInstalledApplications(int) and getPackageInfo(String, int) are deprecated in favour of
+    // Flags overloads that only exist from Android 13 on, and the minimum supported is Android 8.
+    @SuppressWarnings("deprecation")
     private List<PackageInfo> getAdwarePackages(PackageManager pm) {
         List<PackageInfo> adPackages = new ArrayList<>();
         // It'd be simpler to just use pm.getInstalledPackages here, but apparently it's broken

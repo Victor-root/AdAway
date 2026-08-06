@@ -173,6 +173,12 @@ public class DnsServerMapper {
      *
      * @param connectivityManager The connectivity manager.
      */
+    // getAllNetworks() is deprecated in favour of the network callbacks, but those report networks
+    // one at a time as they change. Every use below needs the opposite: the full list at this
+    // instant, either to log it or to fall back to a non-VPN network once the active one turned
+    // out to be unusable. getActiveNetwork() returns a single network and cannot answer that, so
+    // there is no non-deprecated replacement for what these methods do.
+    @SuppressWarnings("deprecation")
     private void dumpNetworkInfo(ConnectivityManager connectivityManager) {
         Network activeNetwork = connectivityManager.getActiveNetwork();
         Timber.d("Dumping network and dns configuration:");
@@ -203,6 +209,7 @@ public class DnsServerMapper {
      * @param connectivityManager The connectivity manager.
      * @return The DNS server addresses, an empty collection if no applicable DNS server found.
      */
+    @SuppressWarnings("deprecation") // getAllNetworks(), see dumpNetworkInfo().
     private List<InetAddress> getAnyNonVpnNetworkDns(ConnectivityManager connectivityManager) {
         for (Network network : connectivityManager.getAllNetworks()) {
             if (isNotVpnNetwork(connectivityManager, network)) {
@@ -223,6 +230,7 @@ public class DnsServerMapper {
      * @param activeNetwork       The active network to filter similar transport type.
      * @return The DNS server addresses, an empty collection if no applicable DNS server found.
      */
+    @SuppressWarnings("deprecation") // getAllNetworks(), see dumpNetworkInfo().
     private List<InetAddress> getDnsFromNonVpnNetworkWithMatchingTransportType(
             ConnectivityManager connectivityManager,
             Network activeNetwork

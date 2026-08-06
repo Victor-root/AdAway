@@ -378,6 +378,9 @@ public class TvHomeActivity extends AppCompatActivity {
         }
     }
 
+    // getPackageInfo(String, int) is deprecated in favour of a PackageInfoFlags overload that
+    // only exists from Android 13 on, and the minimum supported here is Android 8.
+    @SuppressWarnings("deprecation")
     private String getCurrentVersionName() {
         try {
             return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;

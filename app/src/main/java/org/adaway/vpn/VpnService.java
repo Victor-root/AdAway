@@ -288,7 +288,9 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         PreferenceHelper.setVpnServiceStatus(this, STOPPED);
         setCurrentTransport(null);
         this.vpnWorker.stop();
-        stopForeground(true);
+        // STOP_FOREGROUND_REMOVE is exactly what the deprecated stopForeground(true) did: leave the
+        // foreground state and take the notification down with it.
+        stopForeground(STOP_FOREGROUND_REMOVE);
         stopSelf();
         updateVpnStatus(STOPPED);
         Timber.i("VPN service stopped.");
@@ -400,6 +402,12 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         connectivityManager.unregisterNetworkCallback(this.cellularNetworkCallback);
     }
 
+    // getAllNetworks() is deprecated in favour of the network callbacks, which is what the rest of
+    // this class already uses. It is kept here for the one thing callbacks cannot do: report the
+    // current state synchronously. The callbacks only fire after registration returns, so without
+    // this seed startVpn() would run with everything still marked unavailable and build the tunnel
+    // for the wrong transport. No non-deprecated API answers "which networks exist right now".
+    @SuppressWarnings("deprecation")
     private void initializeNetworkState(ConnectivityManager connectivityManager) {
         this.wifiAvailable = false;
         this.wifiValidated = false;

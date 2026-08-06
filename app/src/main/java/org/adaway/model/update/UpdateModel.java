@@ -211,6 +211,9 @@ public class UpdateModel {
             this.name = name;
         }
 
+        // getPackageInfo(String, int) is deprecated in favour of a PackageInfoFlags overload that
+        // only exists from Android 13 on, and the minimum supported here is Android 8.
+        @SuppressWarnings("deprecation")
         static VersionInfo get(Context context) {
             try {
                 PackageInfo packageInfo = context.getPackageManager()

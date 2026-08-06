@@ -73,6 +73,9 @@ public class AboutFragment extends Fragment {
         return uiModeManager != null && uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 
+    // getPackageInfo(String, int) is deprecated in favour of a PackageInfoFlags overload that
+    // only exists from Android 13 on, and the minimum supported here is Android 8.
+    @SuppressWarnings("deprecation")
     private static String getVersionName(Context context) {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);

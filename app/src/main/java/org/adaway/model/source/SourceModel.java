@@ -1,6 +1,7 @@
 package org.adaway.model.source;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.provider.DocumentsContract.Document.COLUMN_LAST_MODIFIED;
 import static org.adaway.model.error.HostError.DOWNLOAD_FAILED;
 import static org.adaway.model.error.HostError.NO_CONNECTION;
@@ -14,7 +15,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
@@ -215,8 +217,16 @@ public class SourceModel {
         if (connectivityManager == null) {
             return false;
         }
-        NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
-        return netInfo == null || !netInfo.isConnectedOrConnecting();
+        // Replaces the deprecated NetworkInfo.isConnectedOrConnecting(): a network advertising
+        // NET_CAPABILITY_INTERNET is the modern equivalent. Deliberately not asking for
+        // NET_CAPABILITY_VALIDATED, which would report "offline" while a freshly joined network
+        // is still being validated and refuse an update that would in fact have worked.
+        Network activeNetwork = connectivityManager.getActiveNetwork();
+        if (activeNetwork == null) {
+            return true;
+        }
+        NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(activeNetwork);
+        return capabilities == null || !capabilities.hasCapability(NET_CAPABILITY_INTERNET);
     }
 
     /**

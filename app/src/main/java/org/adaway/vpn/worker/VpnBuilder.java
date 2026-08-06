@@ -126,6 +126,10 @@ public final class VpnBuilder {
         }
     }
 
+    // queryIntentActivities(Intent, int) is deprecated in favour of a ResolveInfoFlags overload
+    // that only exists from Android 13 on. With a minimum of Android 8 the old call has to stay
+    // anyway, so gating it would just mean carrying both for no behaviour difference.
+    @SuppressWarnings("deprecation")
     private static Set<String> getWebBrowserPackageName(PackageManager packageManager) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("https://isabrowser.adaway.org/"));

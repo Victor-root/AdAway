@@ -68,6 +68,7 @@ public final class VpnServiceControls {
      * {@link ActivityManager#getRunningServices(int)} is deprecated but still returns the
      * caller's own services, which is the only use here.
      */
+    @SuppressWarnings("deprecation")
     public static boolean isVpnServiceAlive(Context context) {
         String serviceName = VpnService.class.getName();
         ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
