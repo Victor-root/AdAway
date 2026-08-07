@@ -174,6 +174,18 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
     }
 
     /**
+     * Check whether the running tunnel forwards to the public fallback DNS server rather than to a
+     * resolver the network reported, which happens when it was established during the gap where the
+     * network is up but has not published its DNS servers yet.
+     *
+     * @return <code>true</code> if the tunnel runs on the fallback resolver, <code>false</code>
+     * otherwise.
+     */
+    public boolean isTunnelUsingFallbackDnsServer() {
+        return this.dnsServerMapper.isUsingFallbackDnsServer();
+    }
+
+    /**
      * Stop the VPN worker.
      */
     public void stop() {

@@ -525,9 +525,9 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
      * which re-reads the DNS from the active network.
      * <p>
      * It is deliberately conservative to avoid churn: it acts only for the transport actually
-     * carrying the tunnel, ignores the empty lists seen mid-transition, records the first
-     * observation without rebuilding, and rebuilds only when the <em>effective</em> DNS server set
-     * genuinely differs. The effective set is the raw list filtered through the same rule
+     * carrying the tunnel, ignores the empty lists seen mid-transition, merely records the first
+     * observation unless the tunnel is stuck on the fallback resolver, and rebuilds only when the
+     * <em>effective</em> DNS server set genuinely differs. The effective set is the raw list filtered through the same rule
      * {@link DnsServerMapper} uses at establish time (IPv6 resolvers are dropped when IPv6 is
      * disabled), so a routes/MTU-only change or an IPv6 churn the tunnel never forwards to leaves
      * the set equal and does not rebuild. Every rebuild goes through the worker's connection
@@ -554,8 +554,21 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         // empty), so losing the last usable resolver is still seen as a change and rebuilt.
         List<InetAddress> effectiveDnsServers = DnsServerMapper.getEffectiveDnsServers(this, dnsServers);
         if (this.currentTransportDnsServers == null) {
-            // First observation for this transport: record it, nothing to compare against yet.
+            // First observation for this transport: normally there is nothing to compare against, so
+            // just record it. One case does need acting on though: the tunnel may have been
+            // established while the network was still reporting no DNS server at all, a gap
+            // routinely seen right after a transport switch, in which case it forwards to the public
+            // fallback resolver instead of the network's own. These servers landing here are exactly
+            // what it was missing, so rebuild on them now rather than leaving the tunnel on the
+            // fallback until an app's query fails and forces the rebuild the hard way. Skipped when
+            // these servers are themselves only the fallback, which would rebuild for nothing.
             this.currentTransportDnsServers = effectiveDnsServers;
+            if (this.vpnWorker.isTunnelUsingFallbackDnsServer()
+                    && !DnsServerMapper.isOnlyFallbackDnsServer(effectiveDnsServers)) {
+                Timber.i("Tunnel is running on the fallback DNS server, rebuilding on %s DNS servers %s.",
+                        type, effectiveDnsServers);
+                reconnect();
+            }
             return;
         }
         if (new HashSet<>(effectiveDnsServers).equals(new HashSet<>(this.currentTransportDnsServers))) {

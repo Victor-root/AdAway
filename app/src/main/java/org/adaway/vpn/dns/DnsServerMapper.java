@@ -8,6 +8,7 @@ import static java.util.Collections.emptyList;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -58,15 +59,36 @@ public class DnsServerMapper {
      */
     private static final String FALLBACK_DNS_SERVER = "1.1.1.1";
     /**
+     * The IPv6 counterpart of {@link #FALLBACK_DNS_SERVER}, picked when the device has IPv6
+     * connectivity and no IPv4 at all.
+     * <p>
+     * Falling back to an IPv4 resolver on an IPv6-only network — a common cellular setup, and
+     * exactly the moment the fallback is most likely to be needed — hands the tunnel a resolver it
+     * has no route to: every forwarded query then fails with {@code ENETUNREACH} until something
+     * rebuilds the tunnel.
+     */
+    private static final String FALLBACK_IPV6_DNS_SERVER = "2606:4700:4700::1111";
+    /**
      * The original DNS servers.
      */
     private final List<InetAddress> dnsServers;
+    /**
+     * Whether the tunnel currently forwards to {@link #getFallbackDnsServer} instead of a resolver
+     * the network reported, i.e. it was established during the gap where the network is up but has
+     * not published its DNS servers yet.
+     * <p>
+     * Written by the worker thread when the tunnel is established and read by the network callback
+     * thread, which uses it to rebuild the tunnel as soon as the real resolvers show up, hence
+     * volatile.
+     */
+    private volatile boolean usingFallbackDnsServer;
 
     /**
      * Constructor.
      */
     public DnsServerMapper() {
         this.dnsServers = new ArrayList<>();
+        this.usingFallbackDnsServer = false;
     }
 
     /**
@@ -85,6 +107,7 @@ public class DnsServerMapper {
         Subnet ipv6Subnet = hasIpV6DnsServers(context, dnsServers) ? addIpv6Address(builder) : null;
         // Configure DNS mapping
         this.dnsServers.clear();
+        this.usingFallbackDnsServer = false;
         for (InetAddress dnsServer : dnsServers) {
             Subnet subnetForDnsServer = dnsServer instanceof Inet4Address ? ipv4Subnet : ipv6Subnet;
             if (subnetForDnsServer == null) {
@@ -105,27 +128,45 @@ public class DnsServerMapper {
         // until the VPN profile is recreated. Fall back to a public DNS so the tunnel always
         // resolves. This only triggers when no DNS server was mapped above, so the normal
         // path is left untouched.
+        // The fallback follows whichever IP family the device can reach, which may mean IPv6 even
+        // when the IPv6 preference is off: the same reasoning as hasIpV6DnsServers() accepting a
+        // lone IPv6 server regardless of that preference, namely that a resolver nothing can reach
+        // is worse than an unwanted one.
         if (this.dnsServers.isEmpty()) {
-            try {
-                InetAddress fallbackDnsServer = InetAddress.getByName(FALLBACK_DNS_SERVER);
-                this.dnsServers.add(fallbackDnsServer);
-                InetAddress dnsAddressAlias = ipv4Subnet.getAddress(this.dnsServers.size());
-                Timber.w("No network DNS server found, falling back to %s mapped as %s.", fallbackDnsServer, dnsAddressAlias);
-                builder.addDnsServer(dnsAddressAlias);
+            InetAddress fallbackDnsServer = getFallbackDnsServer(context);
+            boolean ipv4Fallback = fallbackDnsServer instanceof Inet4Address;
+            // No IPv6 subnet was added above: hasIpV6DnsServers() was asked about a list that turned
+            // out to be empty. Add it now, but only when the fallback actually needs it, so an IPv4
+            // fallback keeps building the exact same tunnel as before.
+            Subnet subnetForFallback = ipv4Fallback ? ipv4Subnet : addIpv6Address(builder);
+            this.dnsServers.add(fallbackDnsServer);
+            this.usingFallbackDnsServer = true;
+            InetAddress dnsAddressAlias = subnetForFallback.getAddress(this.dnsServers.size());
+            Timber.w("No network DNS server found, falling back to %s mapped as %s.", fallbackDnsServer, dnsAddressAlias);
+            builder.addDnsServer(dnsAddressAlias);
+            if (ipv4Fallback) {
+                // As in the loop above, only IPv4 aliases need an explicit route: an IPv6 alias sits
+                // inside the tunnel's own /120, so it is already on-link.
                 builder.addRoute(dnsAddressAlias, 32);
-            } catch (UnknownHostException e) {
-                Timber.w(e, "Failed to add fallback DNS server.");
             }
         }
     }
 
+    /**
+     * Check whether the tunnel currently forwards to the public fallback resolver rather than to a
+     * resolver the network reported.
+     *
+     * @return <code>true</code> if the tunnel runs on the fallback resolver, <code>false</code>
+     * otherwise.
+     */
+    public boolean isUsingFallbackDnsServer() {
+        return this.usingFallbackDnsServer;
+    }
+
     public InetAddress getDefaultDnsServerAddress() {
         if (this.dnsServers.isEmpty()) {
-            try {
-                return InetAddress.getByName(FALLBACK_DNS_SERVER);
-            } catch (UnknownHostException e) {
-                throw new IllegalStateException("Failed to parse hardcoded DNS IP address.", e);
-            }
+            // Only reachable before the first configureVpn(), which always maps at least one server.
+            return parseAddress(FALLBACK_DNS_SERVER);
         }
         // Return last DNS server added
         return this.dnsServers.get(this.dnsServers.size() - 1);
@@ -356,14 +397,88 @@ public class DnsServerMapper {
         if (effectiveDnsServers.isEmpty()) {
             // Mirror configureVpn's safety net: with no usable resolver the tunnel forwards to the
             // public fallback, so report that here too and keep detection in lockstep with establish.
-            effectiveDnsServers.add(getFallbackDnsServer());
+            effectiveDnsServers.add(getFallbackDnsServer(context));
         }
         return effectiveDnsServers;
     }
 
-    private static InetAddress getFallbackDnsServer() {
+    /**
+     * Check a set of effective DNS servers is nothing but the public fallback resolver, i.e.
+     * rebuilding the tunnel on it would not gain anything over the fallback it already runs on.
+     *
+     * @param dnsServers The effective DNS servers, as returned by {@link #getEffectiveDnsServers}.
+     * @return <code>true</code> if the only server is a fallback one, <code>false</code> otherwise.
+     */
+    public static boolean isOnlyFallbackDnsServer(List<InetAddress> dnsServers) {
+        return dnsServers.size() == 1 && isFallbackDnsServer(dnsServers.get(0));
+    }
+
+    private static boolean isFallbackDnsServer(InetAddress dnsServer) {
+        // Both families are checked, not just the one the current network would pick: the tunnel may
+        // have been established while the device still had the other one.
+        return dnsServer.equals(parseAddress(FALLBACK_DNS_SERVER))
+                || dnsServer.equals(parseAddress(FALLBACK_IPV6_DNS_SERVER));
+    }
+
+    /**
+     * Get the public DNS server to fall back to, of the IP family the device can actually reach.
+     *
+     * @param context The application context.
+     * @return The fallback DNS server address.
+     */
+    private static InetAddress getFallbackDnsServer(Context context) {
+        // IPv4 is what virtually every network still carries, so it stays the default and the IPv6
+        // resolver is only picked where the IPv4 one provably cannot work.
+        return isIpv6Only(context)
+                ? parseAddress(FALLBACK_IPV6_DNS_SERVER)
+                : parseAddress(FALLBACK_DNS_SERVER);
+    }
+
+    /**
+     * Check the device has IPv6 connectivity and no IPv4 connectivity at all.
+     * <p>
+     * This looks at the addresses the networks hold rather than at their DNS servers, because it is
+     * asked precisely when no DNS server was reported. VPN networks are skipped: the tunnel always
+     * carries an IPv4 address of its own, which would make every network look dual-stack. Loopback
+     * and link-local addresses are skipped for the same reason, as they say nothing about what the
+     * device can reach.
+     *
+     * @param context The application context.
+     * @return <code>true</code> if the device is IPv6-only, <code>false</code> otherwise.
+     */
+    @SuppressWarnings("deprecation") // getAllNetworks(), see dumpNetworkInfo().
+    private static boolean isIpv6Only(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
+        boolean hasIpv4 = false;
+        boolean hasIpv6 = false;
+        for (Network network : connectivityManager.getAllNetworks()) {
+            NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(network);
+            if (networkCapabilities == null || networkCapabilities.hasTransport(TRANSPORT_VPN)) {
+                continue;
+            }
+            LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
+            if (linkProperties == null) {
+                continue;
+            }
+            for (LinkAddress linkAddress : linkProperties.getLinkAddresses()) {
+                InetAddress address = linkAddress.getAddress();
+                if (address.isLoopbackAddress() || address.isLinkLocalAddress()) {
+                    continue;
+                }
+                if (address instanceof Inet4Address) {
+                    hasIpv4 = true;
+                } else if (address instanceof Inet6Address) {
+                    hasIpv6 = true;
+                }
+            }
+        }
+        return hasIpv6 && !hasIpv4;
+    }
+
+    private static InetAddress parseAddress(String address) {
         try {
-            return InetAddress.getByName(FALLBACK_DNS_SERVER);
+            // A literal address, so this never performs a name lookup and never fails.
+            return InetAddress.getByName(address);
         } catch (UnknownHostException e) {
             throw new IllegalStateException("Failed to parse hardcoded DNS IP address.", e);
         }
