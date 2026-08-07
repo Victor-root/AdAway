@@ -66,7 +66,9 @@ public class DnsQueryQueue {
     }
 
     private void ensureFreeSpace() {
-        if (this.queries.size() > DNS_MAXIMUM_WAITING) {
+        // Called before the new query is added, so the test is against the bound itself: with a
+        // strict comparison the queue settled one query above its stated maximum forever.
+        if (this.queries.size() >= DNS_MAXIMUM_WAITING) {
             DnsQuery oldestQuery = this.queries.remove();
             Timber.d("Dropping query due to space constraints: %s.", oldestQuery);
             oldestQuery.close();

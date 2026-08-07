@@ -20,6 +20,16 @@ import timber.log.Timber;
  */
 class DnsQuery implements AutoCloseable {
     /**
+     * The size of the buffer a DNS response is read into.
+     * <p>
+     * Anything beyond this is dropped by the socket read, and the app gets a truncated, therefore
+     * corrupt, answer. 4096 is the largest buffer size EDNS0 clients advertise, so no answer a
+     * resolver is willing to send over UDP can overflow it. It used to be 1024, which is under the
+     * 1232 bytes Android's own resolver asks for, so large answers (many addresses, DNSSEC, long
+     * TXT records) came back broken and the name simply failed to resolve.
+     */
+    private static final int MAXIMUM_RESPONSE_SIZE = 4096;
+    /**
      * The socket used to query DNS server.
      */
     private final DatagramSocket socket;
@@ -89,7 +99,7 @@ class DnsQuery implements AutoCloseable {
      */
     void handleResponse() {
         try {
-            byte[] responseData = new byte[1024];
+            byte[] responseData = new byte[MAXIMUM_RESPONSE_SIZE];
             DatagramPacket responsePacket = new DatagramPacket(responseData, responseData.length);
             this.socket.receive(responsePacket);
             // Forward only the bytes actually received, not the whole 1024-byte buffer.
