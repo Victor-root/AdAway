@@ -140,6 +140,17 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
      * network-state fields.
      */
     private List<InetAddress> currentTransportDnsServers;
+    /**
+     * Whether the tunnel is down because it was explicitly stopped (user pause, or a revoke), as
+     * opposed to being down while waiting for a network.
+     * <p>
+     * Stopping the service does not take its network callbacks down at once: {@link #stopSelf()}
+     * only queues the destruction, and any callback already queued ahead of it still runs. Those
+     * callbacks reach {@link #reconcile()}, which sees a tunnel that is down with a network
+     * available and dutifully brings it back up, so a Wi-Fi drop landing in that window restarted
+     * the VPN right after the user paused it. This tells the two situations apart.
+     */
+    private boolean stoppedOnPurpose;
     private final VpnWorker vpnWorker;
 
     /**
@@ -154,6 +165,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
         this.cellularAvailable = false;
         this.currentTransport = null;
         this.currentTransportDnsServers = null;
+        this.stoppedOnPurpose = false;
         this.vpnWorker = new VpnWorker(this);
     }
 
@@ -270,6 +282,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
     private void startVpn() {
         Timber.d("Starting VPN service…");
         PreferenceHelper.setVpnServiceStatus(this, RUNNING);
+        this.stoppedOnPurpose = false;
         updateVpnStatus(STARTING);
         // This path is reached only via an explicit START intent (user click, notif
         // action, autostart, sticky resurrection that survived the user-intent gate).
@@ -286,6 +299,7 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
     private void stopVpn() {
         Timber.d("Stopping VPN service…");
         PreferenceHelper.setVpnServiceStatus(this, STOPPED);
+        this.stoppedOnPurpose = true;
         setCurrentTransport(null);
         this.vpnWorker.stop();
         // STOP_FOREGROUND_REMOVE is exactly what the deprecated stopForeground(true) did: leave the
@@ -476,6 +490,11 @@ public class VpnService extends android.net.VpnService implements Handler.Callba
                 waitForNetVpn();
             }
         } else if (this.currentTransport == null) {
+            if (this.stoppedOnPurpose) {
+                // The tunnel is down because it was stopped, not because it lost its network.
+                // Bringing it back here would undo an explicit stop, which is the user's to undo.
+                return;
+            }
             // Connectivity (re)gained while the tunnel was down: bring it up now. Reset the
             // throttler as this is a real connectivity-restored event, not a reconnection storm.
             setCurrentTransport(desired);
