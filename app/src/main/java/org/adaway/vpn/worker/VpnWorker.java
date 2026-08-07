@@ -43,11 +43,12 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -68,7 +69,8 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
      */
     private final VpnService vpnService;
     /**
-     * The queue of packets to send to the device.
+     * The queue of packets to send to the device. Concurrent for the same reason the DNS query
+     * queue is synchronized: the worker being replaced on a network change can still be running.
      */
     private final Queue<byte[]> deviceWrites;
     /**
@@ -104,6 +106,16 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
      * right after the user paused it (so the first tap appeared to do nothing).
      */
     private final AtomicBoolean stopping;
+    /**
+     * The number of the current run, bumped by every {@link #start()}.
+     * <p>
+     * A worker whose number is no longer the current one retires instead of reconnecting.
+     * Shutting an executor down only interrupts its threads, and a worker sitting in the native
+     * {@code Os.poll()} does not answer an interrupt: without this the worker being replaced on
+     * a network change kept looping alongside its replacement, and the two of them corrupted the
+     * queues they share beyond repair.
+     */
+    private final AtomicInteger runNumber;
 
     /**
      * Constructor.
@@ -112,7 +124,7 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
      */
     public VpnWorker(VpnService vpnService) {
         this.vpnService = vpnService;
-        this.deviceWrites = new LinkedList<>();
+        this.deviceWrites = new ConcurrentLinkedQueue<>();
         this.dnsQueryQueue = new DnsQueryQueue();
         this.dnsServerMapper = new DnsServerMapper();
         this.dnsPacketProxy = new DnsPacketProxy(this, this.dnsServerMapper);
@@ -122,6 +134,7 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
         this.executor = new AtomicReference<>(null);
         this.vpnNetworkInterface = new AtomicReference<>(null);
         this.stopping = new AtomicBoolean(false);
+        this.runNumber = new AtomicInteger(0);
     }
 
     /**
@@ -130,6 +143,13 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
      */
     public void start() {
         Timber.d("Starting VPN thread…");
+        // Retire the previous run before creating its replacement. Both share this worker's
+        // packet queues, so they must not overlap; closing the tunnel unblocks whichever
+        // native call the old one is sitting in, and the run number tells it to stop rather
+        // than reconnect once it gets there.
+        int runNumber = this.runNumber.incrementAndGet();
+        forceCloseTunnel();
+        setExecutor(null);
         // Clear any pending stop flag so a fresh worker reconnects normally on errors.
         this.stopping.set(false);
         // Re-arm the monitor: if a previous monitor cycle called stop() (running=false) before
@@ -137,7 +157,7 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
         // exit immediately on the while(running.get()) check without this reset.
         this.connectionMonitor.activate();
         ExecutorService executor = Executors.newFixedThreadPool(2);
-        executor.submit(this::work);
+        executor.submit(() -> work(runNumber));
         executor.submit(this.connectionMonitor::monitor);
         setExecutor(executor);
         Timber.i("VPN thread started.");
@@ -196,26 +216,57 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
         }
     }
 
-    private void work() {
+    /**
+     * Check whether this run has been replaced by a newer one and should therefore stop.
+     *
+     * @param runNumber The number of the run asking.
+     * @return <code>true</code> if a newer run has taken over.
+     */
+    private boolean isSuperseded(int runNumber) {
+        if (this.runNumber.get() == runNumber) {
+            return false;
+        }
+        Timber.d("VPN run %d has been replaced, exiting.", runNumber);
+        return true;
+    }
+
+    private void work(int runNumber) {
         Timber.d("Starting work…");
         // Initialize context
         this.dnsPacketProxy.initialize(this.vpnService);
         // Initialize the watchdog
         this.vpnWatchDog.initialize(PreferenceHelper.getVpnWatchdogEnabled(this.vpnService));
         // Try connecting the vpn continuously
+        boolean superseded = false;
         while (true) {
+            if (isSuperseded(runNumber)) {
+                superseded = true;
+                break;
+            }
             try {
                 this.connectionThrottler.throttle();
                 this.vpnService.notifyVpnStatus(STARTING);
                 runVpn();
+                if (isSuperseded(runNumber)) {
+                    superseded = true;
+                    break;
+                }
                 Timber.i("Told to stop");
                 this.vpnService.notifyVpnStatus(STOPPING);
                 break;
             } catch (InterruptedException e) {
                 Timber.d(e, "Failed to wait for connexion throttling.");
                 Thread.currentThread().interrupt();
+                // Shutting the executor down to make room for a newer run interrupts here too.
+                superseded = isSuperseded(runNumber);
                 break;
             } catch (VpnNetworkException | IOException e) {
+                // A newer run force-closed this tunnel to take over, which surfaces here as a
+                // read failure. Leave without a word: the status belongs to that newer run.
+                if (isSuperseded(runNumber)) {
+                    superseded = true;
+                    break;
+                }
                 // An intentional stop force-closes the tunnel, which unblocks the native
                 // device read with EBADF. That is not a network error: exit cleanly instead
                 // of reconnecting, otherwise the VPN comes straight back up after the user
@@ -228,6 +279,10 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
                 // If an exception was thrown, notify status and try again
                 this.vpnService.notifyVpnStatus(RECONNECTING_NETWORK_ERROR);
             } catch (RuntimeException e) {
+                if (isSuperseded(runNumber)) {
+                    superseded = true;
+                    break;
+                }
                 // Anything unexpected used to escape this loop and kill the thread outright,
                 // which left the tunnel down while the notification, the tile and the home
                 // screen all kept reporting it as running. Stop deliberately instead, so the
@@ -238,13 +293,20 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
                 break;
             }
         }
-        this.vpnService.notifyVpnStatus(STOPPED);
+        // A run that has been replaced stays quiet: announcing STOPPED here would contradict
+        // the run that took over and leave the UI claiming the VPN is down while it is up.
+        if (!superseded) {
+            this.vpnService.notifyVpnStatus(STOPPED);
+        }
         Timber.d("Exiting work.");
     }
 
     private void runVpn() throws IOException, VpnNetworkException {
         // Allocate the buffer for a single packet.
         byte[] packet = new byte[MAX_PACKET_SIZE];
+        // Whatever is still queued was sent through the previous tunnel and will never be
+        // answered through this one, so it goes rather than waiting out its timeout.
+        this.dnsQueryQueue.clear();
 
         // Authenticate and configure the virtual network interface.
         try (ParcelFileDescriptor pfd = establish(this.vpnService, this.dnsServerMapper);
@@ -316,10 +378,11 @@ public class VpnWorker implements DnsPacketProxy.EventLoop {
     }
 
     private void writeToDevice(FileOutputStream fileOutputStream) throws IOException {
-        Timber.d("Write to device %d packets.", this.deviceWrites.size());
         try {
-            while (!this.deviceWrites.isEmpty()) {
-                byte[] ipPacketData = this.deviceWrites.poll();
+            // Drain on the value, not on isEmpty(): the queue is concurrent, so a poll() that
+            // passed the emptiness check can still come back with nothing.
+            byte[] ipPacketData;
+            while ((ipPacketData = this.deviceWrites.poll()) != null) {
                 fileOutputStream.write(ipPacketData);
             }
         } catch (IOException e) {
