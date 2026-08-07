@@ -182,11 +182,20 @@ public class DnsPacketProxy {
             return;
         }
 
-        byte[] dnsRawData = udpPayload.getRawData();
+        byte[] dnsRawData;
         Message dnsMsg;
         try {
+            // Both steps read bytes an app wrote into the tunnel, so both face hostile input.
+            // getRawData() is not a plain accessor here: for a packet on port 53 pcap4j parsed the
+            // payload as DNS, and this re-serializes it, which throws an
+            // ArrayIndexOutOfBoundsException on a domain name it cannot rebuild. That exception
+            // used to escape this method, reach the worker loop and stop the VPN thread for good,
+            // so a single malformed query from any app on the device took the tunnel down. Neither
+            // failure is a reason to do that: discard the packet, exactly as the two parse steps
+            // above already do.
+            dnsRawData = udpPayload.getRawData();
             dnsMsg = new Message(dnsRawData);
-        } catch (IOException e) {
+        } catch (Exception e) {
             Timber.i(e, "handleDnsRequest: Discarding non-DNS or invalid packet");
             return;
         }

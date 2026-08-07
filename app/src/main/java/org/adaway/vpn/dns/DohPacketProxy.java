@@ -201,11 +201,15 @@ public class DohPacketProxy {
             return;
         }
 
-        byte[] dnsRawData = udpPayload.getRawData();
+        byte[] dnsRawData;
         Message dnsMsg;
         try {
+            // Same hostile input as in DnsPacketProxy: getRawData() re-serializes the payload
+            // pcap4j parsed as DNS and throws on a domain name it cannot rebuild, which would
+            // escape into the worker loop and stop the tunnel. Discard the packet instead.
+            dnsRawData = udpPayload.getRawData();
             dnsMsg = new Message(dnsRawData);
-        } catch (IOException e) {
+        } catch (Exception e) {
             Timber.i(e, "handleDnsRequest: Discarding non-DNS or invalid packet");
             return;
         }
