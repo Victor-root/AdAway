@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">VPN sozlamalarini ochish</string>
     <string name="tv_always_on_hint_later">Tushunarli</string>
     <string name="tv_persistence_intent_failed">Bu Android TVda VPN sozlamalari yashirilgan. Koʻrsatilgan ADB buyruqlaridan foydalaning.</string>
+    <string name="tv_dialog_enable_entry">Yoqish</string>
+    <string name="tv_dialog_disable_entry">Oʻchirish</string>
+    <string name="tv_lists_empty">Bu roʻyxatda hali yozuvlar yoʻq.</string>
+    <string name="tv_dialog_search">Qidiruv</string>
+    <string name="tv_dialog_clear_search">Tozalash</string>
 </resources>

@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Avaa VPN-asetukset</string>
     <string name="tv_always_on_hint_later">Selvä</string>
     <string name="tv_persistence_intent_failed">VPN-asetukset on piilotettu tässä Android TV:ssä. Käytä näytettyjä ADB-komentoja.</string>
+    <string name="tv_dialog_enable_entry">Ota käyttöön</string>
+    <string name="tv_dialog_disable_entry">Poista käytöstä</string>
+    <string name="tv_lists_empty">Tässä luettelossa ei ole vielä merkintöjä.</string>
+    <string name="tv_dialog_search">Haku</string>
+    <string name="tv_dialog_clear_search">Tyhjennä</string>
 </resources>

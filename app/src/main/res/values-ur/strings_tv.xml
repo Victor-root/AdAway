@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">VPN ترتیبات کھولیں</string>
     <string name="tv_always_on_hint_later">سمجھ گیا</string>
     <string name="tv_persistence_intent_failed">اس Android TV پر VPN ترتیبات چھپی ہوئی ہیں۔ دکھائی گئی ADB کمانڈز استعمال کریں۔</string>
+    <string name="tv_dialog_enable_entry">فعال کریں</string>
+    <string name="tv_dialog_disable_entry">غیر فعال کریں</string>
+    <string name="tv_lists_empty">اس فہرست میں ابھی تک کوئی اندراج نہیں ہے۔</string>
+    <string name="tv_dialog_search">تلاش</string>
+    <string name="tv_dialog_clear_search">صاف کریں</string>
 </resources>

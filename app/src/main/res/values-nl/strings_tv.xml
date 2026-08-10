@@ -23,4 +23,9 @@
     <string name="tv_always_on_hint_open_settings">VPN-instellingen openen</string>
     <string name="tv_always_on_hint_later">Begrepen</string>
     <string name="tv_persistence_intent_failed">VPN-instellingen zijn verborgen op deze Android TV. Gebruik de getoonde ADB-opdrachten.</string>
+    <string name="tv_dialog_enable_entry">Inschakelen</string>
+    <string name="tv_dialog_disable_entry">Uitschakelen</string>
+    <string name="tv_lists_empty">Nog geen items in deze lijst.</string>
+    <string name="tv_dialog_search">Zoeken</string>
+    <string name="tv_dialog_clear_search">Wissen</string>
 </resources>

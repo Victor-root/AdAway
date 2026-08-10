@@ -96,6 +96,12 @@
             android:parentActivityName=".ui.home.TvHomeActivity"
             android:theme="@style/Theme.AdAway.NoActionBar" />
         <activity
+            android:name=".ui.lists.TvListsActivity"
+            android:exported="false"
+            android:label="@string/lists_title"
+            android:parentActivityName=".ui.home.TvHomeActivity"
+            android:theme="@style/Theme.AdAway.NoActionBar" />
+        <activity
             android:name=".ui.welcome.WelcomeActivity"
             android:exported="false"
             android:label="@string/welcome_title"

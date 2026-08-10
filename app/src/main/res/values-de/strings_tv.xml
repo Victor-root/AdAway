@@ -23,4 +23,9 @@
     <string name="tv_always_on_hint_open_settings">VPN-Einstellungen öffnen</string>
     <string name="tv_always_on_hint_later">Verstanden</string>
     <string name="tv_persistence_intent_failed">VPN-Einstellungen sind auf diesem Android TV ausgeblendet. Verwenden Sie die angezeigten ADB-Befehle.</string>
+    <string name="tv_dialog_enable_entry">Aktivieren</string>
+    <string name="tv_dialog_disable_entry">Deaktivieren</string>
+    <string name="tv_lists_empty">Noch keine Einträge in dieser Liste.</string>
+    <string name="tv_dialog_search">Suchen</string>
+    <string name="tv_dialog_clear_search">Löschen</string>
 </resources>

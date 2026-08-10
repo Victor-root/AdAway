@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Open VPN-instellings</string>
     <string name="tv_always_on_hint_later">Reg so</string>
     <string name="tv_persistence_intent_failed">VPN-instellings is op hierdie Android TV versteek. Gebruik die ADB-opdragte wat gewys word.</string>
+    <string name="tv_dialog_enable_entry">Aktiveer</string>
+    <string name="tv_dialog_disable_entry">Deaktiveer</string>
+    <string name="tv_lists_empty">Nog geen inskrywings in hierdie lys nie.</string>
+    <string name="tv_dialog_search">Soek</string>
+    <string name="tv_dialog_clear_search">Maak skoon</string>
 </resources>

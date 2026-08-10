@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">VPN அமைப்புகளைத் திற</string>
     <string name="tv_always_on_hint_later">புரிந்தது</string>
     <string name="tv_persistence_intent_failed">இந்த Android TV இல் VPN அமைப்புகள் மறைக்கப்பட்டுள்ளன. காட்டப்பட்டுள்ள ADB கட்டளைகளைப் பயன்படுத்தவும்.</string>
+    <string name="tv_dialog_enable_entry">இயக்கு</string>
+    <string name="tv_dialog_disable_entry">முடக்கு</string>
+    <string name="tv_lists_empty">இந்தப் பட்டியலில் இன்னும் உள்ளீடுகள் இல்லை.</string>
+    <string name="tv_dialog_search">தேடு</string>
+    <string name="tv_dialog_clear_search">அழி</string>
 </resources>

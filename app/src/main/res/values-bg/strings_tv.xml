@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Отваряне на настройките за VPN</string>
     <string name="tv_always_on_hint_later">Разбрах</string>
     <string name="tv_persistence_intent_failed">Настройките за VPN са скрити на този Android TV. Използвайте показаните ADB команди.</string>
+    <string name="tv_dialog_enable_entry">Активиране</string>
+    <string name="tv_dialog_disable_entry">Деактивиране</string>
+    <string name="tv_lists_empty">Все още няма записи в този списък.</string>
+    <string name="tv_dialog_search">Търсене</string>
+    <string name="tv_dialog_clear_search">Изчистване</string>
 </resources>

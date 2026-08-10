@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">فتح إعدادات VPN</string>
     <string name="tv_always_on_hint_later">فهمت</string>
     <string name="tv_persistence_intent_failed">إعدادات VPN مخفية على تلفاز Android هذا. استخدم أوامر ADB المعروضة.</string>
+    <string name="tv_dialog_enable_entry">تفعيل</string>
+    <string name="tv_dialog_disable_entry">تعطيل</string>
+    <string name="tv_lists_empty">لا توجد إدخالات في هذه القائمة بعد.</string>
+    <string name="tv_dialog_search">بحث</string>
+    <string name="tv_dialog_clear_search">محو</string>
 </resources>

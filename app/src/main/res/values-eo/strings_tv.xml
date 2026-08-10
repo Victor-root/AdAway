@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Malfermi VPN-agordojn</string>
     <string name="tv_always_on_hint_later">Komprenite</string>
     <string name="tv_persistence_intent_failed">VPN-agordoj estas kaŝitaj sur ĉi tiu Android TV. Uzu la montritajn ADB-komandojn.</string>
+    <string name="tv_dialog_enable_entry">Ŝalti</string>
+    <string name="tv_dialog_disable_entry">Malŝalti</string>
+    <string name="tv_lists_empty">Ankoraŭ neniuj enskriboj en ĉi tiu listo.</string>
+    <string name="tv_dialog_search">Serĉi</string>
+    <string name="tv_dialog_clear_search">Forviŝi</string>
 </resources>

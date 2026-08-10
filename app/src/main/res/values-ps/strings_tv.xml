@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">د VPN تنظیمات پرانیزئ</string>
     <string name="tv_always_on_hint_later">پوه شوم</string>
     <string name="tv_persistence_intent_failed">د VPN تنظیمات په دې اندروید TV کې پټ دي. ښودل شوي ADB کماندونه وکاروئ.</string>
+    <string name="tv_dialog_enable_entry">فعالول</string>
+    <string name="tv_dialog_disable_entry">غیرفعالول</string>
+    <string name="tv_lists_empty">په دې لیست کې لا تر اوسه هیڅ ننوتنه نشته.</string>
+    <string name="tv_dialog_search">لټون</string>
+    <string name="tv_dialog_clear_search">پاکول</string>
 </resources>

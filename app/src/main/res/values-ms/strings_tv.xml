@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Buka tetapan VPN</string>
     <string name="tv_always_on_hint_later">Faham</string>
     <string name="tv_persistence_intent_failed">Tetapan VPN tersembunyi pada Android TV ini. Gunakan arahan ADB yang ditunjukkan.</string>
+    <string name="tv_dialog_enable_entry">Dayakan</string>
+    <string name="tv_dialog_disable_entry">Lumpuhkan</string>
+    <string name="tv_lists_empty">Belum ada entri dalam senarai ini.</string>
+    <string name="tv_dialog_search">Cari</string>
+    <string name="tv_dialog_clear_search">Kosongkan</string>
 </resources>

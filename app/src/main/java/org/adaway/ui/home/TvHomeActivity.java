@@ -45,7 +45,7 @@ import org.adaway.model.adblocking.AdBlockMethod;
 import org.adaway.model.update.Manifest;
 import org.adaway.ui.help.HelpActivity;
 import org.adaway.ui.hosts.HostsSourcesActivity;
-import org.adaway.ui.lists.ListsActivity;
+import org.adaway.ui.lists.TvListsActivity;
 import org.adaway.ui.log.TvLogActivity;
 import org.adaway.ui.prefs.PrefsActivity;
 import org.adaway.ui.update.UpdateActivity;
@@ -209,11 +209,16 @@ public class TvHomeActivity extends AppCompatActivity {
     }
 
     /**
-     * Start hosts lists activity on the given tab, same target/extra as
-     * {@code HomeActivity.startHostListActivity()} on mobile.
+     * Start the TV hosts lists activity on the given tab.
+     * <p>
+     * {@code TvListsActivity}, not {@code ListsActivity}: the phone screen's swipeable tabs and
+     * floating add button have no clean D-pad path, patched as far as that gets in two previous
+     * commits; this is a from-scratch TV layout instead, built the way this app's other TV
+     * screens already are. Same target/extra key as {@code HomeActivity.startHostListActivity()}
+     * on mobile, read by {@code TvListsActivity} the same way {@code ListsActivity} does.
      */
     private void startHostListActivity(int tab) {
-        Intent intent = new Intent(this, ListsActivity.class);
+        Intent intent = new Intent(this, TvListsActivity.class);
         intent.putExtra(TAB, tab);
         startActivity(intent);
     }

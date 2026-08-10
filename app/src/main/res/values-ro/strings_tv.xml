@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Deschide setările VPN</string>
     <string name="tv_always_on_hint_later">Am înțeles</string>
     <string name="tv_persistence_intent_failed">Setările VPN sunt ascunse pe acest Android TV. Folosește comenzile ADB afișate.</string>
+    <string name="tv_dialog_enable_entry">Activare</string>
+    <string name="tv_dialog_disable_entry">Dezactivare</string>
+    <string name="tv_lists_empty">Nu există încă intrări în această listă.</string>
+    <string name="tv_dialog_search">Căutare</string>
+    <string name="tv_dialog_clear_search">Golire</string>
 </resources>

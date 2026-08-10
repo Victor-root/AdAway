@@ -42,4 +42,19 @@
          and the Intent cannot be resolved. The ADB commands stay visible in the
          dialog so the user always has a fallback. -->
     <string name="tv_persistence_intent_failed">VPN settings hidden on this Android TV. Use the ADB commands shown.</string>
+    <!-- TV "Vos listes" screen: the dialog opened by clicking a user-added entry
+         (edit_action/delete_action reuse the existing checkbox_list_context_* strings,
+         and copy reuses tv_dialog_copy_hostname; only the enable/disable toggle, which
+         is a checkbox on mobile and has no text label there, is new here). -->
+    <string name="tv_dialog_enable_entry">Enable</string>
+    <string name="tv_dialog_disable_entry">Disable</string>
+    <!-- Shown in place of the list when the current tab (Blocked/Allowed/Redirected) has
+         no entries. -->
+    <string name="tv_lists_empty">No entries in this list yet.</string>
+    <!-- The header's search button (short on purpose: it shares a row with two other
+         buttons and has to survive some translations running longer than others) and
+         the two extra buttons its dialog needs beyond Cancel: confirming a query and
+         clearing whatever filter is currently active. -->
+    <string name="tv_dialog_search">Search</string>
+    <string name="tv_dialog_clear_search">Clear</string>
 </resources>

@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Mîhengên VPN veke</string>
     <string name="tv_always_on_hint_later">Fêhm kir</string>
     <string name="tv_persistence_intent_failed">Mîhengên VPN li ser vê Android TV-yê veşartî ne. Fermanên ADB yên nîşandayî bikar bîne.</string>
+    <string name="tv_dialog_enable_entry">Çalak bike</string>
+    <string name="tv_dialog_disable_entry">Neçalak bike</string>
+    <string name="tv_lists_empty">Hê tu ketarî di vê lîsteyê de tune ne.</string>
+    <string name="tv_dialog_search">Lêgerîn</string>
+    <string name="tv_dialog_clear_search">Paqij bike</string>
 </resources>

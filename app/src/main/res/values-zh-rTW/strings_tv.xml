@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">開啟 VPN 設定</string>
     <string name="tv_always_on_hint_later">知道了</string>
     <string name="tv_persistence_intent_failed">此 Android TV 上的 VPN 設定已隱藏。請使用顯示的 ADB 指令。</string>
+    <string name="tv_dialog_enable_entry">啟用</string>
+    <string name="tv_dialog_disable_entry">停用</string>
+    <string name="tv_lists_empty">此清單中尚無項目。</string>
+    <string name="tv_dialog_search">搜尋</string>
+    <string name="tv_dialog_clear_search">清除</string>
 </resources>

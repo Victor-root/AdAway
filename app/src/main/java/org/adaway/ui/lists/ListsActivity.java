@@ -5,6 +5,7 @@ import static android.content.Intent.ACTION_SEARCH;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.adaway.R;
 import org.adaway.helper.ThemeHelper;
 import org.adaway.ui.adblocking.ApplyConfigurationSnackbar;
+import org.adaway.ui.lists.type.AbstractListFragment;
 
 /**
  * This activity display hosts list items.
@@ -59,6 +61,20 @@ public class ListsActivity extends AppCompatActivity {
      * The back press callback.
      */
     private OnBackPressedCallback onBackPressedCallback;
+    /**
+     * The tab view pager, and the adapter giving access to its (permanently kept alive, see
+     * {@link ListsFragmentPagerAdapter}) fragments. Kept as fields, rather than the local
+     * variables they used to be, so {@link #dispatchKeyEvent} can reach the fragment behind the
+     * currently selected tab.
+     */
+    private ViewPager2 viewPager;
+    private ListsFragmentPagerAdapter pagerAdapter;
+    /**
+     * The bottom tab bar and the add button, both needed by {@link #dispatchKeyEvent} to
+     * recognise the D-pad crossings it redirects.
+     */
+    private BottomNavigationView navigationView;
+    private FloatingActionButton addActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +106,16 @@ public class ListsActivity extends AppCompatActivity {
          * Configure tabs.
          */
         // Get view pager
-        ViewPager2 viewPager = findViewById(R.id.lists_view_pager);
+        this.viewPager = findViewById(R.id.lists_view_pager);
+        ViewPager2 viewPager = this.viewPager;
         // Create pager adapter
-        ListsFragmentPagerAdapter pagerAdapter = new ListsFragmentPagerAdapter(this);
+        this.pagerAdapter = new ListsFragmentPagerAdapter(this);
+        ListsFragmentPagerAdapter pagerAdapter = this.pagerAdapter;
         // Set view pager adapter
         viewPager.setAdapter(pagerAdapter);
         // Get navigation view
-        BottomNavigationView navigationView = findViewById(R.id.navigation);
+        this.navigationView = findViewById(R.id.navigation);
+        BottomNavigationView navigationView = this.navigationView;
         // White indicator that sits on the bottom edge of the active tab (like a tab indicator).
         View navIndicator = findViewById(R.id.nav_indicator);
         // Position it under the initial tab once the bar has been measured, and keep it aligned
@@ -135,7 +154,8 @@ public class ListsActivity extends AppCompatActivity {
          * Configure add action button.
          */
         // Get the add action button
-        FloatingActionButton addActionButton = findViewById(R.id.lists_add);
+        this.addActionButton = findViewById(R.id.lists_add);
+        FloatingActionButton addActionButton = this.addActionButton;
         // Set add action button listener
         addActionButton.setOnClickListener(clickedView -> {
             // Get current fragment position
@@ -272,5 +292,67 @@ public class ListsActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Redirect the D-pad crossings this screen's layout leads the platform's default focus
+     * search astray on.
+     * <p>
+     * The add button floats over the list via a {@code CoordinatorLayout} anchor, and the list
+     * itself is a {@code RecyclerView} inside a tab of {@link #viewPager}: geometric search has no
+     * plain, stable neighbour to line either of them up with the header or the bottom tab bar, so
+     * without this, up from the tab bar jumped straight past both the list and the add button, and
+     * the add button was not reachable by D-pad at all. This only covers the crossings that were
+     * actually broken; movement within the list, and between it and the header, is left to the
+     * platform's default search.
+     *
+     * @param event The key event being dispatched.
+     * @return <code>true</code> if this consumed the event, the superclass's result otherwise.
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && this.addActionButton != null) {
+            View focused = getCurrentFocus();
+            int keyCode = event.getKeyCode();
+            if (focused != null) {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_UP
+                        && isOrIsDescendantOf(focused, this.navigationView)
+                        && this.addActionButton.requestFocus()) {
+                    return true;
+                }
+                if (focused == this.addActionButton
+                        && (keyCode == KeyEvent.KEYCODE_DPAD_LEFT || keyCode == KeyEvent.KEYCODE_DPAD_UP)
+                        && focusCurrentTabLastItem()) {
+                    return true;
+                }
+                if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT
+                        && isCurrentTabListRow(focused)
+                        && this.addActionButton.requestFocus()) {
+                    return true;
+                }
+            }
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
+    private boolean focusCurrentTabLastItem() {
+        AbstractListFragment fragment = this.pagerAdapter.getFragment(this.viewPager.getCurrentItem());
+        return fragment != null && fragment.focusLastItem();
+    }
+
+    private boolean isCurrentTabListRow(View view) {
+        AbstractListFragment fragment = this.pagerAdapter.getFragment(this.viewPager.getCurrentItem());
+        return fragment != null && view.getParent() == fragment.getRecyclerView();
+    }
+
+    private static boolean isOrIsDescendantOf(View view, View ancestor) {
+        for (View current = view; current != null; ) {
+            if (current == ancestor) {
+                return true;
+            }
+            ViewParent parent = current.getParent();
+            current = parent instanceof View ? (View) parent : null;
+        }
+        return false;
     }
 }

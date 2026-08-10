@@ -23,4 +23,9 @@
     <string name="tv_always_on_hint_open_settings">Abrir configurações de VPN</string>
     <string name="tv_always_on_hint_later">Entendi</string>
     <string name="tv_persistence_intent_failed">Configurações de VPN ocultas nesta Android TV. Use os comandos ADB exibidos.</string>
+    <string name="tv_dialog_enable_entry">Ativar</string>
+    <string name="tv_dialog_disable_entry">Desativar</string>
+    <string name="tv_lists_empty">Ainda não há entradas nesta lista.</string>
+    <string name="tv_dialog_search">Pesquisar</string>
+    <string name="tv_dialog_clear_search">Limpar</string>
 </resources>

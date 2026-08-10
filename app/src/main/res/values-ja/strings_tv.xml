@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">VPN設定を開く</string>
     <string name="tv_always_on_hint_later">了解</string>
     <string name="tv_persistence_intent_failed">このAndroid TVではVPN設定が非表示です。表示されているADBコマンドを使用してください。</string>
+    <string name="tv_dialog_enable_entry">有効にする</string>
+    <string name="tv_dialog_disable_entry">無効にする</string>
+    <string name="tv_lists_empty">このリストにはまだ項目がありません。</string>
+    <string name="tv_dialog_search">検索</string>
+    <string name="tv_dialog_clear_search">消去</string>
 </resources>

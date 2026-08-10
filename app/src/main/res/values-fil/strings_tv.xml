@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Buksan ang mga setting ng VPN</string>
     <string name="tv_always_on_hint_later">Nakuha ko</string>
     <string name="tv_persistence_intent_failed">Nakatago ang mga setting ng VPN sa Android TV na ito. Gamitin ang mga ipinapakitang command ng ADB.</string>
+    <string name="tv_dialog_enable_entry">I-enable</string>
+    <string name="tv_dialog_disable_entry">I-disable</string>
+    <string name="tv_lists_empty">Wala pang entry sa listahang ito.</string>
+    <string name="tv_dialog_search">Maghanap</string>
+    <string name="tv_dialog_clear_search">I-clear</string>
 </resources>

@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">เปิดการตั้งค่า VPN</string>
     <string name="tv_always_on_hint_later">เข้าใจแล้ว</string>
     <string name="tv_persistence_intent_failed">การตั้งค่า VPN ถูกซ่อนไว้บน Android TV นี้ ใช้คำสั่ง ADB ที่แสดง</string>
+    <string name="tv_dialog_enable_entry">เปิดใช้งาน</string>
+    <string name="tv_dialog_disable_entry">ปิดใช้งาน</string>
+    <string name="tv_lists_empty">ยังไม่มีรายการในรายการนี้</string>
+    <string name="tv_dialog_search">ค้นหา</string>
+    <string name="tv_dialog_clear_search">ล้าง</string>
 </resources>

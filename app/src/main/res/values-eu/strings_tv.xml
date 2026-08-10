@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Ireki VPN ezarpenak</string>
     <string name="tv_always_on_hint_later">Ados</string>
     <string name="tv_persistence_intent_failed">VPN ezarpenak ezkutatuta daude Android TV honetan. Erabili erakutsitako ADB komandoak.</string>
+    <string name="tv_dialog_enable_entry">Gaitu</string>
+    <string name="tv_dialog_disable_entry">Desgaitu</string>
+    <string name="tv_lists_empty">Zerrenda honetan ez dago oraindik sarrerarik.</string>
+    <string name="tv_dialog_search">Bilatu</string>
+    <string name="tv_dialog_clear_search">Garbitu</string>
 </resources>

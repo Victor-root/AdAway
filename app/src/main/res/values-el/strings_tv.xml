@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Άνοιγμα ρυθμίσεων VPN</string>
     <string name="tv_always_on_hint_later">Το κατάλαβα</string>
     <string name="tv_persistence_intent_failed">Οι ρυθμίσεις VPN είναι κρυμμένες σε αυτήν την Android TV. Χρησιμοποιήστε τις εντολές ADB που εμφανίζονται.</string>
+    <string name="tv_dialog_enable_entry">Ενεργοποίηση</string>
+    <string name="tv_dialog_disable_entry">Απενεργοποίηση</string>
+    <string name="tv_lists_empty">Δεν υπάρχουν ακόμη καταχωρίσεις σε αυτή τη λίστα.</string>
+    <string name="tv_dialog_search">Αναζήτηση</string>
+    <string name="tv_dialog_clear_search">Απαλοιφή</string>
 </resources>

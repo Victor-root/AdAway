@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Hap cilësimet e VPN-së</string>
     <string name="tv_always_on_hint_later">E kuptova</string>
     <string name="tv_persistence_intent_failed">Cilësimet e VPN-së janë të fshehura në këtë Android TV. Përdorni komandat ADB të shfaqura.</string>
+    <string name="tv_dialog_enable_entry">Aktivizo</string>
+    <string name="tv_dialog_disable_entry">Çaktivizo</string>
+    <string name="tv_lists_empty">Ende nuk ka hyrje në këtë listë.</string>
+    <string name="tv_dialog_search">Kërko</string>
+    <string name="tv_dialog_clear_search">Pastro</string>
 </resources>

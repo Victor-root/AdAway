@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Atverti VPN nustatymus</string>
     <string name="tv_always_on_hint_later">Supratau</string>
     <string name="tv_persistence_intent_failed">VPN nustatymai paslėpti šiame Android TV. Naudokite parodytas ADB komandas.</string>
+    <string name="tv_dialog_enable_entry">Įjungti</string>
+    <string name="tv_dialog_disable_entry">Išjungti</string>
+    <string name="tv_lists_empty">Šiame sąraše dar nėra įrašų.</string>
+    <string name="tv_dialog_search">Ieškoti</string>
+    <string name="tv_dialog_clear_search">Išvalyti</string>
 </resources>

@@ -56,6 +56,10 @@ public abstract class AbstractListFragment extends Fragment implements ListsView
      * The view related hosts source of the current action (<code>null</code> if view is not created).
      */
     private View mActionSourceView;
+    /**
+     * The fragment's list view (<code>null</code> if view is not created).
+     */
+    private RecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,7 +71,8 @@ public abstract class AbstractListFragment extends Fragment implements ListsView
          * Configure recycler view.
          */
         // Store recycler view
-        RecyclerView recyclerView = view.findViewById(R.id.hosts_lists_list);
+        this.mRecyclerView = view.findViewById(R.id.hosts_lists_list);
+        RecyclerView recyclerView = this.mRecyclerView;
         recyclerView.setHasFixedSize(true);
         // Defile recycler layout
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.mActivity);
@@ -199,5 +204,52 @@ public abstract class AbstractListFragment extends Fragment implements ListsView
     @Override
     public void toggleItemEnabled(HostListItem item) {
         this.mViewModel.toggleItemEnabled(item);
+    }
+
+    /**
+     * The fragment's list view.
+     *
+     * @return The list view, or <code>null</code> before {@link #onCreateView} has run.
+     */
+    @Nullable
+    public RecyclerView getRecyclerView() {
+        return this.mRecyclerView;
+    }
+
+    /**
+     * Give focus to the first visible row.
+     * <p>
+     * Used by {@link org.adaway.ui.lists.ListsActivity} to give a D-pad a sensible place to land
+     * when it enters the list from the add button, rather than wherever the platform's default
+     * geometric search happens to pick.
+     *
+     * @return <code>true</code> if a row took focus, <code>false</code> if the list is empty.
+     */
+    public boolean focusFirstItem() {
+        return focusVisibleItem(true);
+    }
+
+    /**
+     * Give focus to the last visible row. See {@link #focusFirstItem()}.
+     *
+     * @return <code>true</code> if a row took focus, <code>false</code> if the list is empty.
+     */
+    public boolean focusLastItem() {
+        return focusVisibleItem(false);
+    }
+
+    private boolean focusVisibleItem(boolean first) {
+        if (this.mRecyclerView == null || !(this.mRecyclerView.getLayoutManager() instanceof LinearLayoutManager)) {
+            return false;
+        }
+        LinearLayoutManager layoutManager = (LinearLayoutManager) this.mRecyclerView.getLayoutManager();
+        int position = first
+                ? layoutManager.findFirstVisibleItemPosition()
+                : layoutManager.findLastVisibleItemPosition();
+        if (position == RecyclerView.NO_POSITION) {
+            return false;
+        }
+        RecyclerView.ViewHolder holder = this.mRecyclerView.findViewHolderForAdapterPosition(position);
+        return holder != null && holder.itemView.requestFocus();
     }
 }

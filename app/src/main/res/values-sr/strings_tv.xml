@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Otvori VPN podešavanja</string>
     <string name="tv_always_on_hint_later">Razumem</string>
     <string name="tv_persistence_intent_failed">VPN podešavanja su skrivena na ovom Android TV-u. Koristite prikazane ADB komande.</string>
+    <string name="tv_dialog_enable_entry">Омогући</string>
+    <string name="tv_dialog_disable_entry">Онемогући</string>
+    <string name="tv_lists_empty">На овој листи још увек нема ставки.</string>
+    <string name="tv_dialog_search">Претражи</string>
+    <string name="tv_dialog_clear_search">Обриши</string>
 </resources>

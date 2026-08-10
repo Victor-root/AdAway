@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">VPN ക്രമീകരണങ്ങൾ തുറക്കുക</string>
     <string name="tv_always_on_hint_later">മനസ്സിലായി</string>
     <string name="tv_persistence_intent_failed">ഈ Android TV-യിൽ VPN ക്രമീകരണങ്ങൾ മറഞ്ഞിരിക്കുന്നു. കാണിച്ചിരിക്കുന്ന ADB കമാൻഡുകൾ ഉപയോഗിക്കുക.</string>
+    <string name="tv_dialog_enable_entry">പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="tv_dialog_disable_entry">പ്രവർത്തനരഹിതമാക്കുക</string>
+    <string name="tv_lists_empty">ഈ ലിസ്റ്റിൽ ഇതുവരെ എൻട്രികളൊന്നുമില്ല.</string>
+    <string name="tv_dialog_search">തിരയുക</string>
+    <string name="tv_dialog_clear_search">മായ്‌ക്കുക</string>
 </resources>

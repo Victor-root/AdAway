@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Opna VPN-stillingar</string>
     <string name="tv_always_on_hint_later">Ég skil</string>
     <string name="tv_persistence_intent_failed">VPN-stillingar faldar á þessu Android-sjónvarpi. Notaðu ADB-skipanirnar sem sýndar eru.</string>
+    <string name="tv_dialog_enable_entry">Virkja</string>
+    <string name="tv_dialog_disable_entry">Óvirkja</string>
+    <string name="tv_lists_empty">Engar færslur eru ennþá á þessum lista.</string>
+    <string name="tv_dialog_search">Leita</string>
+    <string name="tv_dialog_clear_search">Hreinsa</string>
 </resources>

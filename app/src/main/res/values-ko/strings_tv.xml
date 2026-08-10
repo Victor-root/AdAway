@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">VPN 설정 열기</string>
     <string name="tv_always_on_hint_later">확인</string>
     <string name="tv_persistence_intent_failed">이 Android TV에서는 VPN 설정이 숨겨져 있습니다. 표시된 ADB 명령을 사용하십시오.</string>
+    <string name="tv_dialog_enable_entry">사용</string>
+    <string name="tv_dialog_disable_entry">사용 안 함</string>
+    <string name="tv_lists_empty">이 목록에는 아직 항목이 없습니다.</string>
+    <string name="tv_dialog_search">검색</string>
+    <string name="tv_dialog_clear_search">지우기</string>
 </resources>

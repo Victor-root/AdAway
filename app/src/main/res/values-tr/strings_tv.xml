@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">VPN ayarlarını aç</string>
     <string name="tv_always_on_hint_later">Anladım</string>
     <string name="tv_persistence_intent_failed">Bu Android TV\'de VPN ayarları gizli. Gösterilen ADB komutlarını kullanın.</string>
+    <string name="tv_dialog_enable_entry">Etkinleştir</string>
+    <string name="tv_dialog_disable_entry">Devre dışı bırak</string>
+    <string name="tv_lists_empty">Bu listede henüz giriş yok.</string>
+    <string name="tv_dialog_search">Ara</string>
+    <string name="tv_dialog_clear_search">Temizle</string>
 </resources>

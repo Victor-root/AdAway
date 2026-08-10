@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">פתיחת הגדרות ה־VPN</string>
     <string name="tv_always_on_hint_later">הבנתי</string>
     <string name="tv_persistence_intent_failed">הגדרות ה־VPN מוסתרות ב־Android TV הזה. השתמש בפקודות ה־ADB המוצגות.</string>
+    <string name="tv_dialog_enable_entry">הפעלה</string>
+    <string name="tv_dialog_disable_entry">השבתה</string>
+    <string name="tv_lists_empty">אין עדיין רשומות ברשימה זו.</string>
+    <string name="tv_dialog_search">חיפוש</string>
+    <string name="tv_dialog_clear_search">ניקוי</string>
 </resources>

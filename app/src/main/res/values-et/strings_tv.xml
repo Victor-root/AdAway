@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Ava VPN-i seaded</string>
     <string name="tv_always_on_hint_later">Selge</string>
     <string name="tv_persistence_intent_failed">VPN-i seaded on selles Android TV-s peidetud. Kasuta kuvatud ADB-käske.</string>
+    <string name="tv_dialog_enable_entry">Luba</string>
+    <string name="tv_dialog_disable_entry">Keela</string>
+    <string name="tv_lists_empty">Selles loendis pole veel kirjeid.</string>
+    <string name="tv_dialog_search">Otsi</string>
+    <string name="tv_dialog_clear_search">Tühjenda</string>
 </resources>

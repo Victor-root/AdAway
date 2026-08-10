@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Mở cài đặt VPN</string>
     <string name="tv_always_on_hint_later">Đã hiểu</string>
     <string name="tv_persistence_intent_failed">Cài đặt VPN bị ẩn trên Android TV này. Hãy dùng các lệnh ADB được hiển thị.</string>
+    <string name="tv_dialog_enable_entry">Bật</string>
+    <string name="tv_dialog_disable_entry">Tắt</string>
+    <string name="tv_lists_empty">Chưa có mục nào trong danh sách này.</string>
+    <string name="tv_dialog_search">Tìm kiếm</string>
+    <string name="tv_dialog_clear_search">Xóa</string>
 </resources>

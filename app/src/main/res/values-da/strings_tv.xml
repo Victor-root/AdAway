@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">Åbn VPN-indstillinger</string>
     <string name="tv_always_on_hint_later">OK, forstået</string>
     <string name="tv_persistence_intent_failed">VPN-indstillinger er skjult på dette Android TV. Brug de viste ADB-kommandoer.</string>
+    <string name="tv_dialog_enable_entry">Aktivér</string>
+    <string name="tv_dialog_disable_entry">Deaktivér</string>
+    <string name="tv_lists_empty">Ingen poster på denne liste endnu.</string>
+    <string name="tv_dialog_search">Søg</string>
+    <string name="tv_dialog_clear_search">Ryd</string>
 </resources>

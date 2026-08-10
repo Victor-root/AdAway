@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">VPN-beállítások megnyitása</string>
     <string name="tv_always_on_hint_later">Értem</string>
     <string name="tv_persistence_intent_failed">A VPN-beállítások rejtve vannak ezen az Android TV-n. Használja a megjelenített ADB-parancsokat.</string>
+    <string name="tv_dialog_enable_entry">Engedélyezés</string>
+    <string name="tv_dialog_disable_entry">Letiltás</string>
+    <string name="tv_lists_empty">Még nincs bejegyzés ezen a listán.</string>
+    <string name="tv_dialog_search">Keresés</string>
+    <string name="tv_dialog_clear_search">Törlés</string>
 </resources>

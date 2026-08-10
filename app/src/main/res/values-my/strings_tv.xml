@@ -20,4 +20,9 @@
     <string name="tv_always_on_hint_open_settings">VPN ဆက်တင်များ ဖွင့်ပါ</string>
     <string name="tv_always_on_hint_later">ရပါပြီ</string>
     <string name="tv_persistence_intent_failed">ဤ Android TV တွင် VPN ဆက်တင်များကို ဖုံးကွယ်ထားသည်။ ပြထားသော ADB command များကို သုံးပါ။</string>
+    <string name="tv_dialog_enable_entry">ဖွင့်ရန်</string>
+    <string name="tv_dialog_disable_entry">ပိတ်ရန်</string>
+    <string name="tv_lists_empty">ဒီစာရင်းမှာ အရာဝတ္ထုများ မရှိသေးပါ။</string>
+    <string name="tv_dialog_search">ရှာဖွေရန်</string>
+    <string name="tv_dialog_clear_search">ရှင်းလင်းရန်</string>
 </resources>

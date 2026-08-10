@@ -1,6 +1,7 @@
 package org.adaway.ui.lists;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -80,6 +81,32 @@ class ListsFragmentPagerAdapter extends FragmentStateAdapter {
         }
         if (this.redirectionListFragment != null) {
             this.redirectionListFragment.ensureActionModeCanceled();
+        }
+    }
+
+    /**
+     * Get the fragment for a tab position.
+     * <p>
+     * Fields, not {@link #createFragment}: the three fragments are created once in the
+     * constructor and kept alive for the activity's lifetime (see the fields above), so this is
+     * a plain lookup, not a fetch from the {@link androidx.viewpager2.widget.ViewPager2}'s own
+     * (possibly not yet created, and per adjacent-tab preload not reliably "the selected one")
+     * page views.
+     *
+     * @param position The tab position.
+     * @return The fragment at that position, or <code>null</code> if the position is out of range.
+     */
+    @Nullable
+    AbstractListFragment getFragment(int position) {
+        switch (position) {
+            case BLOCKED_HOSTS_TAB:
+                return this.blacklistFragment;
+            case ALLOWED_HOSTS_TAB:
+                return this.whitelistFragment;
+            case REDIRECTED_HOSTS_TAB:
+                return this.redirectionListFragment;
+            default:
+                return null;
         }
     }
 

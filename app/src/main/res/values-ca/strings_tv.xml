@@ -23,4 +23,9 @@
     <string name="tv_always_on_hint_open_settings">Obre la configuració de la VPN</string>
     <string name="tv_always_on_hint_later">Entesos</string>
     <string name="tv_persistence_intent_failed">La configuració de la VPN està amagada en aquest Android TV. Utilitzeu les ordres ADB que es mostren.</string>
+    <string name="tv_dialog_enable_entry">Activa</string>
+    <string name="tv_dialog_disable_entry">Desactiva</string>
+    <string name="tv_lists_empty">Encara no hi ha entrades en aquesta llista.</string>
+    <string name="tv_dialog_search">Cerca</string>
+    <string name="tv_dialog_clear_search">Neteja</string>
 </resources>
