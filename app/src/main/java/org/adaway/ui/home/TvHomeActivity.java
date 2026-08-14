@@ -80,7 +80,6 @@ public class TvHomeActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     private ActivityResultLauncher<Intent> prepareVpnLauncher;
-    private boolean alwaysOnHintCheckedThisSession = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -171,12 +170,7 @@ public class TvHomeActivity extends AppCompatActivity {
         dnsMonitorTile.setOnClickListener(v -> startActivity(new Intent(this, TvLogActivity.class)));
         helpTile.setOnClickListener(v -> startActivity(new Intent(this, HelpActivity.class)));
         preferencesTile.setOnClickListener(v -> startActivity(new Intent(this, PrefsActivity.class)));
-        persistenceButton.setOnClickListener(v -> {
-            // Manual open: also flip the "shown" pref so we stop auto-popping the
-            // dialog on subsequent VPN activations.
-            PreferenceHelper.setTvAlwaysOnVpnHintShown(this, true);
-            showAlwaysOnVpnDialog();
-        });
+        persistenceButton.setOnClickListener(v -> showAlwaysOnVpnDialog());
 
         // Reached once, right after the user grants the VPN consent dialog checkFirstStep()
         // triggered below: the TV's only "first activation" moment, since it skips the welcome
@@ -333,16 +327,6 @@ public class TvHomeActivity extends AppCompatActivity {
         // Refresh the passive always-on indicator whenever the VPN flips, since the
         // user might have just toggled the system setting from another screen.
         updateAlwaysOnIndicator();
-        // First time the user sees the VPN running on the TV, suggest enabling
-        // Always-on VPN. Skip the nag if it's already configured.
-        if (isBlocked && !alwaysOnHintCheckedThisSession) {
-            alwaysOnHintCheckedThisSession = true;
-            boolean alreadyConfigured = isAlwaysOnVpnConfiguredForUs();
-            if (!alreadyConfigured && !PreferenceHelper.isTvAlwaysOnVpnHintShown(this)) {
-                PreferenceHelper.setTvAlwaysOnVpnHintShown(this, true);
-                showAlwaysOnVpnDialog();
-            }
-        }
     }
 
     @Override
