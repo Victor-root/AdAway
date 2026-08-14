@@ -143,6 +143,9 @@ public class SourceModel {
         if (isDeviceOffline()) {
             throw new HostErrorException(NO_CONNECTION);
         }
+        // See the Javadoc on awaitInitialization(): on a fresh install this is the call that
+        // waits for the default hosts sources to actually be in the database before reading it.
+        AppDatabase.awaitInitialization(this.context);
         // Initialize update status
         boolean updateAvailable = false;
         // Get enabled hosts sources
@@ -316,6 +319,12 @@ public class SourceModel {
         if (isDeviceOffline()) {
             throw new HostErrorException(NO_CONNECTION);
         }
+        // A fresh install's default hosts sources are seeded on a background executor the
+        // first time the database is opened (AppDatabase.Callback#onCreate), which merely
+        // schedules that insert and returns immediately - so without this, the very first sync
+        // of a brand new install could read the source list below before its own seeding had
+        // landed, see zero sources, and wrongly report success having synced nothing at all.
+        AppDatabase.awaitInitialization(this.context);
         // Update state to downloading
         setState(R.string.status_retrieve);
         // Initialize copy counters
@@ -324,10 +333,13 @@ public class SourceModel {
         // Compute current date in UTC timezone
         ZonedDateTime now = ZonedDateTime.now();
         // Get each hosts source
-        for (HostsSource source : this.hostsSourceDao.getAll()) {
+        List<HostsSource> allSources = this.hostsSourceDao.getAll();
+        Timber.d("retrieveHostsSources: %d source(s) in database.", allSources.size());
+        for (HostsSource source : allSources) {
             int sourceId = source.getId();
             // Clear disabled source
             if (!source.isEnabled()) {
+                Timber.d("Skip source %s: disabled.", source.getLabel());
                 this.hostListItemDao.clearSourceHosts(sourceId);
                 this.hostsSourceDao.clearProperties(sourceId);
                 continue;
@@ -352,6 +364,7 @@ public class SourceModel {
             }
             // Increment number of copy
             numberOfCopies++;
+            Timber.d("Retrieving source %s (type=%s, url=%s).", source.getLabel(), source.getType(), source.getUrl());
             try {
                 // Check hosts source type
                 switch (source.getType()) {
@@ -369,12 +382,14 @@ public class SourceModel {
                 this.hostsSourceDao.updateModificationDates(sourceId, localModificationDate, onlineModificationDate);
                 // Update size
                 this.hostsSourceDao.updateSize(sourceId);
+                Timber.d("Source %s retrieved successfully.", source.getLabel());
             } catch (IOException e) {
                 Timber.w(e, "Failed to retrieve host source %s.", source.getUrl());
                 // Increment number of failed copy
                 numberOfFailedCopies++;
             }
         }
+        Timber.d("retrieveHostsSources: %d attempted, %d failed.", numberOfCopies, numberOfFailedCopies);
         // Check if all copies failed
         if (numberOfCopies == numberOfFailedCopies && numberOfCopies != 0) {
             throw new HostErrorException(DOWNLOAD_FAILED);

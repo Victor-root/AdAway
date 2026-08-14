@@ -23,6 +23,8 @@ import org.adaway.model.error.HostError;
 import org.adaway.ui.home.HomeViewModel;
 import org.adaway.ui.home.TvHomeActivity;
 
+import timber.log.Timber;
+
 /**
  * Android TV's own first-run wizard: two screens (welcome, then activate) reached only from
  * {@link TvHomeActivity} when the ad-block method is still undefined, playing the role {@link
@@ -67,6 +69,7 @@ public class TvWelcomeActivity extends AppCompatActivity {
         this.homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         this.prepareVpnLauncher = registerForActivityResult(new StartActivityForResult(), result -> {
+            Timber.d("TvWelcomeActivity: VPN prepare result=%d.", result.getResultCode());
             if (result.getResultCode() == RESULT_OK) {
                 showProgress();
                 this.homeViewModel.enable();
@@ -78,6 +81,7 @@ public class TvWelcomeActivity extends AppCompatActivity {
         this.homeViewModel.getState().observe(this, state -> this.progressDetailText.setText(state));
         this.homeViewModel.getError().observe(this, this::showError);
         this.homeViewModel.isAdBlocked().observe(this, adBlocked -> {
+            Timber.d("TvWelcomeActivity: isAdBlocked=%s.", adBlocked);
             if (adBlocked) {
                 showSuccess();
             }
@@ -130,6 +134,7 @@ public class TvWelcomeActivity extends AppCompatActivity {
      */
     private void activate() {
         Intent prepareIntent = VpnService.prepare(this);
+        Timber.d("TvWelcomeActivity.activate: prepareIntent=%s.", prepareIntent);
         if (prepareIntent == null) {
             showProgress();
             this.homeViewModel.enable();
@@ -156,6 +161,7 @@ public class TvWelcomeActivity extends AppCompatActivity {
         if (error == null) {
             return;
         }
+        Timber.d("TvWelcomeActivity.showError: %s.", error);
         this.errorText.setText(getString(R.string.welcome_sync_error, getString(error.getMessageKey())));
         this.progressGroup.setVisibility(View.GONE);
         this.errorGroup.setVisibility(View.VISIBLE);

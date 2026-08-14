@@ -20,6 +20,11 @@ import org.adaway.db.entity.HostsSource;
 import org.adaway.db.entity.HostEntry;
 import org.adaway.util.AppExecutors;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+
+import timber.log.Timber;
+
 import static org.adaway.db.Migrations.MIGRATION_1_2;
 import static org.adaway.db.Migrations.MIGRATION_2_3;
 import static org.adaway.db.Migrations.MIGRATION_3_4;
@@ -41,6 +46,12 @@ public abstract class AppDatabase extends RoomDatabase {
      * The database singleton instance.
      */
     private static volatile AppDatabase instance;
+    /**
+     * Set from {@link Callback#onCreate}, on a fresh install only - stays {@code null} for the
+     * whole life of the process on every other run, since {@code onCreate} itself never fires
+     * then. See {@link #awaitInitialization(Context)}.
+     */
+    private static volatile FutureTask<Void> initializationTask;
 
     /**
      * Get the database instance.
@@ -59,9 +70,10 @@ public abstract class AppDatabase extends RoomDatabase {
                     ).addCallback(new Callback() {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                            AppExecutors.getInstance().diskIO().execute(
-                                    () -> AppDatabase.initialize(context, instance)
-                            );
+                            FutureTask<Void> task = new FutureTask<>(
+                                    () -> AppDatabase.initialize(context, instance), null);
+                            initializationTask = task;
+                            AppExecutors.getInstance().diskIO().execute(task);
                         }
                     }).addMigrations(
                             MIGRATION_1_2,
@@ -75,6 +87,41 @@ public abstract class AppDatabase extends RoomDatabase {
             }
         }
         return instance;
+    }
+
+    /**
+     * Block the calling thread until the default hosts sources seeded by {@link
+     * Callback#onCreate} have actually landed, if that seeding is still in flight.
+     * <p>
+     * On a fresh install, the app's very first real query is what makes Room open the database
+     * file and fire {@code onCreate} - on whichever thread issued that query. {@code onCreate}
+     * itself only hands the insert off to a separate background executor and returns
+     * immediately, so without this, that same first caller could read the hosts source table
+     * before its own seeding had landed, see zero rows, and (for a sync) wrongly conclude there
+     * was nothing to do - exactly what a fresh Android TV install's first sync did.
+     * <p>
+     * {@code getWritableDatabase()} forces that same lazy open to happen right here if it has
+     * not happened yet, so {@code initializationTask} is guaranteed to already be set (on a
+     * fresh install) by the time it is read below, instead of this method racing that open
+     * itself. A cheap no-op on every call after the first: the open is cached by Room, and
+     * {@link FutureTask#get()} on an already-finished task returns immediately.
+     *
+     * @param context The application context.
+     */
+    public static void awaitInitialization(Context context) {
+        getInstance(context).getOpenHelper().getWritableDatabase();
+        FutureTask<Void> task = initializationTask;
+        if (task == null) {
+            return;
+        }
+        try {
+            task.get();
+        } catch (ExecutionException e) {
+            Timber.w(e, "Database initialization failed.");
+        } catch (InterruptedException e) {
+            Timber.w(e, "Interrupted while waiting for database initialization.");
+            Thread.currentThread().interrupt();
+        }
     }
 
     /**

@@ -184,13 +184,17 @@ public class HomeViewModel extends AndroidViewModel {
      */
     public void enable() {
         if (isTrue(this.pending)) {
+            Timber.d("HomeViewModel.enable: already pending, ignoring.");
             return;
         }
         EXECUTORS.networkIO().execute(() -> {
             try {
                 this.pending.postValue(true);
+                Timber.d("HomeViewModel.enable: retrieving hosts sources.");
                 this.sourceModel.retrieveHostsSources();
+                Timber.d("HomeViewModel.enable: hosts sources retrieved, applying ad-block model.");
                 this.adBlockModel.apply();
+                Timber.d("HomeViewModel.enable: ad-block model applied.");
             } catch (HostErrorException exception) {
                 Timber.w(exception, "Failed to enable ad-blocking.");
                 this.error.postValue(exception.getError());
