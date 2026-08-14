@@ -341,6 +341,13 @@ public class SourceModel {
             ZonedDateTime localModificationDate = source.getLocalModificationDate();
             if (localModificationDate != null && localModificationDate.isAfter(onlineModificationDate)) {
                 Timber.i("Skip source %s: no update.", source.getLabel());
+                // Debug level only (below the always-on diagnostic log's INFO+ floor, so this
+                // never reaches a release build's exportable log): a source stamped "up to date"
+                // from before the SourceLoader fix above stays stamped that way forever, since
+                // nothing here re-checks it once the timestamp says skip. Logging what it
+                // actually holds catches that stale state instead of trusting the timestamp.
+                Timber.d("Source %s currently holds %d hosts (local %s, online %s).",
+                        source.getLabel(), source.getSize(), localModificationDate, onlineModificationDate);
                 continue;
             }
             // Increment number of copy

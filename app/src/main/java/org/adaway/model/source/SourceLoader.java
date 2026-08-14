@@ -82,27 +82,43 @@ class SourceLoader {
             executorService.execute(new HostListItemParser(this.source, hostsLineQueue, hostsListItemQueue));
         }
         Future<Integer> inserterFuture = executorService.submit(inserter);
+        boolean insertFailed = false;
         try {
             Integer inserted = inserterFuture.get(LOAD_TIMEOUT_MINUTES, TimeUnit.MINUTES);
             Timber.i("%s host list items inserted.", inserted);
         } catch (ExecutionException e) {
             Timber.w(e, "Failed to parse hosts sources.");
+            insertFailed = true;
         } catch (TimeoutException e) {
             inserterFuture.cancel(true);
             Timber.w(e, "Timed out loading hosts source.");
+            insertFailed = true;
         } catch (InterruptedException e) {
+            inserterFuture.cancel(true);
             Timber.w(e, "Interrupted while parsing sources.");
             Thread.currentThread().interrupt();
+            insertFailed = true;
         }
         executorService.shutdown();
-        // The read failing part way through used to be logged and forgotten: the source was
-        // left holding whatever arrived before the break, then stamped as successfully synced,
-        // so a download cut short (a hostile network only has to reset the connection) silently
-        // disabled that source until something else forced a refresh. Report it instead, so the
-        // caller treats it as the failed sync it is and retries later.
+        // The read, or the insert, failing part way through used to be logged and forgotten:
+        // the source was left holding whatever had already arrived, then stamped as
+        // successfully synced, so a download cut short (a hostile network only has to reset
+        // the connection) or an insert cut short (the OS reclaiming a background thread, a
+        // WorkManager-cancelled sync, an unexpected database error) silently disabled that
+        // source until something else forced a refresh. Report both instead, so the caller
+        // treats it as the failed sync it is and retries later.
+        //
+        // The three catches above only logged a warning for the insert side, unlike the read
+        // side just below: a failure there left ItemInserter.call() returning a normal,
+        // untagged partial count indistinguishable from a complete one, which is how a
+        // production device ended up with a source frozen at roughly half its real size,
+        // and another at zero, both marked current.
         Throwable readFailure = sourceReader.failure;
         if (readFailure != null) {
             throw new IOException("Failed to read the whole hosts source.", readFailure);
+        }
+        if (insertFailed) {
+            throw new IOException("Failed to insert the whole hosts source.");
         }
     }
 
