@@ -46,6 +46,11 @@
 
     <string name="tv_welcome_intro_subtitle">Bu kısa sihirbaz, bu cihazda reklam engellemeyi açacak.</string>
     <string name="tv_welcome_start_button">Başla</string>
+    <string name="tv_welcome_method_header">Engelleme yönteminizi seçin</string>
+    <string name="tv_welcome_method_root_button">Root kullan</string>
+    <string name="tv_welcome_method_root_body">Daha hızlı ve pil dostu. Root\'lu bir cihaz gerektirir.</string>
+    <string name="tv_welcome_method_vpn_button">VPN kullan</string>
+    <string name="tv_welcome_method_vpn_body">Root olmadan çalışır, herhangi bir Android TV cihazıyla uyumludur.</string>
     <string name="tv_welcome_activate_header">Reklam engellemeyi aç</string>
     <string name="tv_welcome_activate_body">Bu yerel bir VPN\'dir: trafiğinizi harici bir sunucudan geçirmeden, reklamları doğrudan bu cihazda filtreler.</string>
 </resources>

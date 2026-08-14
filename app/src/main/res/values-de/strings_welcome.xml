@@ -51,6 +51,11 @@
 
     <string name="tv_welcome_intro_subtitle">Dieser kurze Assistent schaltet die Werbeblockierung auf diesem Gerät ein.</string>
     <string name="tv_welcome_start_button">Los geht\'s</string>
+    <string name="tv_welcome_method_header">Wähle deine Blockierungsmethode</string>
+    <string name="tv_welcome_method_root_button">Root verwenden</string>
+    <string name="tv_welcome_method_root_body">Schneller und akkuschonender. Erfordert ein gerootetes Gerät.</string>
+    <string name="tv_welcome_method_vpn_button">VPN verwenden</string>
+    <string name="tv_welcome_method_vpn_body">Funktioniert ohne Root, kompatibel mit jedem Android-TV-Gerät.</string>
     <string name="tv_welcome_activate_header">Werbeblockierung aktivieren</string>
     <string name="tv_welcome_activate_body">Es handelt sich um ein lokales VPN: Es filtert Werbung direkt auf diesem Gerät, ohne deinen Datenverkehr über einen externen Server zu leiten.</string>
 </resources>

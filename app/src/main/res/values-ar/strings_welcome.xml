@@ -46,6 +46,11 @@
 
     <string name="tv_welcome_intro_subtitle">سيؤدي هذا المعالج القصير إلى تفعيل حظر الإعلانات على هذا الجهاز.</string>
     <string name="tv_welcome_start_button">ابدأ</string>
+    <string name="tv_welcome_method_header">اختر طريقة الحظر الخاصة بك</string>
+    <string name="tv_welcome_method_root_button">استخدام الروت</string>
+    <string name="tv_welcome_method_root_body">أسرع وأكثر توفيرًا للبطارية. يتطلب جهازًا مروتًا (root).</string>
+    <string name="tv_welcome_method_vpn_button">استخدام VPN</string>
+    <string name="tv_welcome_method_vpn_body">يعمل بدون روت، متوافق مع أي جهاز Android TV.</string>
     <string name="tv_welcome_activate_header">تفعيل حظر الإعلانات</string>
     <string name="tv_welcome_activate_body">إنها شبكة VPN محلية: تقوم بتصفية الإعلانات على هذا الجهاز دون توجيه بياناتك عبر خادم خارجي.</string>
 </resources>

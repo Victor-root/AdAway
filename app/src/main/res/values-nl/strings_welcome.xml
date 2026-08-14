@@ -52,6 +52,11 @@ Het synchroniseren is mislukt: %1$s Wilt u het opnieuw proberen?</string>
 
     <string name="tv_welcome_intro_subtitle">Deze korte wizard schakelt advertentieblokkering op dit apparaat in.</string>
     <string name="tv_welcome_start_button">Aan de slag</string>
+    <string name="tv_welcome_method_header">Kies je blokkeermethode</string>
+    <string name="tv_welcome_method_root_button">Root gebruiken</string>
+    <string name="tv_welcome_method_root_body">Sneller en zuiniger met de batterij. Vereist een geroot toestel.</string>
+    <string name="tv_welcome_method_vpn_button">VPN gebruiken</string>
+    <string name="tv_welcome_method_vpn_body">Werkt zonder root, compatibel met elk Android TV-apparaat.</string>
     <string name="tv_welcome_activate_header">Advertentieblokkering inschakelen</string>
     <string name="tv_welcome_activate_body">Het is een lokale VPN: die filtert advertenties op dit apparaat zelf, zonder je verkeer via een externe server te sturen.</string>
 </resources>

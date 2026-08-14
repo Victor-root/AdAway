@@ -51,6 +51,11 @@
 
     <string name="tv_welcome_intro_subtitle">אשף קצר זה יפעיל את חסימת הפרסומות במכשיר הזה.</string>
     <string name="tv_welcome_start_button">התחלה</string>
+    <string name="tv_welcome_method_header">בחר את שיטת החסימה שלך</string>
+    <string name="tv_welcome_method_root_button">השתמש ב-root</string>
+    <string name="tv_welcome_method_root_body">מהיר יותר וחסכוני יותר בסוללה. דורש מכשיר עם הרשאות root.</string>
+    <string name="tv_welcome_method_vpn_button">השתמש ב-VPN</string>
+    <string name="tv_welcome_method_vpn_body">פועל ללא root, תואם לכל מכשיר Android TV.</string>
     <string name="tv_welcome_activate_header">הפעלת חסימת פרסומות</string>
     <string name="tv_welcome_activate_body">זהו VPN מקומי: הוא מסנן פרסומות במכשיר עצמו, מבלי לנתב את התעבורה שלך דרך שרת חיצוני.</string>
 </resources>

@@ -20,6 +20,11 @@
     
     <string name="tv_welcome_intro_subtitle">Este breve asistente activará o bloqueo de anuncios neste dispositivo.</string>
     <string name="tv_welcome_start_button">Comezar</string>
+    <string name="tv_welcome_method_header">Escolle o teu método de bloqueo</string>
+    <string name="tv_welcome_method_root_button">Usar root</string>
+    <string name="tv_welcome_method_root_body">Máis rápido e aforra batería. Require un dispositivo con root.</string>
+    <string name="tv_welcome_method_vpn_button">Usar VPN</string>
+    <string name="tv_welcome_method_vpn_body">Funciona sen root, compatible con calquera dispositivo Android TV.</string>
     <string name="tv_welcome_activate_header">Activar o bloqueo de anuncios</string>
     <string name="tv_welcome_activate_body">É unha VPN local: filtra os anuncios neste dispositivo, sen enviar o teu tráfico a través dun servidor externo.</string>
 </resources>

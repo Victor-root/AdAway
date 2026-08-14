@@ -46,6 +46,11 @@
 
     <string name="tv_welcome_intro_subtitle">Tämä lyhyt ohjattu toiminto ottaa mainosten eston käyttöön tässä laitteessa.</string>
     <string name="tv_welcome_start_button">Aloita</string>
+    <string name="tv_welcome_method_header">Valitse esto-menetelmäsi</string>
+    <string name="tv_welcome_method_root_button">Käytä juurikäyttöoikeuksia</string>
+    <string name="tv_welcome_method_root_body">Nopeampi ja akkuystävällisempi. Vaatii juurioikeutetun laitteen.</string>
+    <string name="tv_welcome_method_vpn_button">Käytä VPN:ää</string>
+    <string name="tv_welcome_method_vpn_body">Toimii ilman juurioikeuksia, yhteensopiva minkä tahansa Android TV -laitteen kanssa.</string>
     <string name="tv_welcome_activate_header">Ota mainosten esto käyttöön</string>
     <string name="tv_welcome_activate_body">Kyseessä on paikallinen VPN: se suodattaa mainokset tässä laitteessa lähettämättä liikennettäsi ulkoisen palvelimen kautta.</string>
 </resources>

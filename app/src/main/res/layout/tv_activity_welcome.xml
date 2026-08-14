@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Android TV's own dedicated first-run wizard, reached only from TvHomeActivity when the
-    ad-block method is still undefined. Two screens where mobile's WelcomeActivity has four: the
-    method choice is skipped outright (TV always uses VPN, decided here rather than asked, the
-    welcome screens not being remote-friendly is exactly why this exists instead of reusing them),
-    and so is the battery/OEM-battery guidance, which is phone-OS/phone-brand specific and
-    irrelevant to a TV box; TV has its own separate, always-reachable persistence guidance on the
-    home screen instead of forcing it into first run.
+    ad-block method is still undefined. Three screens where mobile's WelcomeActivity has four:
+    the battery/OEM-battery guidance is skipped, being phone-OS/phone-brand specific and
+    irrelevant to a TV box (TV has its own separate, always-reachable persistence guidance on
+    the home screen instead of forcing it into first run) - but the root-vs-VPN method choice
+    mobile's WelcomeMethodFragment offers is kept, just rebuilt as two stacked full-width
+    buttons instead of mobile's side-by-side tappable cards, since a TV remote has no
+    equivalent of a tap and needs a clear D-pad up/down order instead.
 
     Same red brand background and pill button style mobile's own welcome screens already use
     (Theme.AdAway.NoActionBar.Red / Widget.AdAway.Button.OnRed in styles.xml, both pre-existing,
@@ -14,13 +15,16 @@
     TV screen in this app uses: this is a one-time, single-purpose moment, not a screen the user
     returns to, so it earns its own look instead of matching the everyday chrome.
 
-    Two top-level pages (tv_welcome_intro_page / tv_welcome_activate_page), only one visible at a
-    time, toggled from TvWelcomeActivity; no ViewPager2, since the mobile wizard already disables
-    swipe (setUserInputEnabled(false)) and is entirely button-driven, so a D-pad loses nothing
-    plain visibility toggling doesn't already give it. Within the activate page, four further
-    sub-states (prompt / progress / success / error) are siblings toggled the same way, mirroring
-    WelcomeSyncFragment's own inline state machine rather than a dialog, since this screen already
-    owns the whole window.
+    Three top-level pages (tv_welcome_intro_page / tv_welcome_method_page /
+    tv_welcome_activate_page), only one visible at a time, toggled from TvWelcomeActivity; no
+    ViewPager2, since the mobile wizard already disables swipe (setUserInputEnabled(false)) and
+    is entirely button-driven, so a D-pad loses nothing plain visibility toggling doesn't already
+    give it. Within the activate page, four further sub-states (prompt / progress / success /
+    error) are siblings toggled the same way, mirroring WelcomeSyncFragment's own inline state
+    machine rather than a dialog, since this screen already owns the whole window. Choosing root
+    skips the prompt sub-state entirely (there is no root equivalent of VpnService.prepare()'s
+    consent dialog to explain first - requesting the grant IS the consent moment) and goes
+    straight to progress once it is actually confirmed granted.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -91,7 +95,97 @@
 
     </LinearLayout>
 
-    <!-- ===================== PAGE 2: ACTIVATE ===================== -->
+    <!-- ===================== PAGE 2: METHOD CHOICE ===================== -->
+    <LinearLayout
+        android:id="@+id/tv_welcome_method_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="48dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tv_welcome_method_header"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            android:textColor="?attr/colorOnPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:alpha="0.85"
+            android:gravity="center"
+            android:maxWidth="720dp"
+            android:text="@string/welcome_method_summary"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="?attr/colorOnPrimary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tv_welcome_root_button"
+            style="@style/Widget.AdAway.Button.OnRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="6dp"
+            android:text="@string/tv_welcome_method_root_button"
+            android:textSize="16sp"
+            android:focusable="true"
+            android:focusedByDefault="true"
+            app:cornerRadius="100dp"
+            app:icon="@drawable/ic_superuser_24dp"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/welcome_button_text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:alpha="0.85"
+            android:gravity="center"
+            android:maxWidth="480dp"
+            android:text="@string/tv_welcome_method_root_body"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?attr/colorOnPrimary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tv_welcome_vpn_button"
+            style="@style/Widget.AdAway.Button.OnRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="6dp"
+            android:text="@string/tv_welcome_method_vpn_button"
+            android:textSize="16sp"
+            android:focusable="true"
+            app:cornerRadius="100dp"
+            app:icon="@drawable/ic_vpn_key_24dp"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/welcome_button_text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:alpha="0.85"
+            android:gravity="center"
+            android:maxWidth="480dp"
+            android:text="@string/tv_welcome_method_vpn_body"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?attr/colorOnPrimary" />
+
+    </LinearLayout>
+
+    <!-- ===================== PAGE 3: ACTIVATE ===================== -->
     <LinearLayout
         android:id="@+id/tv_welcome_activate_page"
         android:layout_width="match_parent"

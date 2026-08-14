@@ -46,6 +46,11 @@
 
     <string name="tv_welcome_intro_subtitle">Ten krótki kreator włączy blokowanie reklam na tym urządzeniu.</string>
     <string name="tv_welcome_start_button">Rozpocznij</string>
+    <string name="tv_welcome_method_header">Wybierz metodę blokowania</string>
+    <string name="tv_welcome_method_root_button">Użyj roota</string>
+    <string name="tv_welcome_method_root_body">Szybsze i oszczędniejsze dla baterii. Wymaga urządzenia z rootem.</string>
+    <string name="tv_welcome_method_vpn_button">Użyj VPN</string>
+    <string name="tv_welcome_method_vpn_body">Działa bez roota, kompatybilne z każdym urządzeniem Android TV.</string>
     <string name="tv_welcome_activate_header">Włącz blokowanie reklam</string>
     <string name="tv_welcome_activate_body">To lokalny VPN: filtruje reklamy bezpośrednio na tym urządzeniu, nie przekierowując Twojego ruchu przez zewnętrzny serwer.</string>
 </resources>

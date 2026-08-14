@@ -43,6 +43,11 @@
 
     <string name="tv_welcome_intro_subtitle">Acest scurt expert va activa blocarea reclamelor pe acest dispozitiv.</string>
     <string name="tv_welcome_start_button">Începe</string>
+    <string name="tv_welcome_method_header">Alege metoda ta de blocare</string>
+    <string name="tv_welcome_method_root_button">Utilizează root</string>
+    <string name="tv_welcome_method_root_body">Mai rapid și eficient pentru baterie. Necesită un dispozitiv cu root.</string>
+    <string name="tv_welcome_method_vpn_button">Utilizează VPN</string>
+    <string name="tv_welcome_method_vpn_body">Funcționează fără root, compatibil cu orice dispozitiv Android TV.</string>
     <string name="tv_welcome_activate_header">Activează blocarea reclamelor</string>
     <string name="tv_welcome_activate_body">Este un VPN local: filtrează reclamele chiar pe acest dispozitiv, fără să direcționeze traficul printr-un server extern.</string>
 </resources>

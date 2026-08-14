@@ -47,6 +47,11 @@ Pilih salah satu yang kamu inginkan:</string>
 
     <string name="tv_welcome_intro_subtitle">Wizard singkat ini akan mengaktifkan pemblokiran iklan di perangkat ini.</string>
     <string name="tv_welcome_start_button">Mulai</string>
+    <string name="tv_welcome_method_header">Pilih metode pemblokiran Anda</string>
+    <string name="tv_welcome_method_root_button">Gunakan root</string>
+    <string name="tv_welcome_method_root_body">Lebih cepat dan hemat baterai. Memerlukan perangkat yang di-root.</string>
+    <string name="tv_welcome_method_vpn_button">Gunakan VPN</string>
+    <string name="tv_welcome_method_vpn_body">Berfungsi tanpa root, kompatibel dengan perangkat Android TV apa pun.</string>
     <string name="tv_welcome_activate_header">Aktifkan pemblokiran iklan</string>
     <string name="tv_welcome_activate_body">Ini adalah VPN lokal: memfilter iklan di perangkat ini, tanpa mengarahkan lalu lintas Anda melalui server eksternal.</string>
 </resources>

@@ -45,6 +45,11 @@
 
     <string name="tv_welcome_intro_subtitle">この短いウィザードで、この端末の広告ブロックをオンにします。</string>
     <string name="tv_welcome_start_button">はじめる</string>
+    <string name="tv_welcome_method_header">ブロック方法を選択してください</string>
+    <string name="tv_welcome_method_root_button">root を使用</string>
+    <string name="tv_welcome_method_root_body">より高速でバッテリーに優しい。root化されたデバイスが必要です。</string>
+    <string name="tv_welcome_method_vpn_button">VPN を使用</string>
+    <string name="tv_welcome_method_vpn_body">root不要で動作し、あらゆるAndroid TVデバイスに対応しています。</string>
     <string name="tv_welcome_activate_header">広告ブロックをオンにする</string>
     <string name="tv_welcome_activate_body">これはローカルVPNです。通信を外部サーバーに送ることなく、この端末上で広告をフィルタリングします。</string>
 </resources>

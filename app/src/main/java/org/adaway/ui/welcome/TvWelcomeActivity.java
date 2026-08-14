@@ -1,6 +1,8 @@
 package org.adaway.ui.welcome;
 
+import static org.adaway.model.adblocking.AdBlockMethod.ROOT;
 import static org.adaway.model.adblocking.AdBlockMethod.VPN;
+import static java.lang.Boolean.TRUE;
 
 import android.content.Intent;
 import android.net.VpnService;
@@ -15,10 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.topjohnwu.superuser.Shell;
 
 import org.adaway.R;
 import org.adaway.helper.PreferenceHelper;
 import org.adaway.helper.ThemeHelper;
+import org.adaway.model.adblocking.AdBlockMethod;
 import org.adaway.model.error.HostError;
 import org.adaway.ui.home.HomeViewModel;
 import org.adaway.ui.home.TvHomeActivity;
@@ -26,22 +31,24 @@ import org.adaway.ui.home.TvHomeActivity;
 import timber.log.Timber;
 
 /**
- * Android TV's own first-run wizard: two screens (welcome, then activate) reached only from
- * {@link TvHomeActivity} when the ad-block method is still undefined, playing the role {@link
- * WelcomeActivity} plays for a fresh mobile install. See tv_activity_welcome.xml for why this is
- * not just that Activity adapted for D-pad: the method choice (TV always uses VPN) and the
- * phone-OS/phone-brand battery guidance mobile shows do not apply to a TV box at all.
+ * Android TV's own first-run wizard: three screens (welcome, method choice, then activate)
+ * reached only from {@link TvHomeActivity} when the ad-block method is still undefined, playing
+ * the role {@link WelcomeActivity} plays for a fresh mobile install. See tv_activity_welcome.xml
+ * for why this is not just that Activity adapted for D-pad: the root-vs-VPN choice is kept (as
+ * two stacked buttons instead of mobile's tappable cards), but the phone-OS/phone-brand battery
+ * guidance mobile shows does not apply to a TV box at all, so that part is dropped.
  * <p>
  * Reuses the exact {@link HomeViewModel#enable()} mobile's own {@link WelcomeSyncFragment} calls
- * for this same first activation: sources are synced before the VPN starts, and it does not start
- * at all if that sync fails, rather than starting immediately against an empty database the way
- * {@link HomeViewModel#toggleAdBlocking()} would.
+ * for this same first activation: sources are synced before ad blocking starts, and it does not
+ * start at all if that sync fails, rather than starting immediately against an empty database the
+ * way {@link HomeViewModel#toggleAdBlocking()} would.
  *
  * @author AdAway Community
  */
 public class TvWelcomeActivity extends AppCompatActivity {
     private HomeViewModel homeViewModel;
     private View introPage;
+    private View methodPage;
     private View activatePage;
     private View promptGroup;
     private View progressGroup;
@@ -49,6 +56,8 @@ public class TvWelcomeActivity extends AppCompatActivity {
     private View errorGroup;
     private TextView progressDetailText;
     private TextView errorText;
+    private MaterialButton rootButton;
+    private MaterialButton vpnButton;
     private MaterialButton activateButton;
     private MaterialButton finishButton;
     private MaterialButton retryButton;
@@ -61,13 +70,6 @@ public class TvWelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.tv_activity_welcome);
         bindViews();
 
-        // Fixed before anything touches HomeViewModel: AdAwayApplication.getAdBlockModel()
-        // only re-resolves the method when asked again, and HomeViewModel reads it once, in
-        // its own constructor - so this has to happen first, or enable() below would run
-        // against an UndefinedBlockModel that does nothing at all.
-        PreferenceHelper.setAbBlockMethod(this, VPN);
-        this.homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
         this.prepareVpnLauncher = registerForActivityResult(new StartActivityForResult(), result -> {
             Timber.d("TvWelcomeActivity: VPN prepare result=%d.", result.getResultCode());
             if (result.getResultCode() == RESULT_OK) {
@@ -77,19 +79,39 @@ public class TvWelcomeActivity extends AppCompatActivity {
             // Cancelled: whatever this screen was already showing (the prompt, or an error
             // from a previous attempt) stays exactly as it was; the button is still there.
         });
+    }
 
-        this.homeViewModel.getState().observe(this, state -> this.progressDetailText.setText(state));
-        this.homeViewModel.getError().observe(this, this::showError);
-        this.homeViewModel.isAdBlocked().observe(this, adBlocked -> {
-            Timber.d("TvWelcomeActivity: isAdBlocked=%s.", adBlocked);
-            if (adBlocked) {
-                showSuccess();
-            }
-        });
+    /**
+     * Lazily builds {@link #homeViewModel} bound to the chosen method, the first time either
+     * method is actually committed to (root only once its grant is confirmed; VPN as soon as
+     * it's chosen, {@link VpnService#prepare} being the actual consent step for that one).
+     * <p>
+     * Fixed before anything touches it: {@code AdAwayApplication.getAdBlockModel()} only
+     * re-resolves the method when asked again, and {@code HomeViewModel} reads it once, in its
+     * own constructor - so the preference has to be set first, or {@code enable()} later would
+     * run against an {@code UndefinedBlockModel} that does nothing at all. Never called twice
+     * with two different methods in practice: this screen only ever moves forward, never back
+     * to a fresh method choice once one has actually been committed to.
+     */
+    private HomeViewModel homeViewModel(AdBlockMethod method) {
+        if (this.homeViewModel == null) {
+            PreferenceHelper.setAbBlockMethod(this, method);
+            this.homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+            this.homeViewModel.getState().observe(this, state -> this.progressDetailText.setText(state));
+            this.homeViewModel.getError().observe(this, this::showError);
+            this.homeViewModel.isAdBlocked().observe(this, adBlocked -> {
+                Timber.d("TvWelcomeActivity: isAdBlocked=%s.", adBlocked);
+                if (adBlocked) {
+                    showSuccess();
+                }
+            });
+        }
+        return this.homeViewModel;
     }
 
     private void bindViews() {
         this.introPage = findViewById(R.id.tv_welcome_intro_page);
+        this.methodPage = findViewById(R.id.tv_welcome_method_page);
         this.activatePage = findViewById(R.id.tv_welcome_activate_page);
         this.promptGroup = findViewById(R.id.tv_welcome_prompt_group);
         this.progressGroup = findViewById(R.id.tv_welcome_progress_group);
@@ -99,13 +121,17 @@ public class TvWelcomeActivity extends AppCompatActivity {
         this.errorText = findViewById(R.id.tv_welcome_error_text);
 
         MaterialButton startButton = findViewById(R.id.tv_welcome_start_button);
+        this.rootButton = findViewById(R.id.tv_welcome_root_button);
+        this.vpnButton = findViewById(R.id.tv_welcome_vpn_button);
         this.activateButton = findViewById(R.id.tv_welcome_activate_button);
         this.finishButton = findViewById(R.id.tv_welcome_finish_button);
         this.retryButton = findViewById(R.id.tv_welcome_retry_button);
 
-        startButton.setOnClickListener(v -> showActivatePage());
+        startButton.setOnClickListener(v -> showMethodPage());
+        this.rootButton.setOnClickListener(v -> chooseRoot());
+        this.vpnButton.setOnClickListener(v -> chooseVpn());
         this.activateButton.setOnClickListener(v -> activate());
-        this.retryButton.setOnClickListener(v -> activate());
+        this.retryButton.setOnClickListener(v -> retry());
         this.finishButton.setOnClickListener(v -> finishWizard());
 
         logButtonGeometry("startButton", startButton);
@@ -144,10 +170,58 @@ public class TvWelcomeActivity extends AppCompatActivity {
         view.post(view::requestFocus);
     }
 
-    private void showActivatePage() {
+    private void showMethodPage() {
         this.introPage.setVisibility(View.GONE);
+        this.methodPage.setVisibility(View.VISIBLE);
+        focusWhenLaidOut(this.rootButton);
+    }
+
+    private void showActivatePage() {
+        this.methodPage.setVisibility(View.GONE);
         this.activatePage.setVisibility(View.VISIBLE);
+    }
+
+    private void chooseVpn() {
+        homeViewModel(VPN);
+        showActivatePage();
+        // Default-visible sub-state of activatePage (see tv_activity_welcome.xml): the prompt
+        // group needs no extra setVisibility call here, only its button focused.
         focusWhenLaidOut(this.activateButton);
+    }
+
+    /**
+     * Requests root the same way mobile's {@code WelcomeMethodFragment.checkRoot()} does, via
+     * libsu, then either commits to root and jumps straight to syncing - no root equivalent of
+     * {@link VpnService#prepare}'s consent dialog to show a prompt sub-state for first, granting
+     * the request IS the consent moment - or reports it missing and leaves the user on this same
+     * screen, free to try again or pick VPN instead.
+     */
+    private void chooseRoot() {
+        this.rootButton.setEnabled(false);
+        Shell.getShell(shell -> {
+            boolean granted = TRUE.equals(Shell.isAppGrantedRoot());
+            Timber.d("TvWelcomeActivity.chooseRoot: granted=%s.", granted);
+            runOnUiThread(() -> {
+                this.rootButton.setEnabled(true);
+                if (granted) {
+                    HomeViewModel viewModel = homeViewModel(ROOT);
+                    showActivatePage();
+                    showProgress();
+                    viewModel.enable();
+                } else {
+                    showRootMissingDialog();
+                }
+            });
+        });
+    }
+
+    private void showRootMissingDialog() {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.welcome_root_missing_title)
+                .setMessage(R.string.welcome_root_missile_description)
+                .setPositiveButton(R.string.button_close, null)
+                .create()
+                .show();
     }
 
     /**
@@ -163,6 +237,20 @@ public class TvWelcomeActivity extends AppCompatActivity {
             this.homeViewModel.enable();
         } else {
             this.prepareVpnLauncher.launch(prepareIntent);
+        }
+    }
+
+    /**
+     * The error sub-state's retry button, shared by both methods: VPN goes through {@link
+     * #activate()} again since consent can theoretically have been revoked between attempts,
+     * root has no equivalent re-check and just retries the sync directly.
+     */
+    private void retry() {
+        if (PreferenceHelper.getAdBlockMethod(this) == VPN) {
+            activate();
+        } else {
+            showProgress();
+            this.homeViewModel.enable();
         }
     }
 

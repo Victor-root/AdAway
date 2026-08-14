@@ -46,6 +46,11 @@
 
     <string name="tv_welcome_intro_subtitle">Цей короткий майстер увімкне блокування реклами на цьому пристрої.</string>
     <string name="tv_welcome_start_button">Почати</string>
+    <string name="tv_welcome_method_header">Виберіть метод блокування</string>
+    <string name="tv_welcome_method_root_button">Використати root</string>
+    <string name="tv_welcome_method_root_body">Швидше та економніше для батареї. Потрібен пристрій з root-доступом.</string>
+    <string name="tv_welcome_method_vpn_button">Використати VPN</string>
+    <string name="tv_welcome_method_vpn_body">Працює без root, сумісний з будь-яким пристроєм Android TV.</string>
     <string name="tv_welcome_activate_header">Увімкнути блокування реклами</string>
     <string name="tv_welcome_activate_body">Це локальний VPN: він фільтрує рекламу прямо на пристрої, не спрямовуючи ваш трафік через зовнішній сервер.</string>
 </resources>

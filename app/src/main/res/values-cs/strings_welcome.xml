@@ -46,6 +46,11 @@
 
     <string name="tv_welcome_intro_subtitle">Tento krátký průvodce zapne blokování reklam na tomto zařízení.</string>
     <string name="tv_welcome_start_button">Začít</string>
+    <string name="tv_welcome_method_header">Vyberte si způsob blokování</string>
+    <string name="tv_welcome_method_root_button">Použít root</string>
+    <string name="tv_welcome_method_root_body">Rychlejší a šetrnější k baterii. Vyžaduje zařízení s rootem.</string>
+    <string name="tv_welcome_method_vpn_button">Použít VPN</string>
+    <string name="tv_welcome_method_vpn_body">Funguje bez rootu, kompatibilní s jakýmkoli zařízením Android TV.</string>
     <string name="tv_welcome_activate_header">Zapnout blokování reklam</string>
     <string name="tv_welcome_activate_body">Jde o místní VPN: filtruje reklamy přímo na tomto zařízení, aniž by váš provoz směrovala přes externí server.</string>
 </resources>

@@ -51,6 +51,11 @@
 
     <string name="tv_welcome_intro_subtitle">این جادوگر کوتاه، مسدودسازی تبلیغات را روی این دستگاه فعال می‌کند.</string>
     <string name="tv_welcome_start_button">شروع کنید</string>
+    <string name="tv_welcome_method_header">روش مسدودسازی خود را انتخاب کنید</string>
+    <string name="tv_welcome_method_root_button">استفاده از روت</string>
+    <string name="tv_welcome_method_root_body">سریع‌تر و کم‌مصرف‌تر برای باتری. به دستگاه روت‌شده نیاز دارد.</string>
+    <string name="tv_welcome_method_vpn_button">استفاده از VPN</string>
+    <string name="tv_welcome_method_vpn_body">بدون روت کار می‌کند، با هر دستگاه Android TV سازگار است.</string>
     <string name="tv_welcome_activate_header">فعال‌سازی مسدودسازی تبلیغات</string>
     <string name="tv_welcome_activate_body">این یک VPN محلی است: تبلیغات را روی همین دستگاه فیلتر می‌کند، بدون اینکه ترافیک شما را از یک سرور خارجی عبور دهد.</string>
 </resources>

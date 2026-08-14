@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Widget.AdAway.Button.OnRed's ripple/state-overlay color. state_pressed only: a brief
-    animated burst on an actual tap, for mobile touch feedback. No state_focused entry: every
-    screen this style is used on only ever shows one focusable control at a time, so there is
-    nothing for a D-pad to move focus to or from and no need for a focus indicator at all -
-    on top of a sustained low-alpha wash, unlike a tap's brief animated ripple, being seen
-    cutting off at the pill's rounded ends instead of following them.
+    animated burst on an actual tap, for mobile touch feedback. No state_focused entry: a
+    sustained low-alpha wash here, unlike a tap's brief animated ripple, was seen cutting off
+    at the pill's rounded ends instead of following them, for as long as a TV D-pad kept a
+    button focused. TV focus is a strokeColor/strokeWidth ring instead (welcome_button_stroke),
+    drawn along the fill's own shape rather than as a second layer over it.
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item

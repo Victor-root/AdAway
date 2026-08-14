@@ -51,6 +51,11 @@
 
     <string name="tv_welcome_intro_subtitle">這個簡短的精靈將在此裝置上開啟廣告攔截。</string>
     <string name="tv_welcome_start_button">開始</string>
+    <string name="tv_welcome_method_header">選擇您的封鎖方式</string>
+    <string name="tv_welcome_method_root_button">使用 root</string>
+    <string name="tv_welcome_method_root_body">速度更快，更省電。需要已取得 root 權限的裝置。</string>
+    <string name="tv_welcome_method_vpn_button">使用 VPN</string>
+    <string name="tv_welcome_method_vpn_body">無需 root 即可運作，相容任何 Android TV 裝置。</string>
     <string name="tv_welcome_activate_header">開啟廣告攔截</string>
     <string name="tv_welcome_activate_body">這是一個本機 VPN：它直接在此裝置上過濾廣告，不會將您的流量轉發到外部伺服器。</string>
 </resources>

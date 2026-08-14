@@ -46,6 +46,11 @@
 
     <string name="tv_welcome_intro_subtitle">Morroi labur honek gailu honetan iragarkien blokeoa aktibatuko du.</string>
     <string name="tv_welcome_start_button">Hasi</string>
+    <string name="tv_welcome_method_header">Aukeratu blokeo-metodoa</string>
+    <string name="tv_welcome_method_root_button">Erabili root</string>
+    <string name="tv_welcome_method_root_body">Azkarragoa eta bateria gehiago errespetatzen du. Root eginda dagoen gailua behar da.</string>
+    <string name="tv_welcome_method_vpn_button">Erabili VPN</string>
+    <string name="tv_welcome_method_vpn_body">Root gabe funtzionatzen du, edozein Android TV gailurekin bateragarria.</string>
     <string name="tv_welcome_activate_header">Aktibatu iragarkien blokeoa</string>
     <string name="tv_welcome_activate_body">VPN lokal bat da: iragarkiak gailu honetan bertan iragazten ditu, zure trafikoa kanpoko zerbitzari batetik bideratu gabe.</string>
 </resources>

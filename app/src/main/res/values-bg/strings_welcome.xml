@@ -53,6 +53,11 @@
 
     <string name="tv_welcome_intro_subtitle">Този кратък съветник ще включи блокирането на реклами на това устройство.</string>
     <string name="tv_welcome_start_button">Начало</string>
+    <string name="tv_welcome_method_header">Изберете метод на блокиране</string>
+    <string name="tv_welcome_method_root_button">Използване на root</string>
+    <string name="tv_welcome_method_root_body">По-бързо и щадящо батерията. Изисква руутнато устройство.</string>
+    <string name="tv_welcome_method_vpn_button">Използване на VPN</string>
+    <string name="tv_welcome_method_vpn_body">Работи без root, съвместим с всяко устройство с Android TV.</string>
     <string name="tv_welcome_activate_header">Включване на блокирането на реклами</string>
     <string name="tv_welcome_activate_body">Това е локална VPN: тя филтрира реклами на устройството, без да пренасочва трафика ви през външен сървър.</string>
 </resources>

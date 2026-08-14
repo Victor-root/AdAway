@@ -46,6 +46,11 @@
 
     <string name="tv_welcome_intro_subtitle">Ta kratek čarovnik bo vklopil blokiranje oglasov na tej napravi.</string>
     <string name="tv_welcome_start_button">Začni</string>
+    <string name="tv_welcome_method_header">Izberite način blokiranja</string>
+    <string name="tv_welcome_method_root_button">Uporabi root</string>
+    <string name="tv_welcome_method_root_body">Hitreje in varčneje z baterijo. Zahteva napravo z rootom.</string>
+    <string name="tv_welcome_method_vpn_button">Uporabi VPN</string>
+    <string name="tv_welcome_method_vpn_body">Deluje brez roota, združljivo s katero koli napravo Android TV.</string>
     <string name="tv_welcome_activate_header">Vklopi blokiranje oglasov</string>
     <string name="tv_welcome_activate_body">Gre za lokalni VPN: oglase filtrira na sami napravi, brez preusmerjanja vašega prometa prek zunanjega strežnika.</string>
 </resources>

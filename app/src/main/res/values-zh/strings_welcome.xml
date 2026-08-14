@@ -51,6 +51,11 @@
 
     <string name="tv_welcome_intro_subtitle">这个简短的向导将在此设备上开启广告拦截。</string>
     <string name="tv_welcome_start_button">开始</string>
+    <string name="tv_welcome_method_header">选择您的拦截方式</string>
+    <string name="tv_welcome_method_root_button">使用 root</string>
+    <string name="tv_welcome_method_root_body">速度更快，更省电。需要已获取 root 权限的设备。</string>
+    <string name="tv_welcome_method_vpn_button">使用 VPN</string>
+    <string name="tv_welcome_method_vpn_body">无需 root 即可运行，兼容任何 Android TV 设备。</string>
     <string name="tv_welcome_activate_header">开启广告拦截</string>
     <string name="tv_welcome_activate_body">这是一个本地 VPN：它直接在此设备上过滤广告，不会将您的流量转发到外部服务器。</string>
 </resources>

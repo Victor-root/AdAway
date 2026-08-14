@@ -45,6 +45,11 @@
 
     <string name="tv_welcome_intro_subtitle">이 짧은 마법사가 이 기기에서 광고 차단을 켭니다.</string>
     <string name="tv_welcome_start_button">시작하기</string>
+    <string name="tv_welcome_method_header">차단 방법을 선택하세요</string>
+    <string name="tv_welcome_method_root_button">루트 사용</string>
+    <string name="tv_welcome_method_root_body">더 빠르고 배터리 친화적입니다. 루트된 기기가 필요합니다.</string>
+    <string name="tv_welcome_method_vpn_button">VPN 사용</string>
+    <string name="tv_welcome_method_vpn_body">루트 없이 작동하며 모든 Android TV 기기와 호환됩니다.</string>
     <string name="tv_welcome_activate_header">광고 차단 켜기</string>
     <string name="tv_welcome_activate_body">로컬 VPN입니다. 트래픽을 외부 서버로 보내지 않고 이 기기에서 직접 광고를 필터링합니다.</string>
 </resources>

@@ -206,15 +206,19 @@
         state (e.g. "Granted ✓") dims both colors instead of just going flat grey, so it still
         reads as intentional/done.
 
-        rippleColor is state_pressed only (welcome_button_ripple), for mobile tap feedback - no
-        state_focused entry, and no other state_focused styling anywhere in this style either
-        (elevation is flat 0dp, android:defaultFocusHighlightEnabled turns off the system's own
-        automatic focus overlay). Every screen this style is used on, mobile or TV, only ever
-        has one focusable/clickable control visible at a time, so there is nothing for a D-pad
-        to move focus to or from and nothing a focus indicator would actually disambiguate -
-        one less state to keep rendering correctly, on top of it being one less thing that a
-        color wash, a shadow, a scale and a system overlay had each in turn been seen doing
-        wrong here: cutting off at the pill's rounded ends instead of following them.
+        rippleColor is state_pressed only (welcome_button_ripple), for mobile tap feedback - a
+        flat @color/welcomeBackground here used to also cover state_focused, which read as a
+        muddy wash for as long as a TV D-pad kept a button focused, since that state sits on
+        screen for as long as focus is held rather than being a brief animated burst like a
+        tap's ripple. elevation and android:defaultFocusHighlightEnabled are both explicitly
+        off for the same reason (an animated shadow, then a system overlay, each also having
+        to render for that whole sustained duration) - both were seen cutting off at the
+        pill's rounded ends instead of following them, and so was a state list animator that
+        scaled the button on focus instead. TV focus is a strokeColor/strokeWidth ring now
+        (welcome_button_stroke): drawn along the exact same shape path as the fill itself
+        rather than as any kind of separate overlay, transform, or system-drawn layer, so
+        there is nothing left that could mismatch it - confirmed working on device, unlike
+        every one of the above.
     -->
     <style name="Widget.AdAway.Button.OnRed" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/welcome_button_background</item>
@@ -222,6 +226,8 @@
         <item name="android:textStyle">bold</item>
         <item name="rippleColor">@color/welcome_button_ripple</item>
         <item name="elevation">0dp</item>
+        <item name="strokeColor">@color/welcome_button_stroke</item>
+        <item name="strokeWidth">3dp</item>
         <item name="android:defaultFocusHighlightEnabled">false</item>
     </style>
 

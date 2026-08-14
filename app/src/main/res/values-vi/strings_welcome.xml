@@ -46,6 +46,11 @@
 
     <string name="tv_welcome_intro_subtitle">Trình hướng dẫn ngắn này sẽ bật tính năng chặn quảng cáo trên thiết bị này.</string>
     <string name="tv_welcome_start_button">Bắt đầu</string>
+    <string name="tv_welcome_method_header">Chọn phương thức chặn của bạn</string>
+    <string name="tv_welcome_method_root_button">Sử dụng root</string>
+    <string name="tv_welcome_method_root_body">Nhanh hơn và tiết kiệm pin. Yêu cầu thiết bị đã root.</string>
+    <string name="tv_welcome_method_vpn_button">Sử dụng VPN</string>
+    <string name="tv_welcome_method_vpn_body">Hoạt động không cần root, tương thích với mọi thiết bị Android TV.</string>
     <string name="tv_welcome_activate_header">Bật chặn quảng cáo</string>
     <string name="tv_welcome_activate_body">Đây là VPN cục bộ: nó lọc quảng cáo ngay trên thiết bị này, không định tuyến lưu lượng của bạn qua máy chủ bên ngoài.</string>
 </resources>

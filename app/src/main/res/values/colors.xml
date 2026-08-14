@@ -19,6 +19,12 @@
     <color name="cardBackground">#FF424242</color>
     <color name="cardEnabledBackground">#388E3C</color>
     <color name="welcomeBackground">#B71C1C</color>
+    <!-- TV D-pad focus ring on the red welcome screens (Widget.AdAway.Button.OnRed): the
+         button's own red text color blended into the same-toned red page behind it, leaving
+         the ring visible only along its inner edge against the white fill. Amber reads clearly
+         against both. Fixed, no night-mode override, like welcomeBackground itself: these
+         screens keep the same red/white look regardless of system theme. -->
+    <color name="welcomeFocusRing">#FFC107</color>
     <!-- Notifications -->
     <color name="notification">#b71c1c</color>
 

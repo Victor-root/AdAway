@@ -45,6 +45,11 @@
 
     <string name="tv_welcome_intro_subtitle">Гэты кароткі майстар уключыць блакіроўку рэкламы на гэтай прыладзе.</string>
     <string name="tv_welcome_start_button">Пачаць</string>
+    <string name="tv_welcome_method_header">Выберыце спосаб блакіроўкі</string>
+    <string name="tv_welcome_method_root_button">Выкарыстоўваць root</string>
+    <string name="tv_welcome_method_root_body">Хутчэй і эканамічней для батарэі. Патрабуе рутаванай прылады.</string>
+    <string name="tv_welcome_method_vpn_button">Выкарыстоўваць VPN</string>
+    <string name="tv_welcome_method_vpn_body">Працуе без root, сумяшчальны з любой прыладай Android TV.</string>
     <string name="tv_welcome_activate_header">Уключыць блакіроўку рэкламы</string>
     <string name="tv_welcome_activate_body">Гэта лакальны VPN: ён фільтруе рэкламу на гэтай прыладзе, не накіроўваючы ваш трафік праз знешні сервер.</string>
 </resources>

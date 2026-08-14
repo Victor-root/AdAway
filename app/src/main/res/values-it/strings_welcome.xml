@@ -51,6 +51,11 @@
 
     <string name="tv_welcome_intro_subtitle">Questa breve procedura guidata attiverà il blocco degli annunci su questo dispositivo.</string>
     <string name="tv_welcome_start_button">Inizia</string>
+    <string name="tv_welcome_method_header">Scegli il tuo metodo di blocco</string>
+    <string name="tv_welcome_method_root_button">Usa root</string>
+    <string name="tv_welcome_method_root_body">Più veloce e rispettoso della batteria. Richiede un dispositivo rootato.</string>
+    <string name="tv_welcome_method_vpn_button">Usa VPN</string>
+    <string name="tv_welcome_method_vpn_body">Funziona senza root, compatibile con qualsiasi dispositivo Android TV.</string>
     <string name="tv_welcome_activate_header">Attiva il blocco degli annunci</string>
     <string name="tv_welcome_activate_body">È una VPN locale: filtra gli annunci direttamente su questo dispositivo, senza instradare il tuo traffico attraverso un server esterno.</string>
 </resources>

@@ -45,6 +45,11 @@
 
     <string name="tv_welcome_intro_subtitle">Ez a rövid varázsló bekapcsolja a hirdetésblokkolást ezen az eszközön.</string>
     <string name="tv_welcome_start_button">Kezdés</string>
+    <string name="tv_welcome_method_header">Válaszd ki a blokkolási módot</string>
+    <string name="tv_welcome_method_root_button">Root használata</string>
+    <string name="tv_welcome_method_root_body">Gyorsabb és kíméletesebb az akkumulátorral. Rootolt eszközt igényel.</string>
+    <string name="tv_welcome_method_vpn_button">VPN használata</string>
+    <string name="tv_welcome_method_vpn_body">Root nélkül működik, bármely Android TV eszközzel kompatibilis.</string>
     <string name="tv_welcome_activate_header">Hirdetésblokkolás bekapcsolása</string>
     <string name="tv_welcome_activate_body">Ez egy helyi VPN: a hirdetéseket magán az eszközön szűri, anélkül hogy a forgalmadat külső szerveren keresztül irányítaná.</string>
 </resources>

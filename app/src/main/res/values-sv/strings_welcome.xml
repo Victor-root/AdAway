@@ -45,6 +45,11 @@
 
     <string name="tv_welcome_intro_subtitle">Den här korta guiden slår på annonsblockering på den här enheten.</string>
     <string name="tv_welcome_start_button">Kom igång</string>
+    <string name="tv_welcome_method_header">Välj din blockeringsmetod</string>
+    <string name="tv_welcome_method_root_button">Använd root</string>
+    <string name="tv_welcome_method_root_body">Snabbare och batterivänligt. Kräver en rootad enhet.</string>
+    <string name="tv_welcome_method_vpn_button">Använd VPN</string>
+    <string name="tv_welcome_method_vpn_body">Fungerar utan root, kompatibel med alla Android TV-enheter.</string>
     <string name="tv_welcome_activate_header">Slå på annonsblockering</string>
     <string name="tv_welcome_activate_body">Det är en lokal VPN: den filtrerar annonser på själva enheten, utan att skicka din trafik via en extern server.</string>
 </resources>
