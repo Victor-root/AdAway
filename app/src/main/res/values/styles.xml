@@ -201,16 +201,28 @@
 
     <!--
         Filled white pill button used on the plain red welcome background (battery onboarding
-        steps): the default filled MaterialButton background tints to colorPrimary, which is the
-        same red as the page, making it nearly invisible. Disabled state (e.g. "Granted ✓") dims
-        both colors instead of just going flat grey, so it still reads as intentional/done.
+        steps, the TV welcome wizard): the default filled MaterialButton background tints to
+        colorPrimary, which is the same red as the page, making it nearly invisible. Disabled
+        state (e.g. "Granted ✓") dims both colors instead of just going flat grey, so it still
+        reads as intentional/done.
+
+        rippleColor is state_pressed only (welcome_button_ripple), for mobile tap feedback - no
+        state_focused entry, and no other state_focused styling anywhere in this style either
+        (elevation is flat 0dp, android:defaultFocusHighlightEnabled turns off the system's own
+        automatic focus overlay). Every screen this style is used on, mobile or TV, only ever
+        has one focusable/clickable control visible at a time, so there is nothing for a D-pad
+        to move focus to or from and nothing a focus indicator would actually disambiguate -
+        one less state to keep rendering correctly, on top of it being one less thing that a
+        color wash, a shadow, a scale and a system overlay had each in turn been seen doing
+        wrong here: cutting off at the pill's rounded ends instead of following them.
     -->
     <style name="Widget.AdAway.Button.OnRed" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/welcome_button_background</item>
         <item name="android:textColor">@color/welcome_button_text</item>
         <item name="android:textStyle">bold</item>
-        <item name="rippleColor">@color/welcomeBackground</item>
-        <item name="elevation">4dp</item>
+        <item name="rippleColor">@color/welcome_button_ripple</item>
+        <item name="elevation">0dp</item>
+        <item name="android:defaultFocusHighlightEnabled">false</item>
     </style>
 
     <!--

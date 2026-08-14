@@ -107,6 +107,29 @@ public class TvWelcomeActivity extends AppCompatActivity {
         this.activateButton.setOnClickListener(v -> activate());
         this.retryButton.setOnClickListener(v -> activate());
         this.finishButton.setOnClickListener(v -> finishWizard());
+
+        logButtonGeometry("startButton", startButton);
+        logButtonGeometry("activateButton", this.activateButton);
+        logButtonGeometry("finishButton", this.finishButton);
+        logButtonGeometry("retryButton", this.retryButton);
+    }
+
+    /**
+     * Dumps the button's actual post-layout geometry once its first layout pass completes -
+     * every visual report on these buttons so far (a color wash on the rounded ends, a clipped
+     * shadow, still something cut after both were addressed) has turned out to need the real
+     * rendered numbers to pin down rather than another guess from a screenshot alone.
+     */
+    private void logButtonGeometry(String label, MaterialButton button) {
+        button.post(() -> Timber.d(
+                "%s geometry: %dx%d px, cornerRadius=%dpx, elevation=%.1f, strokeWidth=%dpx, rippleColor=%s",
+                label,
+                button.getWidth(),
+                button.getHeight(),
+                button.getCornerRadius(),
+                button.getElevation(),
+                button.getStrokeWidth(),
+                button.getRippleColor()));
     }
 
     /**

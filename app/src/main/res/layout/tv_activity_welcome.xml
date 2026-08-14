@@ -87,7 +87,7 @@
             android:textSize="16sp"
             android:focusable="true"
             android:focusedByDefault="true"
-            app:cornerRadius="24dp" />
+            app:cornerRadius="100dp" />
 
     </LinearLayout>
 
@@ -107,6 +107,7 @@
             android:id="@+id/tv_welcome_prompt_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
             android:orientation="vertical"
             android:gravity="center">
 
@@ -150,10 +151,11 @@
                 android:textSize="16sp"
                 android:focusable="true"
                 android:focusedByDefault="true"
-                app:cornerRadius="24dp"
+                app:cornerRadius="100dp"
                 app:icon="@drawable/ic_tv_power_24"
                 app:iconGravity="textStart"
-                app:iconPadding="8dp" />
+                app:iconPadding="8dp"
+                app:iconTint="@color/welcome_button_text" />
         </LinearLayout>
 
         <!-- Sub-state: progress -->
@@ -199,6 +201,7 @@
             android:id="@+id/tv_welcome_success_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
             android:orientation="vertical"
             android:gravity="center"
             android:visibility="gone"
@@ -235,7 +238,7 @@
                 android:text="@string/welcome_finish_button"
                 android:textSize="16sp"
                 android:focusable="true"
-                app:cornerRadius="24dp" />
+                app:cornerRadius="100dp" />
         </LinearLayout>
 
         <!-- Sub-state: error -->
@@ -243,6 +246,7 @@
             android:id="@+id/tv_welcome_error_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
             android:orientation="vertical"
             android:gravity="center"
             android:visibility="gone"
@@ -277,7 +281,7 @@
                 android:text="@string/welcome_sync_retry_logo"
                 android:textSize="16sp"
                 android:focusable="true"
-                app:cornerRadius="24dp" />
+                app:cornerRadius="100dp" />
         </LinearLayout>
 
     </LinearLayout>

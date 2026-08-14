@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Widget.AdAway.Button.OnRed's ripple/state-overlay color. state_pressed only: a brief
+    animated burst on an actual tap, for mobile touch feedback. No state_focused entry: every
+    screen this style is used on only ever shows one focusable control at a time, so there is
+    nothing for a D-pad to move focus to or from and no need for a focus indicator at all -
+    on top of a sustained low-alpha wash, unlike a tap's brief animated ripple, being seen
+    cutting off at the pill's rounded ends instead of following them.
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:alpha="0.24"
+        android:color="@color/welcomeBackground"
+        android:state_pressed="true" />
+    <item
+        android:alpha="0"
+        android:color="@color/welcomeBackground" />
+</selector>
