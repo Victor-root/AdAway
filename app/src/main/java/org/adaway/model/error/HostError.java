@@ -12,7 +12,7 @@ import org.adaway.R;
 public enum HostError {
     // Source model errors
     NO_CONNECTION(R.string.error_no_connection_message, R.string.error_no_connection_details),
-    DOWNLOAD_FAILED(R.string.error_download_failed_message, R.string.error_no_connection_details),
+    DOWNLOAD_FAILED(R.string.error_download_failed_message, R.string.error_download_failed_details),
     // Host install model errors
     PRIVATE_FILE_FAILED(R.string.error_private_file_failed_message, R.string.error_private_file_failed_details),
     NOT_ENOUGH_SPACE(R.string.error_not_enough_space_message, R.string.error_not_enough_space_details),

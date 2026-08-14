@@ -286,17 +286,27 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         String message = getString(error.getDetailsKey()) + "\n\n" + getString(R.string.error_dialog_help);
-        new MaterialAlertDialogBuilder(this)
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle(error.getMessageKey())
                 .setMessage(message)
-                .setPositiveButton(R.string.button_close, (dialog, id) -> dialog.dismiss())
                 .setNegativeButton(R.string.button_help, (dialog, id) -> {
                     dialog.dismiss();
                     startActivity(new Intent(this, HelpActivity.class));
-                })
-                .create()
-                .show();
+                });
+        if (error == HostError.DOWNLOAD_FAILED || error == HostError.NO_CONNECTION) {
+            // Both mean the last hosts sources fetch could not complete. Retrying is the
+            // one thing to actually do about it, so offer it right where the error shows
+            // up, the same "Retry sync" action the welcome screen already offers for this
+            // exact case, instead of sending the user hunting for the sync button elsewhere.
+            builder.setPositiveButton(R.string.welcome_sync_retry_logo, (dialog, id) -> {
+                dialog.dismiss();
+                this.homeViewModel.sync();
+            });
+        } else {
+            builder.setPositiveButton(R.string.button_close, (dialog, id) -> dialog.dismiss());
+        }
+        builder.create().show();
     }
 
     private void showUpdate(View view) {
