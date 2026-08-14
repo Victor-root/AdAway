@@ -44,7 +44,7 @@ import org.adaway.helper.ThemeHelper;
 import org.adaway.model.adblocking.AdBlockMethod;
 import org.adaway.model.update.Manifest;
 import org.adaway.ui.help.HelpActivity;
-import org.adaway.ui.hosts.HostsSourcesActivity;
+import org.adaway.ui.hosts.TvHostsSourcesActivity;
 import org.adaway.ui.lists.TvListsActivity;
 import org.adaway.ui.log.TvLogActivity;
 import org.adaway.ui.prefs.PrefsActivity;
@@ -138,7 +138,7 @@ public class TvHomeActivity extends AppCompatActivity {
         blockedCardView.setOnClickListener(v -> startHostListActivity(BLOCKED_HOSTS_TAB));
         allowedCardView.setOnClickListener(v -> startHostListActivity(ALLOWED_HOSTS_TAB));
         redirectCardView.setOnClickListener(v -> startHostListActivity(REDIRECTED_HOSTS_TAB));
-        sourcesCardView.setOnClickListener(v -> startActivity(new Intent(this, HostsSourcesActivity.class)));
+        sourcesCardView.setOnClickListener(v -> startActivity(new Intent(this, TvHostsSourcesActivity.class)));
         syncSourcesIcon.setOnClickListener(v -> homeViewModel.sync());
         dnsMonitorTile.setOnClickListener(v -> startActivity(new Intent(this, TvLogActivity.class)));
         helpTile.setOnClickListener(v -> startActivity(new Intent(this, HelpActivity.class)));
