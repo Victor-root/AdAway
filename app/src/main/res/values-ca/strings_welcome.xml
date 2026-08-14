@@ -42,4 +42,9 @@
     <string name="welcome_back_button">Enrere</string>
     <string name="welcome_next_button">Següent</string>
     <string name="welcome_finish_button">Acaba</string>
+
+    <string name="tv_welcome_intro_subtitle">Aquest breu assistent activarà el bloqueig d\'anuncis en aquest dispositiu.</string>
+    <string name="tv_welcome_start_button">Comença</string>
+    <string name="tv_welcome_activate_header">Activa el bloqueig d\'anuncis</string>
+    <string name="tv_welcome_activate_body">És una VPN local: filtra els anuncis en aquest dispositiu, sense fer passar el vostre trànsit per cap servidor extern.</string>
 </resources>

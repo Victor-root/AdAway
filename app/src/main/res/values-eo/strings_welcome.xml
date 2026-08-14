@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="tv_welcome_intro_subtitle">Ĉi tiu mallonga asistanto ŝaltos la reklamblokadon sur ĉi tiu aparato.</string>
+    <string name="tv_welcome_start_button">Ekstarti</string>
+    <string name="tv_welcome_activate_header">Ŝalti la reklamblokadon</string>
+    <string name="tv_welcome_activate_body">Ĝi estas loka VPN: ĝi filtras reklamojn sur ĉi tiu aparato, sen sendi vian trafikon tra ekstera servilo.</string>
 </resources>

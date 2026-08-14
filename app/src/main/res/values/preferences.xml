@@ -58,6 +58,8 @@
     <string name="pref_vpn_diagnostic_log_clear_key" translatable="false">vpnDiagnosticLogClear</string>
     <string name="pref_tv_always_on_hint_shown_key" translatable="false">tvAlwaysOnVpnHintShown</string>
     <bool name="pref_tv_always_on_hint_shown_def">false</bool>
+    <string name="pref_tv_welcome_done_key" translatable="false">tvWelcomeDone</string>
+    <bool name="pref_tv_welcome_done_def">false</bool>
     <string name="pref_debug_category_key" translatable="false">debugCategory</string>
     <string name="pref_enable_debug_key" translatable="false">debugEnabled</string>
     <bool name="pref_enable_debug_def">false</bool>

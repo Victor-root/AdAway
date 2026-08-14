@@ -10,4 +10,9 @@
     <string name="welcome_back_button">شا</string>
     <string name="welcome_next_button">بل </string>
     <string name="welcome_finish_button">پاينه </string>
+
+    <string name="tv_welcome_intro_subtitle">دا لنډ برنامه به پدې وسیله کې د اعلاناتو بندول فعال کړي.</string>
+    <string name="tv_welcome_start_button">پیل</string>
+    <string name="tv_welcome_activate_header">د اعلاناتو بندول فعال کړئ</string>
+    <string name="tv_welcome_activate_body">دا یو محلي VPN دی: دا ستاسو ترافیک د بهرني سرور له لارې لیږلو پرته، په همدې وسیله کې اعلانات فلټر کوي.</string>
 </resources>

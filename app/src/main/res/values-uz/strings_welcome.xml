@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="tv_welcome_intro_subtitle">Ushbu qisqa yordamchi shu qurilmada reklama blokirovkasini yoqadi.</string>
+    <string name="tv_welcome_start_button">Boshlash</string>
+    <string name="tv_welcome_activate_header">Reklama blokirovkasini yoqish</string>
+    <string name="tv_welcome_activate_body">Bu mahalliy VPN: u trafikingizni tashqi serverga yubormasdan, reklamalarni to‘g‘ridan-to‘g‘ri shu qurilmada filtrlaydi.</string>
 </resources>

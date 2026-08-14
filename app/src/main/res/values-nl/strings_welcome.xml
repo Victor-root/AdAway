@@ -49,4 +49,9 @@ Het synchroniseren is mislukt: %1$s Wilt u het opnieuw proberen?</string>
     <string name="welcome_back_button">Vorige</string>
     <string name="welcome_next_button">Volgende</string>
     <string name="welcome_finish_button">Afronden</string>
+
+    <string name="tv_welcome_intro_subtitle">Deze korte wizard schakelt advertentieblokkering op dit apparaat in.</string>
+    <string name="tv_welcome_start_button">Aan de slag</string>
+    <string name="tv_welcome_activate_header">Advertentieblokkering inschakelen</string>
+    <string name="tv_welcome_activate_body">Het is een lokale VPN: die filtert advertenties op dit apparaat zelf, zonder je verkeer via een externe server te sturen.</string>
 </resources>

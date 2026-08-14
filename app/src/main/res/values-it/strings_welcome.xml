@@ -48,4 +48,9 @@
     <string name="welcome_back_button">Indietro</string>
     <string name="welcome_next_button">Avanti</string>
     <string name="welcome_finish_button">Fine</string>
+
+    <string name="tv_welcome_intro_subtitle">Questa breve procedura guidata attiverà il blocco degli annunci su questo dispositivo.</string>
+    <string name="tv_welcome_start_button">Inizia</string>
+    <string name="tv_welcome_activate_header">Attiva il blocco degli annunci</string>
+    <string name="tv_welcome_activate_body">È una VPN locale: filtra gli annunci direttamente su questo dispositivo, senza instradare il tuo traffico attraverso un server esterno.</string>
 </resources>

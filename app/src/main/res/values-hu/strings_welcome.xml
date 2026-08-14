@@ -42,4 +42,9 @@
     <string name="welcome_back_button">Vissza</string>
     <string name="welcome_next_button">Következő</string>
     <string name="welcome_finish_button">Befejezés</string>
+
+    <string name="tv_welcome_intro_subtitle">Ez a rövid varázsló bekapcsolja a hirdetésblokkolást ezen az eszközön.</string>
+    <string name="tv_welcome_start_button">Kezdés</string>
+    <string name="tv_welcome_activate_header">Hirdetésblokkolás bekapcsolása</string>
+    <string name="tv_welcome_activate_body">Ez egy helyi VPN: a hirdetéseket magán az eszközön szűri, anélkül hogy a forgalmadat külső szerveren keresztül irányítaná.</string>
 </resources>

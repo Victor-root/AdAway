@@ -42,4 +42,9 @@
     <string name="welcome_back_button">Natrag</string>
     <string name="welcome_next_button">Sljedeće</string>
     <string name="welcome_finish_button">Završi</string>
+
+    <string name="tv_welcome_intro_subtitle">Ovaj kratki čarobnjak uključit će blokiranje oglasa na ovom uređaju.</string>
+    <string name="tv_welcome_start_button">Započni</string>
+    <string name="tv_welcome_activate_header">Uključi blokiranje oglasa</string>
+    <string name="tv_welcome_activate_body">Riječ je o lokalnom VPN-u: filtrira oglase na ovom uređaju, bez usmjeravanja vašeg prometa preko vanjskog poslužitelja.</string>
 </resources>

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome_root_missing_title">റൂട്ട് ചെയ്ത ആൻഡ്രോയിഡ് ആവശ്യമാണ് </string>
+
+    <string name="tv_welcome_intro_subtitle">ഈ ചെറിയ വിസാർഡ് ഈ ഉപകരണത്തിൽ പരസ്യങ്ങൾ തടയൽ ഓണാക്കും.</string>
+    <string name="tv_welcome_start_button">ആരംഭിക്കുക</string>
+    <string name="tv_welcome_activate_header">പരസ്യം തടയൽ ഓണാക്കുക</string>
+    <string name="tv_welcome_activate_body">ഇതൊരു ലോക്കൽ VPN ആണ്: ഇത് നിങ്ങളുടെ ട്രാഫിക് ഒരു ബാഹ്യ സെർവറിലൂടെ അയക്കാതെ, ഈ ഉപകരണത്തിൽ തന്നെ പരസ്യങ്ങൾ ഫിൽട്ടർ ചെയ്യുന്നു.</string>
 </resources>

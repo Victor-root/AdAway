@@ -50,6 +50,7 @@ import org.adaway.ui.lists.TvListsActivity;
 import org.adaway.ui.log.TvLogActivity;
 import org.adaway.ui.prefs.PrefsActivity;
 import org.adaway.ui.update.UpdateActivity;
+import org.adaway.ui.welcome.TvWelcomeActivity;
 import org.adaway.vpn.VpnServiceControls;
 
 import kotlin.jvm.functions.Function1;
@@ -85,17 +86,42 @@ public class TvHomeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ThemeHelper.applyTheme(this);
+
+        // Defaulting straight into this screen used to just set the method here and continue,
+        // skipping onboarding outright: the right call for a TV where the mobile welcome
+        // screens are not remote-friendly, but that also meant a completely fresh install
+        // immediately enabled the VPN with nothing in the local database yet - blocking zero
+        // hosts, no error, no explanation why. TvWelcomeActivity now plays the role
+        // WelcomeActivity plays for a fresh mobile install instead: sources are synced before
+        // the VPN starts, in TvWelcomeActivity itself. This Activity is exported, so without
+        // the TV check any app could start it on a phone and silently reach a wizard meant
+        // only for a TV's own first run.
+        //
+        // isTvWelcomeDone, not AdBlockMethod == UNDEFINED: TvWelcomeActivity has to persist
+        // AdBlockMethod = VPN the moment it opens (HomeViewModel resolves the ad-block model
+        // once, in its own constructor), before the user has done anything - so that signal
+        // is gone the instant the wizard is reached, even if the user never finishes it.
+        // getVpnServiceUserEnabled() is only ever set by VpnModel.apply(), which the wizard
+        // only reaches after a successful sync, so an abandoned attempt (D-pad trouble, a
+        // sync failure, pressing Back) still reports false here and is sent back into the
+        // wizard next time, instead of landing on a normal-looking Home screen stuck at zero
+        // with no way back in.
+        if (isRunningOnTv() && !PreferenceHelper.isTvWelcomeDone(this)) {
+            if (!PreferenceHelper.getVpnServiceUserEnabled(this)) {
+                startActivity(new Intent(this, TvWelcomeActivity.class));
+                finish();
+                return;
+            }
+            // Either a pre-existing install from before this wizard existed, or the wizard's
+            // own sync-then-activate already genuinely succeeded before the user reached its
+            // finish button: either way the VPN has really been turned on, so mark this
+            // install as onboarded instead of re-deriving it on every single launch.
+            PreferenceHelper.setTvWelcomeDone(this, true);
+        }
+
         NotificationHelper.clearUpdateNotifications(this);
         org.adaway.broadcast.UpdateReceiver.clearInstallToast(this);
         setContentView(R.layout.tv_activity_home);
-
-        // Defaulting to VPN skips the onboarding flow, which is the right call on a TV (the
-        // welcome screens are not remote friendly) but not anywhere else. This Activity is
-        // exported, so without the TV check any app could start it on a phone and silently
-        // decide the ad-blocking method for a user who has not been asked yet.
-        if (isRunningOnTv() && PreferenceHelper.getAdBlockMethod(this) == AdBlockMethod.UNDEFINED) {
-            PreferenceHelper.setAbBlockMethod(this, VPN);
-        }
 
         // Opening the app is the first moment recovery is possible after an OEM
         // battery-manager force-stop (which blocks sticky resurrection, the heartbeat

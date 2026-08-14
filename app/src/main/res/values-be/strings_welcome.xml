@@ -42,4 +42,9 @@
     <string name="welcome_back_button">Назад</string>
     <string name="welcome_next_button">Далей</string>
     <string name="welcome_finish_button">Завершыць</string>
+
+    <string name="tv_welcome_intro_subtitle">Гэты кароткі майстар уключыць блакіроўку рэкламы на гэтай прыладзе.</string>
+    <string name="tv_welcome_start_button">Пачаць</string>
+    <string name="tv_welcome_activate_header">Уключыць блакіроўку рэкламы</string>
+    <string name="tv_welcome_activate_body">Гэта лакальны VPN: ён фільтруе рэкламу на гэтай прыладзе, не накіроўваючы ваш трафік праз знешні сервер.</string>
 </resources>

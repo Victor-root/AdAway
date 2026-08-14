@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome_root_missing_title">Rootlu Android tələb olunur</string>
+
+    <string name="tv_welcome_intro_subtitle">Bu qısa sihirbaz bu cihazda reklam bloklamasını aktivləşdirəcək.</string>
+    <string name="tv_welcome_start_button">Başla</string>
+    <string name="tv_welcome_activate_header">Reklam bloklamasını aktivləşdirin</string>
+    <string name="tv_welcome_activate_body">Bu yerli VPN-dir: reklamları bu cihazda süzür, trafikinizi xarici serverdən keçirmədən.</string>
 </resources>

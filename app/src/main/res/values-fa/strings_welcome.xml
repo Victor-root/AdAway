@@ -48,4 +48,9 @@
     <string name="welcome_back_button">بازگشت</string>
     <string name="welcome_next_button">بعدی</string>
     <string name="welcome_finish_button">پایان</string>
+
+    <string name="tv_welcome_intro_subtitle">این جادوگر کوتاه، مسدودسازی تبلیغات را روی این دستگاه فعال می‌کند.</string>
+    <string name="tv_welcome_start_button">شروع کنید</string>
+    <string name="tv_welcome_activate_header">فعال‌سازی مسدودسازی تبلیغات</string>
+    <string name="tv_welcome_activate_body">این یک VPN محلی است: تبلیغات را روی همین دستگاه فیلتر می‌کند، بدون اینکه ترافیک شما را از یک سرور خارجی عبور دهد.</string>
 </resources>

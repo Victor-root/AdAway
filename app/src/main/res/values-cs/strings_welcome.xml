@@ -43,4 +43,9 @@
     <string name="welcome_back_button">Zpět</string>
     <string name="welcome_next_button">Další</string>
     <string name="welcome_finish_button">Dokončit</string>
+
+    <string name="tv_welcome_intro_subtitle">Tento krátký průvodce zapne blokování reklam na tomto zařízení.</string>
+    <string name="tv_welcome_start_button">Začít</string>
+    <string name="tv_welcome_activate_header">Zapnout blokování reklam</string>
+    <string name="tv_welcome_activate_body">Jde o místní VPN: filtruje reklamy přímo na tomto zařízení, aniž by váš provoz směrovala přes externí server.</string>
 </resources>

@@ -43,4 +43,9 @@
     <string name="welcome_back_button">Wstecz</string>
     <string name="welcome_next_button">Dalej</string>
     <string name="welcome_finish_button">Zakończ</string>
+
+    <string name="tv_welcome_intro_subtitle">Ten krótki kreator włączy blokowanie reklam na tym urządzeniu.</string>
+    <string name="tv_welcome_start_button">Rozpocznij</string>
+    <string name="tv_welcome_activate_header">Włącz blokowanie reklam</string>
+    <string name="tv_welcome_activate_body">To lokalny VPN: filtruje reklamy bezpośrednio na tym urządzeniu, nie przekierowując Twojego ruchu przez zewnętrzny serwer.</string>
 </resources>

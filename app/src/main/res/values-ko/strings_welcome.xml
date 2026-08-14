@@ -42,4 +42,9 @@
     <string name="welcome_back_button">뒤로</string>
     <string name="welcome_next_button">다음</string>
     <string name="welcome_finish_button">완료</string>
+
+    <string name="tv_welcome_intro_subtitle">이 짧은 마법사가 이 기기에서 광고 차단을 켭니다.</string>
+    <string name="tv_welcome_start_button">시작하기</string>
+    <string name="tv_welcome_activate_header">광고 차단 켜기</string>
+    <string name="tv_welcome_activate_body">로컬 VPN입니다. 트래픽을 외부 서버로 보내지 않고 이 기기에서 직접 광고를 필터링합니다.</string>
 </resources>

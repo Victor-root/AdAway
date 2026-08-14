@@ -43,4 +43,9 @@
     <string name="welcome_back_button">Geri</string>
     <string name="welcome_next_button">İleri</string>
     <string name="welcome_finish_button">Tamamlandı</string>
+
+    <string name="tv_welcome_intro_subtitle">Bu kısa sihirbaz, bu cihazda reklam engellemeyi açacak.</string>
+    <string name="tv_welcome_start_button">Başla</string>
+    <string name="tv_welcome_activate_header">Reklam engellemeyi aç</string>
+    <string name="tv_welcome_activate_body">Bu yerel bir VPN\'dir: trafiğinizi harici bir sunucudan geçirmeden, reklamları doğrudan bu cihazda filtreler.</string>
 </resources>

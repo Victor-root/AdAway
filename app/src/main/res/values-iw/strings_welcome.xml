@@ -48,4 +48,9 @@
     <string name="welcome_back_button">חזור</string>
     <string name="welcome_next_button">הבא</string>
     <string name="welcome_finish_button">סיום</string>
+
+    <string name="tv_welcome_intro_subtitle">אשף קצר זה יפעיל את חסימת הפרסומות במכשיר הזה.</string>
+    <string name="tv_welcome_start_button">התחלה</string>
+    <string name="tv_welcome_activate_header">הפעלת חסימת פרסומות</string>
+    <string name="tv_welcome_activate_body">זהו VPN מקומי: הוא מסנן פרסומות במכשיר עצמו, מבלי לנתב את התעבורה שלך דרך שרת חיצוני.</string>
 </resources>

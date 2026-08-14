@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="tv_welcome_intro_subtitle">මෙම කෙටි විසාඩ් මෙම උපාංගයේ දැන්වීම් අවහිර කිරීම ක්‍රියාත්මක කරයි.</string>
+    <string name="tv_welcome_start_button">ආරම්භ කරන්න</string>
+    <string name="tv_welcome_activate_header">දැන්වීම් අවහිර කිරීම ක්‍රියාත්මක කරන්න</string>
+    <string name="tv_welcome_activate_body">එය දේශීය VPN එකකි: එය ඔබේ ට්‍රැෆික් බාහිර සර්වරයක් හරහා යැවීමකින් තොරව, මෙම උපාංගයේම දැන්වීම් පෙරහන් කරයි.</string>
 </resources>

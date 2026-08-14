@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="tv_welcome_intro_subtitle">यो छोटो विजार्डले यस उपकरणमा विज्ञापन ब्लक गर्ने सुविधा सक्रिय गर्नेछ।</string>
+    <string name="tv_welcome_start_button">सुरु गर्नुहोस्</string>
+    <string name="tv_welcome_activate_header">विज्ञापन ब्लकिङ सक्रिय गर्नुहोस्</string>
+    <string name="tv_welcome_activate_body">यो एक स्थानीय VPN हो: यसले तपाईंको ट्राफिकलाई बाहिरी सर्भरमार्फत नपठाई यही उपकरणमा विज्ञापनहरू फिल्टर गर्छ।</string>
 </resources>

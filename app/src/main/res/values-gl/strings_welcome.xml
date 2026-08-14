@@ -17,4 +17,9 @@
     <string name="welcome_root_missile_description">Podería ser que non se atopara o arquivo su binary ou que AdAway non teña autorización dos permisos root.\n\nIsto sucede cando o teu dispositivo non está rooteado. Podes atopar información sobre como rootear o teu dispositivo en wiki.lineageos.org ou noutros sitios web Android.</string>
 
     <string name="welcome_next_button">Seguinte</string>
-    </resources>
+    
+    <string name="tv_welcome_intro_subtitle">Este breve asistente activará o bloqueo de anuncios neste dispositivo.</string>
+    <string name="tv_welcome_start_button">Comezar</string>
+    <string name="tv_welcome_activate_header">Activar o bloqueo de anuncios</string>
+    <string name="tv_welcome_activate_body">É unha VPN local: filtra os anuncios neste dispositivo, sen enviar o teu tráfico a través dun servidor externo.</string>
+</resources>

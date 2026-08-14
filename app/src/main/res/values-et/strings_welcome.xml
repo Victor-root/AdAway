@@ -42,4 +42,9 @@
     <string name="welcome_back_button">Tagasi</string>
     <string name="welcome_next_button">Edasi</string>
     <string name="welcome_finish_button">Lõpeta</string>
+
+    <string name="tv_welcome_intro_subtitle">See lühike juhend lülitab sisse reklaamide blokeerimise selles seadmes.</string>
+    <string name="tv_welcome_start_button">Alusta</string>
+    <string name="tv_welcome_activate_header">Lülita sisse reklaamide blokeerimine</string>
+    <string name="tv_welcome_activate_body">See on kohalik VPN: see filtreerib reklaame otse selles seadmes, suunamata teie liiklust välise serveri kaudu.</string>
 </resources>

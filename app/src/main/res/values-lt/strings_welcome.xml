@@ -42,4 +42,9 @@
     <string name="welcome_back_button">Atgal</string>
     <string name="welcome_next_button">Kitas</string>
     <string name="welcome_finish_button">Pabaiga</string>
+
+    <string name="tv_welcome_intro_subtitle">Šis trumpas vediklis įjungs reklamų blokavimą šiame įrenginyje.</string>
+    <string name="tv_welcome_start_button">Pradėti</string>
+    <string name="tv_welcome_activate_header">Įjungti reklamų blokavimą</string>
+    <string name="tv_welcome_activate_body">Tai vietinis VPN: jis filtruoja reklamas pačiame įrenginyje, nenukreipdamas jūsų srauto per išorinį serverį.</string>
 </resources>

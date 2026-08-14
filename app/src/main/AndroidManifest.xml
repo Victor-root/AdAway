@@ -120,6 +120,12 @@
             android:parentActivityName=".ui.home.HomeActivity"
             android:theme="@style/Theme.AdAway.NoActionBar.Red" />
         <activity
+            android:name=".ui.welcome.TvWelcomeActivity"
+            android:exported="false"
+            android:label="@string/welcome_title"
+            android:parentActivityName=".ui.home.TvHomeActivity"
+            android:theme="@style/Theme.AdAway.NoActionBar.Red" />
+        <activity
             android:name=".ui.hosts.HostsSourcesActivity"
             android:exported="false"
             android:label="@string/hosts_title"

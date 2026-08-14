@@ -340,6 +340,38 @@ public final class PreferenceHelper {
                 .apply();
     }
 
+    /**
+     * Whether the TV first-run wizard ({@code TvWelcomeActivity}) has already been handled for
+     * this install, either by actually completing it or by having been detected as an existing
+     * install that already had ad-blocking working before the wizard existed.
+     * <p>
+     * Deliberately separate from {@link #getAdBlockMethod}: {@code TvWelcomeActivity} has to
+     * persist {@code AdBlockMethod = VPN} the moment it opens, before the user has done
+     * anything, so {@code HomeViewModel} resolves a real VPN model instead of
+     * {@code UndefinedBlockModel}. That means {@code AdBlockMethod} alone can't tell
+     * {@code TvHomeActivity} whether the wizard actually finished - only this flag can.
+     */
+    public static boolean isTvWelcomeDone(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(
+                Constants.PREFS_NAME,
+                Context.MODE_PRIVATE
+        );
+        return prefs.getBoolean(
+                context.getString(R.string.pref_tv_welcome_done_key),
+                context.getResources().getBoolean(R.bool.pref_tv_welcome_done_def)
+        );
+    }
+
+    public static void setTvWelcomeDone(Context context, boolean done) {
+        SharedPreferences prefs = context.getApplicationContext().getSharedPreferences(
+                Constants.PREFS_NAME,
+                Context.MODE_PRIVATE
+        );
+        prefs.edit()
+                .putBoolean(context.getString(R.string.pref_tv_welcome_done_key), done)
+                .apply();
+    }
+
     public static boolean getDebugEnabled(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(
                 Constants.PREFS_NAME,

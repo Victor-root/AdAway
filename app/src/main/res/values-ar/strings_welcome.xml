@@ -43,4 +43,9 @@
     <string name="welcome_back_button">رجوع</string>
     <string name="welcome_next_button">التالي</string>
     <string name="welcome_finish_button">إنتهاء</string>
+
+    <string name="tv_welcome_intro_subtitle">سيؤدي هذا المعالج القصير إلى تفعيل حظر الإعلانات على هذا الجهاز.</string>
+    <string name="tv_welcome_start_button">ابدأ</string>
+    <string name="tv_welcome_activate_header">تفعيل حظر الإعلانات</string>
+    <string name="tv_welcome_activate_body">إنها شبكة VPN محلية: تقوم بتصفية الإعلانات على هذا الجهاز دون توجيه بياناتك عبر خادم خارجي.</string>
 </resources>

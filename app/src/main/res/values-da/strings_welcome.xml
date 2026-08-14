@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome_root_missing_title">En rootet Android kræves</string>
+
+    <string name="tv_welcome_intro_subtitle">Denne korte guide slår annonceblokering til på denne enhed.</string>
+    <string name="tv_welcome_start_button">Kom i gang</string>
+    <string name="tv_welcome_activate_header">Slå annonceblokering til</string>
+    <string name="tv_welcome_activate_body">Det er en lokal VPN: den filtrerer annoncer på denne enhed uden at sende din trafik gennem en ekstern server.</string>
 </resources>

@@ -44,4 +44,9 @@ Pilih salah satu yang kamu inginkan:</string>
     <string name="welcome_back_button">Kembali</string>
     <string name="welcome_next_button">Selanjutnya</string>
     <string name="welcome_finish_button">Selesai</string>
+
+    <string name="tv_welcome_intro_subtitle">Wizard singkat ini akan mengaktifkan pemblokiran iklan di perangkat ini.</string>
+    <string name="tv_welcome_start_button">Mulai</string>
+    <string name="tv_welcome_activate_header">Aktifkan pemblokiran iklan</string>
+    <string name="tv_welcome_activate_body">Ini adalah VPN lokal: memfilter iklan di perangkat ini, tanpa mengarahkan lalu lintas Anda melalui server eksternal.</string>
 </resources>

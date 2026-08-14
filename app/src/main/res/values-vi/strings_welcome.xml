@@ -43,4 +43,9 @@
     <string name="welcome_back_button">Quay lại</string>
     <string name="welcome_next_button">Tiếp theo</string>
     <string name="welcome_finish_button">Hoàn thành</string>
+
+    <string name="tv_welcome_intro_subtitle">Trình hướng dẫn ngắn này sẽ bật tính năng chặn quảng cáo trên thiết bị này.</string>
+    <string name="tv_welcome_start_button">Bắt đầu</string>
+    <string name="tv_welcome_activate_header">Bật chặn quảng cáo</string>
+    <string name="tv_welcome_activate_body">Đây là VPN cục bộ: nó lọc quảng cáo ngay trên thiết bị này, không định tuyến lưu lượng của bạn qua máy chủ bên ngoài.</string>
 </resources>

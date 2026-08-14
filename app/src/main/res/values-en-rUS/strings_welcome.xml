@@ -42,4 +42,9 @@
     <string name="welcome_back_button">Back</string>
     <string name="welcome_next_button">Next</string>
     <string name="welcome_finish_button">Finish</string>
+
+    <string name="tv_welcome_intro_subtitle">This short wizard turns on ad blocking on this device.</string>
+    <string name="tv_welcome_start_button">Get started</string>
+    <string name="tv_welcome_activate_header">Turn on ad blocking</string>
+    <string name="tv_welcome_activate_body">It\'s a local VPN: it filters ads on this device, without routing your traffic through an outside server.</string>
 </resources>

@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="tv_welcome_intro_subtitle">یہ مختصر وزرڈ اس ڈیوائس پر اشتہارات کی بلاکنگ آن کر دے گا۔</string>
+    <string name="tv_welcome_start_button">شروع کریں</string>
+    <string name="tv_welcome_activate_header">اشتہارات کی بلاکنگ آن کریں</string>
+    <string name="tv_welcome_activate_body">یہ ایک لوکل VPN ہے: یہ آپ کے ٹریفک کو کسی بیرونی سرور سے بھیجے بغیر، اسی ڈیوائس پر اشتہارات فلٹر کرتا ہے۔</string>
 </resources>

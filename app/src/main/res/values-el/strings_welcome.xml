@@ -48,4 +48,9 @@
     <string name="welcome_back_button">Πίσω</string>
     <string name="welcome_next_button">Επόμενο</string>
     <string name="welcome_finish_button">Τέλος</string>
+
+    <string name="tv_welcome_intro_subtitle">Αυτός ο σύντομος οδηγός θα ενεργοποιήσει τον αποκλεισμό διαφημίσεων σε αυτή τη συσκευή.</string>
+    <string name="tv_welcome_start_button">Έναρξη</string>
+    <string name="tv_welcome_activate_header">Ενεργοποίηση αποκλεισμού διαφημίσεων</string>
+    <string name="tv_welcome_activate_body">Είναι ένα τοπικό VPN: φιλτράρει τις διαφημίσεις σε αυτή τη συσκευή, χωρίς να δρομολογεί την κίνησή σας μέσω εξωτερικού διακομιστή.</string>
 </resources>

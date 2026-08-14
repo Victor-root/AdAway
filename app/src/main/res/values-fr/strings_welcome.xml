@@ -113,4 +113,9 @@
     <string name="welcome_back_button">Retour</string>
     <string name="welcome_next_button">Suivant</string>
     <string name="welcome_finish_button">Terminer</string>
+
+    <string name="tv_welcome_intro_subtitle">Ce petit assistant va activer le blocage des publicités sur cet appareil.</string>
+    <string name="tv_welcome_start_button">Commencer</string>
+    <string name="tv_welcome_activate_header">Activer le blocage des publicités</string>
+    <string name="tv_welcome_activate_body">C\'est un VPN local : il filtre les publicités directement sur cet appareil, sans faire transiter votre trafic par un serveur externe.</string>
 </resources>
