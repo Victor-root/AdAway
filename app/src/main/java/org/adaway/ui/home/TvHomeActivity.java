@@ -152,9 +152,17 @@ public class TvHomeActivity extends AppCompatActivity {
             showAlwaysOnVpnDialog();
         });
 
+        // Reached once, right after the user grants the VPN consent dialog checkFirstStep()
+        // triggered below: the TV's only "first activation" moment, since it skips the welcome
+        // wizard mobile uses for this (see the onCreate comment above). enable(), not
+        // toggleAdBlocking(): the latter starts the VPN with whatever is already in the local
+        // database, nothing at all on a fresh install, no error and no warning, just an
+        // enabled-looking toggle blocking zero hosts. enable() syncs sources first and only
+        // starts the VPN if that succeeds, the same ordering WelcomeSyncFragment.onCreateView()
+        // already uses for mobile's own first activation.
         prepareVpnLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK) {
-                homeViewModel.toggleAdBlocking();
+                homeViewModel.enable();
             }
         });
 
