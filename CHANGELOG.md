@@ -21,7 +21,7 @@
 * 📖 Overhaul the Help section: rewritten FAQ/Problems tabs, dropped outdated content, added VPN and battery troubleshooting
 * 🔀 Merge the Sources card's check and download buttons into one sync action
 * 📺 Rebuild the Android TV home screen for parity with mobile
-* 📺 Rebuild the Android TV "Blocked/Allowed/Redirected" and "Hosts sources" screens from scratch, replacing patched-over mobile layouts with D-pad-first ones (a single click opens an action dialog instead of checkbox + long-press)
+* 📺 Rebuild the Android TV "Blocked/Allowed/Redirected", "Hosts sources" and source add/edit screens from scratch, replacing patched-over mobile layouts with D-pad-first ones (a single click opens an action dialog instead of checkbox + long-press, and Save/Delete are header buttons instead of an ActionBar menu)
 * 🃏 Show each Hosts source in its own card on Android TV, instead of a plain row, so sources are easier to tell apart
 * 🏷️ Auto-name release APKs to match the GitHub release convention
 * 🔤 Complete translations for this release's new strings
@@ -48,7 +48,7 @@
 * 💥 Fix a malformed DNS packet from any app crashing the whole VPN tunnel
 * 🌐 Fix the DNS fallback occasionally picking a resolver the device couldn't actually reach (e.g. IPv6-only cellular), causing a burst of failed lookups right after a network switch
 * 🚑 Fix a race between VPN workers on a network change that could corrupt internal state and, in the worst case, leave the VPN unable to reconnect at all
-* 🎮 Fix the Android TV "Blocked/Allowed/Redirected" and "Hosts sources" screens being barely reachable, or unusable, by D-pad
+* 🎮 Fix the Android TV "Blocked/Allowed/Redirected", "Hosts sources" and source add/edit screens being barely reachable, or unusable, by D-pad
 * 🎮 Fix D-pad focus stopping on every disabled Preferences row instead of skipping to the next usable one (e.g. after "Clear diagnostic log")
 
 ## [6.5.1-c] - 2026-05-16

@@ -18,7 +18,7 @@ import org.adaway.R;
 import org.adaway.db.entity.HostsSource;
 import org.adaway.helper.ThemeHelper;
 import org.adaway.ui.adblocking.ApplyConfigurationSnackbar;
-import org.adaway.ui.source.SourceEditActivity;
+import org.adaway.ui.source.TvSourceEditActivity;
 
 import static org.adaway.ui.source.SourceEditActivity.SOURCE_ID;
 
@@ -28,10 +28,10 @@ import static org.adaway.ui.source.SourceEditActivity.SOURCE_ID;
  * of the phone's ({@link HostsSourcesActivity}/{@link HostsSourcesFragment}) floating add button
  * and checkbox-plus-click rows, both touch patterns with no clean D-pad equivalent.
  * <p>
- * The data layer is untouched: the same {@link HostsSourcesViewModel}, and adding or editing a
- * source still goes through the exact same {@link SourceEditActivity} the phone screen uses — its
- * form (text fields, a couple of button groups) has no floating or overlapping elements, so
- * unlike the list screens it did not need a TV-specific rebuild to be D-pad usable.
+ * The data layer is untouched: the same {@link HostsSourcesViewModel}. Adding or editing a source
+ * opens {@link TvSourceEditActivity}, not the phone's {@link org.adaway.ui.source.SourceEditActivity}:
+ * reported as technically usable but impractical with a remote (Save/Delete live in the ActionBar
+ * overflow, the fields have no guaranteed D-pad order), the same class of problem the list screens had.
  *
  * @author Bruce BUJON (bruce.bujon(at)gmail(dot)com)
  */
@@ -95,7 +95,7 @@ public class TvHostsSourcesActivity extends AppCompatActivity {
     }
 
     private void startSourceEdition(@Nullable HostsSource source) {
-        Intent intent = new Intent(this, SourceEditActivity.class);
+        Intent intent = new Intent(this, TvSourceEditActivity.class);
         if (source != null) {
             intent.putExtra(SOURCE_ID, source.getId());
         }

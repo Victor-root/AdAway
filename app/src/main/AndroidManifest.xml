@@ -108,6 +108,12 @@
             android:parentActivityName=".ui.home.TvHomeActivity"
             android:theme="@style/Theme.AdAway.NoActionBar" />
         <activity
+            android:name=".ui.source.TvSourceEditActivity"
+            android:exported="false"
+            android:label="@string/source_edit_title"
+            android:parentActivityName=".ui.hosts.TvHostsSourcesActivity"
+            android:theme="@style/Theme.AdAway.NoActionBar" />
+        <activity
             android:name=".ui.welcome.WelcomeActivity"
             android:exported="false"
             android:label="@string/welcome_title"
