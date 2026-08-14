@@ -104,6 +104,36 @@ public class ApplyConfigurationSnackbar {
     }
 
     /**
+     * Create an {@link Observer} with the same "ignore the first (initialization) event" rule as
+     * {@link #createObserver()}, but calling back instead of showing the snackbar's own action
+     * button. For a screen whose "Apply" control is a plain header button rather than this
+     * class's {@link Snackbar} action, which a D-pad has no way to reach: a Snackbar is a
+     * transient, touch-dismissible overlay outside the normal focus order, not a control a TV
+     * remote can land on.
+     *
+     * @param onPending Called on every change after the first.
+     * @param <T>       The type of data to observe.
+     * @return The observer instance.
+     */
+    public <T> Observer<T> createPendingObserver(Runnable onPending) {
+        return new Observer<T>() {
+            boolean firstUpdate = true;
+
+            @Override
+            public void onChanged(@Nullable T t) {
+                if (t == null || (t instanceof Collection && ((Collection<?>) t).isEmpty())) {
+                    return;
+                }
+                if (this.firstUpdate) {
+                    this.firstUpdate = false;
+                    return;
+                }
+                onPending.run();
+            }
+        };
+    }
+
+    /**
      * Notify update available.
      */
     public void notifyUpdateAvailable() {
@@ -128,7 +158,12 @@ public class ApplyConfigurationSnackbar {
         this.update = false;
     }
 
-    private void apply() {
+    /**
+     * Apply the pending configuration change. Also the snackbar action's own target on a screen
+     * that keeps using this class's Snackbar; a screen driving its own header button through
+     * {@link #createPendingObserver} calls this directly instead.
+     */
+    public void apply() {
         showLoading();
         AppExecutors.getInstance().diskIO().execute(() -> {
             AdAwayApplication application = (AdAwayApplication) this.view.getContext().getApplicationContext();

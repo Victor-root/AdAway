@@ -96,6 +96,8 @@ public class TvListsActivity extends AppCompatActivity {
         MaterialButton addButton = findViewById(R.id.tv_lists_add);
         MaterialButton searchButton = findViewById(R.id.tv_lists_search);
         MaterialButton toggleSourcesButton = findViewById(R.id.tv_lists_toggle_sources);
+        MaterialButton applyButton = findViewById(R.id.tv_lists_apply);
+        TextView applyHintText = findViewById(R.id.tv_lists_apply_hint);
 
         this.viewModel = new ViewModelProvider(this).get(ListsViewModel.class);
         this.adapter = new TvListsAdapter(this::onItemClicked);
@@ -126,17 +128,34 @@ public class TvListsActivity extends AppCompatActivity {
         this.viewModel.getAllowedListItems().observe(this, data -> submitIfCurrent(ALLOWED, data));
         this.viewModel.getRedirectedListItems().observe(this, data -> submitIfCurrent(REDIRECTED, data));
 
-        addButton.setOnClickListener(v -> addItem());
-        searchButton.setOnClickListener(v -> openSearchDialog());
-        toggleSourcesButton.setOnClickListener(v -> this.viewModel.toggleSources());
-
         // Same prompt-before-apply flow as ListsActivity: adding, editing, toggling or deleting an
         // entry only changes the database; this is what tells the user a change is pending and
         // lets them apply it, exactly like on mobile. Anchored on the window's content root since
         // this layout has no CoordinatorLayout (no floating action button for one to keep clear of).
+        //
+        // createObserver()'s own Snackbar action button is a touch-only control (a Snackbar sits
+        // outside the normal focus order, unreachable by D-pad), reported stuck showing "Apply"
+        // with no way to actually press it. createPendingObserver() drives the header's own
+        // "apply" button instead, and apply() is called directly on click; the underlying
+        // sync/apply logic is exactly the one the Snackbar's own action button already used.
+        // Constructed ahead of the click listeners below so applyButton's can call it.
         View contentRoot = findViewById(android.R.id.content);
         ApplyConfigurationSnackbar applySnackbar = new ApplyConfigurationSnackbar(contentRoot, false, false);
-        this.viewModel.getModelChanged().observe(this, applySnackbar.createObserver());
+        this.viewModel.getModelChanged().observe(this, applySnackbar.createPendingObserver(() -> {
+            applyButton.setVisibility(View.VISIBLE);
+            applyHintText.setVisibility(View.VISIBLE);
+            toggleSourcesButton.setNextFocusRightId(R.id.tv_lists_apply);
+        }));
+
+        addButton.setOnClickListener(v -> addItem());
+        searchButton.setOnClickListener(v -> openSearchDialog());
+        toggleSourcesButton.setOnClickListener(v -> this.viewModel.toggleSources());
+        applyButton.setOnClickListener(v -> {
+            applyButton.setVisibility(View.GONE);
+            applyHintText.setVisibility(View.GONE);
+            toggleSourcesButton.setNextFocusRightId(View.NO_ID);
+            applySnackbar.apply();
+        });
 
         int requestedTab = getIntent().getIntExtra(ListsActivity.TAB, ListsActivity.BLOCKED_HOSTS_TAB);
         selectTab(tabToType(requestedTab));

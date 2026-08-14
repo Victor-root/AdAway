@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -54,6 +55,7 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:text="@string/button_add"
                 android:textSize="13sp"
                 android:paddingHorizontal="16dp"
@@ -67,7 +69,52 @@
                 app:iconTint="?attr/colorOnPrimary"
                 app:strokeColor="?attr/colorOnPrimary"
                 app:rippleColor="?attr/colorOnPrimary" />
+
+            <!--
+                Hidden until a change is actually pending (ApplyConfigurationSnackbar's
+                createPendingObserver in TvHostsSourcesActivity), the D-pad-reachable
+                replacement for that class's own Snackbar action button, which a remote has no
+                way to focus.
+            -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tv_sources_apply"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/checkbox_list_context_apply"
+                android:textSize="13sp"
+                android:paddingHorizontal="16dp"
+                android:textColor="?attr/colorOnPrimary"
+                android:focusable="true"
+                android:visibility="gone"
+                android:nextFocusLeft="@id/tv_sources_add"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/baseline_check_24"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconSize="18dp"
+                app:iconTint="?attr/colorOnPrimary"
+                app:strokeColor="?attr/colorOnPrimary"
+                app:rippleColor="?attr/colorOnPrimary"
+                tools:visibility="visible" />
         </LinearLayout>
+
+        <!--
+            Same message the Snackbar it replaced showed; only the unreachable-by-D-pad action
+            button was the problem, not the text explaining why "Appliquer" appeared. Shown and
+            hidden together with tv_sources_apply.
+        -->
+        <TextView
+            android:id="@+id/tv_sources_apply_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/notification_configuration_changed"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="?attr/colorOnPrimary"
+            android:visibility="gone"
+            tools:visibility="visible" />
     </LinearLayout>
 
     <FrameLayout

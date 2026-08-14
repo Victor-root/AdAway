@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -40,6 +42,7 @@ public class TvHostsSourcesActivity extends AppCompatActivity {
     private TvHostsSourcesAdapter adapter;
     private RecyclerView recyclerView;
     private TextView emptyTextView;
+    private ActivityResultLauncher<Intent> sourceEditLauncher;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,25 +53,57 @@ public class TvHostsSourcesActivity extends AppCompatActivity {
         this.recyclerView = findViewById(R.id.tv_sources_recycler);
         this.emptyTextView = findViewById(R.id.tv_sources_empty_text);
         MaterialButton addButton = findViewById(R.id.tv_sources_add);
+        MaterialButton applyButton = findViewById(R.id.tv_sources_apply);
+        TextView applyHintText = findViewById(R.id.tv_sources_apply_hint);
 
         this.viewModel = new ViewModelProvider(this).get(HostsSourcesViewModel.class);
         this.adapter = new TvHostsSourcesAdapter(this, this::onItemClicked);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.recyclerView.setAdapter(this.adapter);
 
+        // Adding/editing/deleting a source happens in a separate Activity (TvSourceEditActivity),
+        // not through this.viewModel, so its result (RESULT_OK only on a real save or delete, not
+        // on cancel/back) is what tells notifyModelChanged() a change actually happened there.
+        this.sourceEditLauncher = registerForActivityResult(new StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK) {
+                this.viewModel.notifyModelChanged();
+            }
+        });
+
         // Same prompt-before-apply flow as HostsSourcesFragment: syncSources=true and
         // ignoreEventDuringInstall=true match that fragment's own instantiation exactly, since
         // toggling or editing a source (unlike a Lists entry) can change what gets fetched, not
         // just what gets kept.
+        //
+        // createObserver()'s own Snackbar action button is a touch-only control (a Snackbar sits
+        // outside the normal focus order, unreachable by D-pad), reported stuck showing "Apply"
+        // with no way to actually press it. createPendingObserver() drives the header's own
+        // "apply" button instead, and apply() is called directly on click; the underlying
+        // sync/apply logic is exactly the one the Snackbar's own action button already used.
+        //
+        // getModelChanged(), not getHostsSources(): that one is the raw, reactive query result,
+        // which re-emits on any write to the table, background syncs included, so the button
+        // this drove used to pop up (and on TV, with nothing to auto-dismiss it, stay stuck
+        // showing) from a sync the user never asked to apply. See HostsSourcesViewModel.
         View contentRoot = findViewById(android.R.id.content);
         ApplyConfigurationSnackbar applySnackbar = new ApplyConfigurationSnackbar(contentRoot, true, true);
-        this.viewModel.getHostsSources().observe(this, applySnackbar.createObserver());
+        this.viewModel.getModelChanged().observe(this, applySnackbar.createPendingObserver(() -> {
+            applyButton.setVisibility(View.VISIBLE);
+            applyHintText.setVisibility(View.VISIBLE);
+            addButton.setNextFocusRightId(R.id.tv_sources_apply);
+        }));
         this.viewModel.getHostsSources().observe(this, sources -> {
             this.adapter.submitList(sources);
             updateEmptyState(sources.isEmpty());
         });
 
         addButton.setOnClickListener(v -> startSourceEdition(null));
+        applyButton.setOnClickListener(v -> {
+            applyButton.setVisibility(View.GONE);
+            applyHintText.setVisibility(View.GONE);
+            addButton.setNextFocusRightId(View.NO_ID);
+            applySnackbar.apply();
+        });
     }
 
     private void updateEmptyState(boolean empty) {
@@ -99,6 +134,6 @@ public class TvHostsSourcesActivity extends AppCompatActivity {
         if (source != null) {
             intent.putExtra(SOURCE_ID, source.getId());
         }
-        startActivity(intent);
+        this.sourceEditLauncher.launch(intent);
     }
 }

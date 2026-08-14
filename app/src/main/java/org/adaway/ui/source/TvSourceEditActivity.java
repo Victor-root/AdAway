@@ -219,12 +219,14 @@ public class TvSourceEditActivity extends AppCompatActivity {
                 this.hostsSourceDao.delete(this.edited);
             }
             this.hostsSourceDao.insert(source);
+            setResult(RESULT_OK);
             finish();
         });
     }
 
     private void delete() {
         DISK_IO_EXECUTOR.execute(() -> this.hostsSourceDao.delete(this.edited));
+        setResult(RESULT_OK);
         finish();
     }
 
