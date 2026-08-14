@@ -42,6 +42,7 @@ import org.adaway.helper.NotificationHelper;
 import org.adaway.helper.PreferenceHelper;
 import org.adaway.helper.ThemeHelper;
 import org.adaway.model.adblocking.AdBlockMethod;
+import org.adaway.model.error.HostError;
 import org.adaway.model.update.Manifest;
 import org.adaway.ui.help.HelpActivity;
 import org.adaway.ui.hosts.TvHostsSourcesActivity;
@@ -130,6 +131,7 @@ public class TvHomeActivity extends AppCompatActivity {
         homeViewModel.isAdBlocked().observe(this, this::updateStatus);
         homeViewModel.getState().observe(this, text -> stateDetailText.setText(text));
         homeViewModel.getPending().observe(this, pending -> progressBar.setVisibility(pending ? View.VISIBLE : View.GONE));
+        homeViewModel.getError().observe(this, this::notifyError);
         homeViewModel.getAppManifest().observe(this, this::bindAppUpdateBanner);
         bindHostCounter();
         bindSourceCounter();
@@ -206,6 +208,39 @@ public class TvHomeActivity extends AppCompatActivity {
         homeViewModel.getOutdatedSourceCount().observe(this, count ->
                 outdatedSourcesTextView.setText(resources.getQuantityString(R.plurals.outdated_source_label, count, count))
         );
+    }
+
+    /**
+     * Show the sync/toggle error dialog, the TV counterpart of {@code HomeActivity.notifyError()}
+     * on mobile: {@code TvHomeActivity} had never observed {@code getError()} at all, so a failed
+     * background sync (a hosts source timing out, no connection, …) previously showed nothing
+     * here beyond the progress bar briefly appearing and disappearing again, count unchanged and
+     * no indication anything had gone wrong. Same dialog shape, same reused strings: a plain
+     * Close button for most errors, replaced with the welcome screen's own "Retry sync" action
+     * for the two that a sync retry can actually fix.
+     */
+    private void notifyError(@Nullable HostError error) {
+        if (error == null) {
+            return;
+        }
+        String message = getString(error.getDetailsKey()) + "\n\n" + getString(R.string.error_dialog_help);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(error.getMessageKey())
+                .setMessage(message)
+                .setNegativeButton(R.string.button_help, (dialog, id) -> {
+                    dialog.dismiss();
+                    startActivity(new Intent(this, HelpActivity.class));
+                });
+        if (error == HostError.DOWNLOAD_FAILED || error == HostError.NO_CONNECTION) {
+            builder.setPositiveButton(R.string.welcome_sync_retry_logo, (dialog, id) -> {
+                dialog.dismiss();
+                homeViewModel.sync();
+            });
+        } else {
+            builder.setPositiveButton(R.string.button_close, (dialog, id) -> dialog.dismiss());
+        }
+        builder.create().show();
     }
 
     /**
