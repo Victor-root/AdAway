@@ -18,7 +18,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreferenceCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.adaway.AdAwayApplication;
 import org.adaway.R;
@@ -41,6 +43,12 @@ public class PrefsUpdateFragment extends PreferenceFragmentCompat {
         bindInstallUpdateAction();
         bindHostsUpdatePrefAction();
         updateNotificationPreferencesState();
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.Adapter onCreateAdapter(PreferenceScreen preferenceScreen) {
+        return new FocusSkippingPreferenceGroupAdapter(preferenceScreen);
     }
 
     @Override

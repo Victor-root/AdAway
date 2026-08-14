@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceScreen;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.adaway.R;
 import org.adaway.helper.PreferenceHelper;
@@ -48,6 +50,12 @@ public class PrefsMainFragment extends PreferenceFragmentCompat
         hideDebugCategoryOnReleaseBuild();
         // The root section restarts the web server when its icon setting changes
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.Adapter onCreateAdapter(PreferenceScreen preferenceScreen) {
+        return new FocusSkippingPreferenceGroupAdapter(preferenceScreen);
     }
 
     @Override

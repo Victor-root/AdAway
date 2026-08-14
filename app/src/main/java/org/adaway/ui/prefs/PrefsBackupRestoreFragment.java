@@ -15,6 +15,8 @@ import androidx.activity.result.contract.ActivityResultContracts.OpenDocument;
 import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceScreen;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.adaway.R;
 import org.adaway.model.backup.BackupExporter;
@@ -54,6 +56,12 @@ public class PrefsBackupRestoreFragment extends PreferenceFragmentCompat {
         // Bind pref actions
         bindBackupPref();
         bindRestorePref();
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.Adapter onCreateAdapter(PreferenceScreen preferenceScreen) {
+        return new FocusSkippingPreferenceGroupAdapter(preferenceScreen);
     }
 
     @Override
