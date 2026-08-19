@@ -1,6 +1,6 @@
-# Changelog
+# 📋 Changelog
 
-## [6.6.0-c] - 2026-08-04
+## [6.6.0-c] - 2026-08-19
 
 ### ➕ Added
 
@@ -10,46 +10,57 @@
 * 🌐 Add support for Android 13+ per-app language preferences
 * 🔋 Add battery-optimization steps to first-run setup, with guidance for OEM battery managers (Samsung, Xiaomi, ColorOS, Huawei, vivo)
 * 🔍 Add search to the Android TV "Blocked/Allowed/Redirected" screen, matching the mobile app
+* 📺 Add a dedicated first-run wizard for Android TV, remote-friendly and offering the same root or VPN choice as the phone, where the phone's own welcome screens were never reachable
+* 🛡️ Add a "VPN persistence" entry to the mobile home screen: the Always-on VPN shortcut existed only on Android TV, while it is the one thing that brings ad blocking back after Android force-stops the app
 
 ### 🔄 Changed
 
-* 🎨 Replace the faded light-theme rose with a vivid red, matching the dark theme
-* ⬜ Make text on red headers white for legibility in light mode
-* 🔒 Hide the Debug preferences category on release builds
-* 🎨 Redesign the home screen: pastel stat cards, wave-shaped bottom bar, Material 3 switches and dialogs
-* 🔴 Redesign the Blocked/Allowed/Redirected bottom bar with a red footer and a sliding white indicator
-* 📖 Overhaul the Help section: rewritten FAQ/Problems tabs, dropped outdated content, added VPN and battery troubleshooting
-* 🔀 Merge the Sources card's check and download buttons into one sync action
-* 📺 Rebuild the Android TV home screen for parity with mobile
-* 📺 Rebuild the Android TV "Blocked/Allowed/Redirected", "Hosts sources" and source add/edit screens from scratch, replacing patched-over mobile layouts with D-pad-first ones (a single click opens an action dialog instead of checkbox + long-press, and Save/Delete are header buttons instead of an ActionBar menu)
-* 🃏 Show each Hosts source in its own card on Android TV, instead of a plain row, so sources are easier to tell apart
-* 🏷️ Auto-name release APKs to match the GitHub release convention
-* 🔤 Complete translations for this release's new strings
+* Replace the faded light-theme rose with a vivid red, matching the dark theme
+* Make text on red headers white for legibility in light mode
+* Hide the Debug preferences category on release builds
+* Redesign the home screen: pastel stat cards, wave-shaped bottom bar, Material 3 switches and dialogs
+* Redesign the Blocked/Allowed/Redirected bottom bar with a red footer and a sliding white indicator
+* Overhaul the Help section: rewritten FAQ/Problems tabs, dropped outdated content, added VPN and battery troubleshooting
+* Merge the Sources card's check and download buttons into one sync action
+* Rebuild the Android TV home screen for parity with mobile
+* Rebuild the Android TV "Blocked/Allowed/Redirected", "Hosts sources" and source add/edit screens from scratch, replacing patched-over mobile layouts with D-pad-first ones (a single click opens an action dialog instead of checkbox + long-press, and Save/Delete are header buttons instead of an ActionBar menu)
+* Show each Hosts source in its own card on Android TV, instead of a plain row, so sources are easier to tell apart
+* Auto-name release APKs to match the GitHub release convention
+* Round the app mark's white shape into a true circle instead of an octagon, on mobile and Android TV alike
+* Stop the Android TV "VPN persistence" dialog opening on its own after the first activation; it stays one click away on the home screen
+* Complete translations for this release's new strings
 
 ### 🐛 Fixed
 
-* 🛡️ Fix an ANR loop on the welcome screen when a mouse is connected via scrcpy or Bluetooth
-* 💾 Fix a file-descriptor leak and an oversized-reply bug in the VPN DNS forwarder
-* 🏷️ Fix allow-list entries being dropped when a hosts source line has an inline comment
-* 🔔 Fix the quick-settings tile leaking an observer every time it's opened
-* 🔗 Fix crashes on malformed Gist source URLs and unreadable local file hosts sources
-* ⚡ Fix a rare double-initialisation race in the app's executor pool
-* ⏸️ Fix pausing the VPN sometimes needing two taps to actually stop
-* 🔁 Fix the VPN restarting itself or losing its status icon on some devices (ColorOS) and during rapid network switching
-* 📶 Fix DNS briefly failing when Wi-Fi comes back while on cellular data
-* 🐕 Fix the "Monitor connection" option reconnecting the VPN even on a stable network
-* 🚑 Fix the VPN not recovering after being force-killed by an OEM battery manager
-* 💥 Fix a crash toggling light/dark theme on the Blocked/Allowed/Redirected screens
-* 💥 Fix the redesigned Android TV home screen crashing on launch
-* 🎮 Fix unpredictable D-pad focus on the Android TV home and Help screens
-* 🎨 Various small UI fixes: clipped welcome cards, mismatched status/navigation bar colors, hard-to-read app bar titles, cramped spacing, onboarding screen contrast, a mispositioned TV tab indicator, and the TV launcher banner's off-brand red
-* 📦 Fix DNS answers larger than 1KB being truncated into a broken reply
-* ⏸️ Fix a paused VPN reconnecting itself if the network changed right after pausing
-* 💥 Fix a malformed DNS packet from any app crashing the whole VPN tunnel
-* 🌐 Fix the DNS fallback occasionally picking a resolver the device couldn't actually reach (e.g. IPv6-only cellular), causing a burst of failed lookups right after a network switch
-* 🚑 Fix a race between VPN workers on a network change that could corrupt internal state and, in the worst case, leave the VPN unable to reconnect at all
-* 🎮 Fix the Android TV "Blocked/Allowed/Redirected", "Hosts sources" and source add/edit screens being barely reachable, or unusable, by D-pad
-* 🎮 Fix D-pad focus stopping on every disabled Preferences row instead of skipping to the next usable one (e.g. after "Clear diagnostic log")
+* Fix an ANR loop on the welcome screen when a mouse is connected via scrcpy or Bluetooth
+* Fix a file-descriptor leak and an oversized-reply bug in the VPN DNS forwarder
+* Fix allow-list entries being dropped when a hosts source line has an inline comment
+* Fix the quick-settings tile leaking an observer every time it's opened
+* Fix crashes on malformed Gist source URLs and unreadable local file hosts sources
+* Fix a rare double-initialisation race in the app's executor pool
+* Fix pausing the VPN sometimes needing two taps to actually stop
+* Fix the VPN restarting itself or losing its status icon on some devices (ColorOS) and during rapid network switching
+* Fix DNS briefly failing when Wi-Fi comes back while on cellular data
+* Fix the "Monitor connection" option reconnecting the VPN even on a stable network
+* Fix the VPN not recovering after being force-killed by an OEM battery manager
+* Fix a crash toggling light/dark theme on the Blocked/Allowed/Redirected screens
+* Fix the redesigned Android TV home screen crashing on launch
+* Fix unpredictable D-pad focus on the Android TV home and Help screens
+* Various small UI fixes: clipped welcome cards, mismatched status/navigation bar colors, hard-to-read app bar titles, cramped spacing, onboarding screen contrast, a mispositioned TV tab indicator, and the TV launcher banner's off-brand red
+* Fix DNS answers larger than 1KB being truncated into a broken reply
+* Fix a paused VPN reconnecting itself if the network changed right after pausing
+* Fix a malformed DNS packet from any app crashing the whole VPN tunnel
+* Fix the DNS fallback occasionally picking a resolver the device couldn't actually reach (e.g. IPv6-only cellular), causing a burst of failed lookups right after a network switch
+* Fix a race between VPN workers on a network change that could corrupt internal state and, in the worst case, leave the VPN unable to reconnect at all
+* Fix a brand-new install syncing nothing at all: the default hosts sources could still be on their way in when the first sync read the list, so it found none, reported success and enabled ad blocking against an empty rule set
+* Fix a hosts source whose import was cut short being stamped as up to date anyway, freezing it at a partial (sometimes empty) size until something else forced a refresh
+* Fix a failed sync explaining the wrong problem, and let the error dialog retry the sync itself instead of leaving it to be found again
+* Fix the Android TV home screen silently swallowing sync and toggle errors, showing nothing but a progress bar appearing and disappearing
+* Fix a first activation on Android TV starting the VPN before any source had been downloaded, leaving it enabled but blocking nothing
+* Fix the "Apply configuration" prompt on Android TV being unreachable with a remote, and appearing after background syncs rather than actual edits
+* Fix the Android TV source address field eating D-pad presses and stranding the cursor in the middle of the text
+* Fix the Android TV "Blocked/Allowed/Redirected", "Hosts sources" and source add/edit screens being barely reachable, or unusable, by D-pad
+* Fix D-pad focus stopping on every disabled Preferences row instead of skipping to the next usable one (e.g. after "Clear diagnostic log")
 
 ## [6.5.1-c] - 2026-05-16
 
