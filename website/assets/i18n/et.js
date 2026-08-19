@@ -22,6 +22,7 @@ window.AAC_I18N['et'] = {
   'hero.sub': "AdAway blokeerib reklaamid ja jälgijad kõigis su Android-seadme rakendustes, DNS-i tasemel. Juurõigusi pole vaja, kontot pole vaja, liiklust ei saadeta kuhugi. See kogukondlik haru hoiab selle uutel Androidi versioonidel stabiilsena ja lisab Android TV toe.",
   'hero.cta1': "Laadi APK alla",
   'hero.cta2': "Vaata lähtekoodi",
+  'hero.cta3': "Hangi see Omnify kaudu",
   'hero.req': "Android 8 Oreo või uuem · GPLv3 · Vaikimisi ei mingeid jälgijaid, reklaame ega telemeetriat",
   'hero.feed': "DNS-päringud",
   'hero.feedBlocked': "blokeeritud",

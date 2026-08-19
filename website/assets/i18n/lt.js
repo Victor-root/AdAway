@@ -22,6 +22,7 @@ window.AAC_I18N['lt'] = {
   'hero.sub': "AdAway blokuoja reklamas ir sekiklius visose jūsų Android įrenginio programose, DNS lygmeniu. Nereikia root teisių, nereikia paskyros, jokie duomenys niekur nesiunčiami. Ši bendruomeninė atšaka išlaiko jį stabilų naujose Android versijose ir prideda Android TV palaikymą.",
   'hero.cta1': "Atsisiųsti APK",
   'hero.cta2': "Žiūrėti pirminį kodą",
+  'hero.cta3': "Gaukite per Omnify",
   'hero.req': "Android 8 Oreo arba naujesnė · GPLv3 · Pagal numatymą jokių sekiklių, reklamų ar telemetrijos",
   'hero.feed': "DNS užklausos",
   'hero.feedBlocked': "užblokuota",

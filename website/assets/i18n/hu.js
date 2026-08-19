@@ -22,6 +22,7 @@ window.AAC_I18N['hu'] = {
   'hero.sub': "Az AdAway DNS szinten blokkolja a reklámokat és a nyomkövetőket az Android készüléke minden alkalmazásában. Nem kell root, nem kell fiók, és semmilyen forgalom nem megy sehová. Ez a közösségi fork stabilan tartja az újabb Android verziókon, és Android TV támogatással bővíti.",
   'hero.cta1': "APK letöltése",
   'hero.cta2': "Forráskód megtekintése",
+  'hero.cta3': "Beszerzés az Omnify-ról",
   'hero.req': "Android 8 Oreo vagy újabb · GPLv3 · Alapértelmezés szerint nincs nyomkövető, reklám és telemetria",
   'hero.feed': "DNS kérések",
   'hero.feedBlocked': "blokkolva",

@@ -22,6 +22,7 @@ window.AAC_I18N['sk'] = {
   'hero.sub': "AdAway blokuje reklamy a sledovače vo všetkých aplikáciách vo vašom zariadení s Androidom, na úrovni DNS. Bez rootu, bez účtu, bez odosielania premávky kamkoľvek. Tento komunitný fork ho drží stabilný na nových verziách Androidu a pridáva podporu Android TV.",
   'hero.cta1': "Stiahnuť APK",
   'hero.cta2': "Zobraziť zdrojový kód",
+  'hero.cta3': "Získať cez Omnify",
   'hero.req': "Android 8 Oreo alebo novší · GPLv3 · Predvolene žiadne sledovače, reklamy ani telemetria",
   'hero.feed': "DNS požiadavky",
   'hero.feedBlocked': "zablokované",

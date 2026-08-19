@@ -22,6 +22,7 @@ window.AAC_I18N['hr'] = {
   'hero.sub': "AdAway blokira oglase i pratitelje u svim aplikacijama na vašem Android uređaju, na razini DNS-a. Bez roota, bez računa, bez prometa poslanog bilo kamo. Ovaj zajednički fork drži ga stabilnim na novijim verzijama Androida i dodaje podršku za Android TV.",
   'hero.cta1': "Preuzmi APK",
   'hero.cta2': "Pogledaj izvorni kod",
+  'hero.cta3': "Preuzmi putem Omnifyja",
   'hero.req': "Android 8 Oreo ili noviji · GPLv3 · Bez pratitelja, bez oglasa, bez telemetrije po zadanome",
   'hero.feed': "DNS zahtjevi",
   'hero.feedBlocked': "blokirano",

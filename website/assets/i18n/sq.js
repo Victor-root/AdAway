@@ -22,6 +22,7 @@ window.AAC_I18N['sq'] = {
   'hero.sub': "AdAway bllokon reklamat dhe gjurmuesit në çdo aplikacion të pajisjes suaj Android, në nivelin e DNS-së. Pa root, pa llogari dhe pa dërguar trafikun tuaj askund. Ky degëzim i komunitetit e mban të qëndrueshëm në versionet e reja të Android dhe shton mbështetjen për Android TV.",
   'hero.cta1': "Shkarko APK-në",
   'hero.cta2': "Shiko kodin burim",
+  'hero.cta3': "Merre në Omnify",
   'hero.req': "Android 8 Oreo ose më i ri · GPLv3 · Pa gjurmues, pa reklama, pa telemetri si parazgjedhje",
   'hero.feed': "Kërkesa DNS",
   'hero.feedBlocked': "bllokuar",

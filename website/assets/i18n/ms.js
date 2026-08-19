@@ -22,6 +22,7 @@ window.AAC_I18N['ms'] = {
   'hero.sub': "AdAway menyekat iklan dan penjejak dalam setiap aplikasi pada peranti Android anda, pada peringkat DNS. Tiada root diperlukan, tiada akaun, tiada trafik dihantar ke mana-mana. Cabang komuniti ini mengekalkannya stabil pada versi Android terkini dan menambah sokongan Android TV.",
   'hero.cta1': "Muat turun APK",
   'hero.cta2': "Lihat kod sumber",
+  'hero.cta3': "Dapatkan di Omnify",
   'hero.req': "Android 8 Oreo atau lebih baharu · GPLv3 · Tiada penjejak, tiada iklan, tiada telemetri secara lalai",
   'hero.feed': "Permintaan DNS",
   'hero.feedBlocked': "disekat",

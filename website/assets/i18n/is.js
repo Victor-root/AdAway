@@ -22,6 +22,7 @@ window.AAC_I18N['is'] = {
   'hero.sub': "AdAway blokkar auglýsingar og rekjara í öllum forritum á Android-tækinu þínu, á DNS-stigi. Engin rótaraðgangur, enginn reikningur, engin umferð send neitt. Þessi samfélagsútgáfa heldur því stöðugu á nýjum Android-útgáfum og bætir við stuðningi við Android TV.",
   'hero.cta1': "Sækja APK-skrána",
   'hero.cta2': "Skoða frumkóðann",
+  'hero.cta3': "Náðu í það á Omnify",
   'hero.req': "Android 8 Oreo eða nýrra · GPLv3 · Engir rekjarar, engar auglýsingar, engin fjarmæling sjálfgefið",
   'hero.feed': "DNS-beiðnir",
   'hero.feedBlocked': "blokkað",

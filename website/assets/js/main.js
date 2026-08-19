@@ -35,6 +35,7 @@
     'hero.sub': 'AdAway blocks ads and trackers across every app on your Android device, at the DNS level. No root required, no account, no traffic sent anywhere. This community fork keeps it stable on recent Android versions and adds Android TV support.',
     'hero.cta1': 'Download the APK',
     'hero.cta2': 'View source',
+    'hero.cta3': 'Get it on Omnify',
     'hero.req': 'Android 8 Oreo or later · GPLv3 · No trackers, no ads, no telemetry by default',
     'hero.feed': 'DNS requests',
     'hero.feedBlocked': 'blocked',

@@ -22,6 +22,7 @@ window.AAC_I18N['ro'] = {
   'hero.sub': "AdAway blochează reclamele și urmăritorii în toate aplicațiile de pe dispozitivul tău Android, la nivel DNS. Fără root, fără cont și fără trafic trimis nicăieri. Această ramificație comunitară îl păstrează stabil pe versiunile recente de Android și adaugă suport pentru Android TV.",
   'hero.cta1': "Descarcă APK-ul",
   'hero.cta2': "Vezi codul sursă",
+  'hero.cta3': "Obține-l pe Omnify",
   'hero.req': "Android 8 Oreo sau mai nou · GPLv3 · Fără urmăritori, fără reclame, fără telemetrie în mod implicit",
   'hero.feed': "Cereri DNS",
   'hero.feedBlocked': "blocate",

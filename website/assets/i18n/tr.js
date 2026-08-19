@@ -22,6 +22,7 @@ window.AAC_I18N['tr'] = {
   'hero.sub': "AdAway, Android cihazınızdaki her uygulamada reklamları ve izleyicileri DNS düzeyinde engeller. Root gerekmez, hesap gerekmez, hiçbir trafik hiçbir yere gönderilmez. Bu topluluk çatallaması onu güncel Android sürümlerinde kararlı tutar ve Android TV desteği ekler.",
   'hero.cta1': "APK’yı indir",
   'hero.cta2': "Kaynak kodu görüntüle",
+  'hero.cta3': "Omnify ile edinin",
   'hero.req': "Android 8 Oreo veya üzeri · GPLv3 · Öntanımlı olarak izleyici, reklam ve telemetri yok",
   'hero.feed': "DNS istekleri",
   'hero.feedBlocked': "engellendi",

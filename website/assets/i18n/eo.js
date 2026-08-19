@@ -22,6 +22,7 @@ window.AAC_I18N['eo'] = {
   'hero.sub': "AdAway blokas reklamojn kaj spurilojn en ĉiu aplikaĵo de via Android-aparato, je la DNS-nivelo. Sen radiko, sen konto, sen trafiko sendata ien ajn. Ĉi tiu komunuma forko tenas ĝin stabila sur novaj Android-versioj kaj aldonas subtenon de Android TV.",
   'hero.cta1': "Elŝuti la APK-on",
   'hero.cta2': "Vidi la fontkodon",
+  'hero.cta3': "Akiru ĝin per Omnify",
   'hero.req': "Android 8 Oreo aŭ pli nova · GPLv3 · Neniuj spuriloj, neniuj reklamoj, neniu telemetrio defaŭlte",
   'hero.feed': "DNS-petoj",
   'hero.feedBlocked': "blokitaj",

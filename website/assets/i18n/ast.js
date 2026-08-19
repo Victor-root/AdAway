@@ -22,6 +22,7 @@ window.AAC_I18N['ast'] = {
   'hero.sub': "AdAway bloquia anuncios y rastrexadores en toles aplicaciones del to preséu Android, a nivel de DNS. Ensin root, ensin cuenta y ensin unviar el to tráficu a nengún llugar. Esta bifurcación comunitaria caltiénlu estable nes versiones recientes d’Android y amiesta sofitu p’Android TV.",
   'hero.cta1': "Baxar l’APK",
   'hero.cta2': "Ver el códigu fonte",
+  'hero.cta3': "Consíguelu n'Omnify",
   'hero.req': "Android 8 Oreo o posterior · GPLv3 · Ensin rastrexadores, ensin anuncios y ensin telemetría por defeutu",
   'hero.feed': "Peticiones DNS",
   'hero.feedBlocked': "bloquiaes",

@@ -22,6 +22,7 @@ window.AAC_I18N['vi'] = {
   'hero.sub': "AdAway chặn quảng cáo và trình theo dõi trong mọi ứng dụng trên thiết bị Android của bạn, ở mức DNS. Không cần root, không cần tài khoản, không gửi lưu lượng đi đâu cả. Nhánh cộng đồng này giữ cho ứng dụng ổn định trên các phiên bản Android mới và bổ sung hỗ trợ Android TV.",
   'hero.cta1': "Tải tệp APK",
   'hero.cta2': "Xem mã nguồn",
+  'hero.cta3': "Nhận qua Omnify",
   'hero.req': "Android 8 Oreo trở lên · GPLv3 · Mặc định không có trình theo dõi, quảng cáo hay dữ liệu đo lường",
   'hero.feed': "Yêu cầu DNS",
   'hero.feedBlocked': "đã chặn",

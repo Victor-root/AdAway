@@ -22,6 +22,7 @@ window.AAC_I18N['fr'] = {
   'hero.sub': "AdAway bloque les publicités et les traqueurs dans toutes les applications de votre appareil Android, au niveau DNS. Sans root, sans compte, sans envoyer votre trafic où que ce soit. Ce fork communautaire le garde stable sur les versions récentes d’Android et ajoute la prise en charge d’Android TV.",
   'hero.cta1': "Télécharger l’APK",
   'hero.cta2': "Voir le code source",
+  'hero.cta3': "Obtenir via Omnify",
   'hero.req': "Android 8 Oreo ou supérieur · GPLv3 · Aucun traqueur, aucune publicité, aucune télémétrie par défaut",
   'hero.feed': "Requêtes DNS",
   'hero.feedBlocked': "bloquées",

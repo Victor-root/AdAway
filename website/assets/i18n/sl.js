@@ -22,6 +22,7 @@ window.AAC_I18N['sl'] = {
   'hero.sub': "AdAway zavira oglase in sledilnike v vseh aplikacijah na vaši napravi Android, na ravni DNS. Brez korenskega dostopa, brez računa, brez prometa, poslanega kamor koli. Ta skupnostna razvejitev ga ohranja stabilnega na novejših različicah Androida in dodaja podporo za Android TV.",
   'hero.cta1': "Prenesi APK",
   'hero.cta2': "Poglej izvorno kodo",
+  'hero.cta3': "Pridobite prek Omnifyja",
   'hero.req': "Android 8 Oreo ali novejši · GPLv3 · Privzeto brez sledilnikov, oglasov in telemetrije",
   'hero.feed': "Zahteve DNS",
   'hero.feedBlocked': "zavrto",

@@ -22,6 +22,7 @@ window.AAC_I18N['eu'] = {
   'hero.sub': "AdAway-k iragarkiak eta jarraitzaileak blokeatzen ditu zure Android gailuko aplikazio guztietan, DNS mailan. Root gabe, konturik gabe eta zure trafikoa inora bidali gabe. Komunitate-sardexka honek egonkor mantentzen du Android-en bertsio berrietan eta Android TV euskarria gehitzen dio.",
   'hero.cta1': "Deskargatu APKa",
   'hero.cta2': "Ikusi iturburu-kodea",
+  'hero.cta3': "Lortu Omnify-n",
   'hero.req': "Android 8 Oreo edo berriagoa · GPLv3 · Jarraitzailerik, iragarkirik eta telemetriarik ez lehenetsita",
   'hero.feed': "DNS eskaerak",
   'hero.feedBlocked': "blokeatuta",

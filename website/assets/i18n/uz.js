@@ -22,6 +22,7 @@ window.AAC_I18N['uz'] = {
   'hero.sub': "AdAway Android qurilmangizdagi har bir ilovada reklama va kuzatuvchilarni DNS darajasida bloklaydi. Root kerak emas, hisob kerak emas, hech qanday trafik hech qayerga yuborilmaydi. Ushbu hamjamiyat forki uni Androidning yangi versiyalarida barqaror saqlaydi va Android TV qoʻllab-quvvatlashini qoʻshadi.",
   'hero.cta1': "APK’ni yuklab olish",
   'hero.cta2': "Manba kodini koʻrish",
+  'hero.cta3': "Omnify orqali oling",
   'hero.req': "Android 8 Oreo yoki undan yangi · GPLv3 · Sukut boʻyicha kuzatuvchilar, reklama va telemetriya yoʻq",
   'hero.feed': "DNS soʻrovlari",
   'hero.feedBlocked': "bloklandi",

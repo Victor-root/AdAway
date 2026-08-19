@@ -22,6 +22,7 @@ window.AAC_I18N['fil'] = {
   'hero.sub': "Hinaharangan ng AdAway ang mga ad at tracker sa bawat app sa iyong Android device, sa antas ng DNS. Walang root na kailangan, walang account, walang trapikong ipinapadala kahit saan. Pinapanatili itong matatag ng community fork na ito sa mga bagong bersyon ng Android at nagdaragdag ng suporta sa Android TV.",
   'hero.cta1': "I-download ang APK",
   'hero.cta2': "Tingnan ang source code",
+  'hero.cta3': "Kunin ito sa Omnify",
   'hero.req': "Android 8 Oreo o mas bago · GPLv3 · Walang tracker, walang ad, walang telemetry bilang default",
   'hero.feed': "Mga kahilingan sa DNS",
   'hero.feedBlocked': "hinarang",

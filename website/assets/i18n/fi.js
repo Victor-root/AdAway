@@ -22,6 +22,7 @@ window.AAC_I18N['fi'] = {
   'hero.sub': "AdAway estää mainokset ja seuraimet kaikissa Android-laitteesi sovelluksissa, DNS-tasolla. Ei rootia, ei tiliä, ei liikennettä minnekään. Tämä yhteisöhaara pitää sen vakaana uusissa Android-versioissa ja lisää Android TV -tuen.",
   'hero.cta1': "Lataa APK",
   'hero.cta2': "Katso lähdekoodi",
+  'hero.cta3': "Hanki se Omnifysta",
   'hero.req': "Android 8 Oreo tai uudempi · GPLv3 · Ei seuraimia, ei mainoksia, ei telemetriaa oletuksena",
   'hero.feed': "DNS-kyselyt",
   'hero.feedBlocked': "estetty",

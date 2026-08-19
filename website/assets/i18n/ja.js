@@ -22,6 +22,7 @@ window.AAC_I18N['ja'] = {
   'hero.sub': "AdAway は Android 端末上のすべてのアプリで、広告とトラッカーを DNS レベルでブロックします。root は不要、アカウントも不要、通信をどこかへ送ることもありません。このコミュニティ フォークは、新しい Android バージョンでの安定性を保ち、Android TV 対応を追加します。",
   'hero.cta1': "APK をダウンロード",
   'hero.cta2': "ソースコードを見る",
+  'hero.cta3': "Omnify で入手",
   'hero.req': "Android 8 Oreo 以降 · GPLv3 · 既定でトラッカー・広告・テレメトリなし",
   'hero.feed': "DNS リクエスト",
   'hero.feedBlocked': "ブロック",

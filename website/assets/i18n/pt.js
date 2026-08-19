@@ -22,6 +22,7 @@ window.AAC_I18N['pt'] = {
   'hero.sub': "O AdAway bloqueia anúncios e rastreadores em todas as aplicações do seu dispositivo Android, ao nível do DNS. Sem root, sem conta e sem enviar o seu tráfego para lado nenhum. Esta bifurcação comunitária mantém-no estável nas versões recentes do Android e acrescenta suporte a Android TV.",
   'hero.cta1': "Transferir o APK",
   'hero.cta2': "Ver o código-fonte",
+  'hero.cta3': "Obtenha no Omnify",
   'hero.req': "Android 8 Oreo ou posterior · GPLv3 · Sem rastreadores, sem anúncios e sem telemetria por predefinição",
   'hero.feed': "Pedidos DNS",
   'hero.feedBlocked': "bloqueados",

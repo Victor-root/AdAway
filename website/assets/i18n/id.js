@@ -22,6 +22,7 @@ window.AAC_I18N['id'] = {
   'hero.sub': "AdAway memblokir iklan dan pelacak di setiap aplikasi pada perangkat Android Anda, di tingkat DNS. Tanpa root, tanpa akun, tanpa lalu lintas yang dikirim ke mana pun. Fork komunitas ini menjaganya tetap stabil di versi Android terbaru dan menambahkan dukungan Android TV.",
   'hero.cta1': "Unduh APK",
   'hero.cta2': "Lihat kode sumber",
+  'hero.cta3': "Dapatkan di Omnify",
   'hero.req': "Android 8 Oreo atau lebih baru · GPLv3 · Tanpa pelacak, tanpa iklan, tanpa telemetri secara bawaan",
   'hero.feed': "Permintaan DNS",
   'hero.feedBlocked': "diblokir",

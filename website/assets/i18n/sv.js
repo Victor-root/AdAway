@@ -22,6 +22,7 @@ window.AAC_I18N['sv'] = {
   'hero.sub': "AdAway blockerar annonser och spårare i alla appar på din Android-enhet, på DNS-nivå. Ingen root krävs, inget konto, ingen trafik som skickas någonstans. Den här community-forken håller den stabil på nyare Android-versioner och lägger till stöd för Android TV.",
   'hero.cta1': "Ladda ner APK-filen",
   'hero.cta2': "Visa källkoden",
+  'hero.cta3': "Hämta det på Omnify",
   'hero.req': "Android 8 Oreo eller senare · GPLv3 · Inga spårare, inga annonser, ingen telemetri som standard",
   'hero.feed': "DNS-förfrågningar",
   'hero.feedBlocked': "blockerade",

@@ -22,6 +22,7 @@ window.AAC_I18N['zh'] = {
   'hero.sub': "AdAway 在 DNS 层面拦截 Android 设备上每个应用中的广告与追踪器。无需 root，无需账号，不会把任何流量发往别处。这个社区分支让它在较新的 Android 版本上保持稳定，并加入了 Android TV 支持。",
   'hero.cta1': "下载 APK",
   'hero.cta2': "查看源代码",
+  'hero.cta3': "通过 Omnify 获取",
   'hero.req': "Android 8 Oreo 及以上 · GPLv3 · 默认不含追踪器、广告与遥测",
   'hero.feed': "DNS 请求",
   'hero.feedBlocked': "已拦截",

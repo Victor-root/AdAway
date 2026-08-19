@@ -22,6 +22,7 @@ window.AAC_I18N['az'] = {
   'hero.sub': "AdAway Android cihazınızdakı bütün tətbiqlərdə reklamları və izləyiciləri DNS səviyyəsində bloklayır. Root tələb olunmur, hesab yoxdur, heç bir trafik heç yerə göndərilmir. Bu icma forku onu son Android versiyalarında sabit saxlayır və Android TV dəstəyi əlavə edir.",
   'hero.cta1': "APK-nı yüklə",
   'hero.cta2': "Mənbə koduna bax",
+  'hero.cta3': "Omnify ilə əldə edin",
   'hero.req': "Android 8 Oreo və ya sonrası · GPLv3 · Standart olaraq izləyici, reklam və telemetriya yoxdur",
   'hero.feed': "DNS sorğuları",
   'hero.feedBlocked': "bloklandı",

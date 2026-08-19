@@ -22,6 +22,7 @@ window.AAC_I18N['ku'] = {
   'hero.sub': "AdAway reklaman û şopgeran di her sepana amûra te ya Androidê de, li asta DNSê asteng dike. Root ne pêwîst e, hesab tune ye, tu seyrûsefer ti derê nayê şandin. Ev forka civakî wê li ser guhertoyên nû yên Androidê aram digire û piştgiriya Android TV lê zêde dike.",
   'hero.cta1': "APKê daxîne",
   'hero.cta2': "Koda çavkaniyê bibîne",
+  'hero.cta3': "Bi Omnify bistîne",
   'hero.req': "Android 8 Oreo an nûtir · GPLv3 · Bi awayê pêşdanasînî bê şopger, bê reklam, bê telemetrî",
   'hero.feed': "Daxwazên DNSê",
   'hero.feedBlocked': "hate astengkirin",
