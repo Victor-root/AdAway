@@ -38,6 +38,11 @@
     <string name="home_tile_log">DNS log</string>
     <string name="home_tile_help">Help</string>
 
+    <!-- VPN persistence card. Its title and the dialog it opens use the shared
+         vpn_persistence_* strings, since the TV home screen shows that same dialog. -->
+    <string name="home_persistence_subtitle">Keep ad blocking running in the background</string>
+    <string name="home_persistence_settings_unavailable">VPN settings are not available on this device.</string>
+
     <!-- Project card -->
     <string name="project_label">Open GitHub page</string>
 

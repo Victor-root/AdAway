@@ -60,6 +60,9 @@
     <string name="home_tile_log">DNS zapis</string>
     <string name="home_tile_help">Pomoć</string>
 
+    <string name="home_persistence_subtitle">Održavaj blokiranje oglasa aktivnim u pozadini</string>
+    <string name="home_persistence_settings_unavailable">Postavke VPN-a nisu dostupne na ovom uređaju.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">O aplikaciji</string>
     <string name="about_app_name">AdAway Community</string>

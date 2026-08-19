@@ -66,6 +66,9 @@
     <string name="home_tile_log">سجل DNS</string>
     <string name="home_tile_help">مساعدة</string>
 
+    <string name="home_persistence_subtitle">إبقاء حظر الإعلانات نشطًا في الخلفية</string>
+    <string name="home_persistence_settings_unavailable">إعدادات VPN غير متوفرة على هذا الجهاز.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">حول</string>
     <string name="about_app_name">AdAway Community</string>

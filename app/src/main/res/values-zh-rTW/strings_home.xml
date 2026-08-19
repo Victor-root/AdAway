@@ -52,6 +52,9 @@
     <string name="home_tile_log">DNS 記錄</string>
     <string name="home_tile_help">說明</string>
 
+    <string name="home_persistence_subtitle">在背景保持廣告攔截運作</string>
+    <string name="home_persistence_settings_unavailable">此裝置上無法使用 VPN 設定。</string>
+
     <!-- About tab -->
     <string name="help_tab_about">關於</string>
     <string name="about_app_name">AdAway Community</string>

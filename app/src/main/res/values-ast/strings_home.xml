@@ -32,6 +32,9 @@
     <string name="home_tile_log">Rexistru DNS</string>
     <string name="home_tile_help">Ayuda</string>
 
+    <string name="home_persistence_subtitle">Caltener el bloquéu d\'anuncios activu en segundu planu</string>
+    <string name="home_persistence_settings_unavailable">Los axustes de VPN nun tán disponibles nesti preséu.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Tocante a</string>
     <string name="about_app_name">AdAway Community</string>

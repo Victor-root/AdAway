@@ -60,6 +60,9 @@
     <string name="home_tile_log">Registo DNS</string>
     <string name="home_tile_help">Ajuda</string>
 
+    <string name="home_persistence_subtitle">Manter o bloqueio de anúncios ativo em segundo plano</string>
+    <string name="home_persistence_settings_unavailable">As definições de VPN não estão disponíveis neste dispositivo.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Acerca de</string>
     <string name="about_app_name">AdAway Community</string>

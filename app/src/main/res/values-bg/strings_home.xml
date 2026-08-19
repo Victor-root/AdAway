@@ -58,6 +58,9 @@
     <string name="home_tile_log">DNS дневник</string>
     <string name="home_tile_help">Помощ</string>
 
+    <string name="home_persistence_subtitle">Поддържане на блокирането на реклами във фонов режим</string>
+    <string name="home_persistence_settings_unavailable">Настройките за VPN не са налични на това устройство.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Относно</string>
     <string name="about_app_name">AdAway Community</string>

@@ -62,6 +62,9 @@
     <string name="home_tile_log">Záznam DNS</string>
     <string name="home_tile_help">Pomoc</string>
 
+    <string name="home_persistence_subtitle">Udržať blokovanie reklám aktívne na pozadí</string>
+    <string name="home_persistence_settings_unavailable">Nastavenia VPN nie sú na tomto zariadení dostupné.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">O aplikácii</string>
     <string name="about_app_name">AdAway Community</string>

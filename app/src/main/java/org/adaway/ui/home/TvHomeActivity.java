@@ -6,8 +6,6 @@ import static org.adaway.ui.lists.ListsActivity.BLOCKED_HOSTS_TAB;
 import static org.adaway.ui.lists.ListsActivity.REDIRECTED_HOSTS_TAB;
 import static org.adaway.ui.lists.ListsActivity.TAB;
 
-import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.app.UiModeManager;
@@ -16,18 +14,15 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.VpnService;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
@@ -44,6 +39,7 @@ import org.adaway.helper.ThemeHelper;
 import org.adaway.model.adblocking.AdBlockMethod;
 import org.adaway.model.error.HostError;
 import org.adaway.model.update.Manifest;
+import org.adaway.ui.dialog.VpnPersistenceDialog;
 import org.adaway.ui.help.HelpActivity;
 import org.adaway.ui.hosts.TvHostsSourcesActivity;
 import org.adaway.ui.lists.TvListsActivity;
@@ -54,7 +50,6 @@ import org.adaway.ui.welcome.TvWelcomeActivity;
 import org.adaway.vpn.VpnServiceControls;
 
 import kotlin.jvm.functions.Function1;
-import timber.log.Timber;
 
 public class TvHomeActivity extends AppCompatActivity {
 
@@ -333,9 +328,12 @@ public class TvHomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         // User may have just toggled Always-on VPN in system settings (or via ADB):
-        // refresh the indicator when we come back to the foreground.
+        // refresh the indicator when we come back to the foreground. Null-guarded because
+        // onCreate returns early, before any of these are bound, when it redirects to the
+        // welcome wizard.
         if (alwaysOnIndicator != null) {
             updateAlwaysOnIndicator();
+            updatePersistenceVisibility();
         }
         // Resume an APK install that was queued before the user was sent to the
         // "install unknown apps" Settings screen. On Shield TV the AdAway process
@@ -345,87 +343,18 @@ public class TvHomeActivity extends AppCompatActivity {
         UpdateActivity.tryResumePendingInstall(this);
     }
 
-    /**
-     * Returns true when the Android system has AdAway set as the Always-on VPN app
-     * (Settings.Secure.ALWAYS_ON_VPN_APP, with fallback to the Global namespace for
-     * older or customized builds). Returns false in any other case, including when
-     * the setting is not readable.
-     */
-    private boolean isAlwaysOnVpnConfiguredForUs() {
-        String pkg = getPackageName();
-        ContentResolver cr = getContentResolver();
-        try {
-            String alwaysOnApp = Settings.Secure.getString(cr, "always_on_vpn_app");
-            if (alwaysOnApp == null || alwaysOnApp.isEmpty()) {
-                alwaysOnApp = Settings.Global.getString(cr, "always_on_vpn_app");
-            }
-            return pkg.equals(alwaysOnApp);
-        } catch (SecurityException e) {
-            Timber.w(e, "Cannot read always-on VPN setting; treating as not configured.");
-            return false;
-        }
-    }
-
     private void updateAlwaysOnIndicator() {
-        alwaysOnIndicator.setVisibility(isAlwaysOnVpnConfiguredForUs() ? View.VISIBLE : View.GONE);
+        alwaysOnIndicator.setVisibility(
+                VpnPersistenceDialog.isAlwaysOnVpnEnabled(this) ? View.VISIBLE : View.GONE);
     }
 
     /**
-     * Show the unified "VPN persistence" dialog. Always renders the current
-     * always-on detection status plus the ADB commands, so the user can
-     * verify the current state and copy the commands at any time.
+     * Show the shared "VPN persistence" dialog, with the ADB commands included: the system VPN
+     * settings screen is hidden outright on a fair share of Android TV builds, so the commands
+     * are the only way in on those.
      */
     private void showAlwaysOnVpnDialog() {
-        boolean configured = isAlwaysOnVpnConfiguredForUs();
-        String statusLine = getString(configured
-                ? R.string.tv_persistence_status_enabled
-                : R.string.tv_persistence_status_disabled);
-        String message = statusLine
-                + "\n\n"
-                + getString(R.string.tv_always_on_hint_message)
-                + "\n\n"
-                + getString(R.string.tv_persistence_adb_commands, getPackageName());
-        // Build with null click listeners so the auto-dismiss-on-click is wired,
-        // then override the positive button after show(): if the Intent fails
-        // (Toast shown), keep the dialog up so the user can still read the ADB
-        // commands instead of having to re-open the dialog.
-        AlertDialog dialog = new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.tv_always_on_hint_title)
-                .setMessage(message)
-                .setPositiveButton(R.string.tv_always_on_hint_open_settings, null)
-                .setNegativeButton(R.string.tv_always_on_hint_later, null)
-                .create();
-        dialog.setOnShowListener(d -> dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                .setOnClickListener(v -> {
-                    if (tryOpenVpnSettings()) {
-                        dialog.dismiss();
-                    }
-                    // else: VPN settings are hidden, Toast already shown,
-                    // keep the dialog open so the ADB commands stay visible.
-                }));
-        dialog.show();
-    }
-
-    /**
-     * Tries to open the system VPN settings via {@link Settings#ACTION_VPN_SETTINGS}.
-     * Non-blocking: if the Activity is unresolved or {@code startActivity} throws,
-     * a Toast points the user back to the ADB commands. Returns {@code true} when
-     * the system Activity successfully started, {@code false} otherwise so the
-     * caller can decide whether to keep its UI on screen.
-     */
-    private boolean tryOpenVpnSettings() {
-        Intent intent = new Intent(Settings.ACTION_VPN_SETTINGS)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            try {
-                startActivity(intent);
-                return true;
-            } catch (ActivityNotFoundException | SecurityException e) {
-                Timber.w(e, "Failed to open VPN settings.");
-            }
-        }
-        Toast.makeText(this, R.string.tv_persistence_intent_failed, Toast.LENGTH_LONG).show();
-        return false;
+        VpnPersistenceDialog.show(this, true, R.string.tv_persistence_intent_failed);
     }
 
     private void checkFirstStep() {
@@ -457,11 +386,51 @@ public class TvHomeActivity extends AppCompatActivity {
             appUpdateButton.setText(getString(R.string.pref_update_install_summary, manifest.version));
             appUpdateButton.setVisibility(View.VISIBLE);
             appUpdateButton.setOnClickListener(v -> startActivity(new Intent(this, UpdateActivity.class)));
-            toggleButton.setNextFocusDownId(R.id.btn_app_update);
         } else {
             appUpdateButton.setVisibility(View.GONE);
-            toggleButton.setNextFocusDownId(R.id.btn_persistence);
         }
+        applyBottomRowFocus();
+    }
+
+    /**
+     * Show the persistence card in VPN mode only. Root mode installs the block list into the
+     * system hosts file, where it stays on its own: there is no service to keep alive and no
+     * Always-on VPN to pin, so the card would open a dialog with nothing to act on.
+     * <p>
+     * Refreshed on every resume rather than once at creation: the method is chosen in the
+     * welcome wizard, which finishes back onto this screen.
+     */
+    private void updatePersistenceVisibility() {
+        boolean vpnMode = PreferenceHelper.getAdBlockMethod(this) == VPN;
+        persistenceButton.setVisibility(vpnMode ? View.VISIBLE : View.GONE);
+        applyBottomRowFocus();
+    }
+
+    /**
+     * Re-point every explicit D-pad link that lands on the bottom actions row, which holds the
+     * persistence and theme cards.
+     * <p>
+     * An explicit {@code nextFocus*} aimed at a GONE view leaves the focus stuck where it is
+     * rather than falling back to a geometric search, so hiding either the persistence card or
+     * the update banner has to be followed by this. Both callers go through it, so whichever
+     * runs last leaves the whole graph coherent regardless of their order.
+     */
+    private void applyBottomRowFocus() {
+        boolean persistenceShown = persistenceButton.getVisibility() == View.VISIBLE;
+        // What the row is entered on from above: the persistence card, or the theme card when
+        // that row is down to it alone.
+        int rowEntry = persistenceShown ? R.id.btn_persistence : R.id.btn_theme;
+        appUpdateButton.setNextFocusDownId(rowEntry);
+        dnsMonitorTile.setNextFocusDownId(rowEntry);
+        helpTile.setNextFocusDownId(rowEntry);
+        preferencesTile.setNextFocusDownId(rowEntry);
+        // Nothing sits left of the theme card once persistence is hidden: clearing the id lets
+        // Android run its own search, which then correctly finds nothing in that direction.
+        themeButton.setNextFocusLeftId(persistenceShown ? R.id.btn_persistence : View.NO_ID);
+        // The toggle drops into the update banner while it is showing, into the row otherwise.
+        toggleButton.setNextFocusDownId(appUpdateButton.getVisibility() == View.VISIBLE
+                ? R.id.btn_app_update
+                : rowEntry);
     }
 
     /**

@@ -27,6 +27,9 @@
     <string name="home_preferences_subtitle">AdAway കോൺഫിഗർ ചെയ്യുക</string>
     <string name="home_tile_log">DNS ലോഗ്</string>
     <string name="home_tile_help">സഹായം</string>
+
+    <string name="home_persistence_subtitle">പശ്ചാത്തലത്തിൽ പരസ്യം തടയൽ പ്രവർത്തിപ്പിക്കുക</string>
+    <string name="home_persistence_settings_unavailable">ഈ ഉപകരണത്തിൽ VPN ക്രമീകരണങ്ങൾ ലഭ്യമല്ല.</string>
     <string name="help_tab_about">കുറിച്ച്</string>
     <string name="about_app_name">AdAway Community</string>
     <string name="about_version">പതിപ്പ് %s</string>

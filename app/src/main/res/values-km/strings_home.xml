@@ -17,6 +17,9 @@
     <string name="home_preferences_subtitle">កំណត់រចនាសម្ព័ន្ធ AdAway</string>
     <string name="home_tile_log">កំណត់ហេតុ DNS</string>
     <string name="home_tile_help">ជំនួយ</string>
+
+    <string name="home_persistence_subtitle">រក្សាការទប់ស្កាត់ការផ្សាយពាណិជ្ជកម្មឱ្យដំណើរការនៅផ្ទៃខាងក្រោយ</string>
+    <string name="home_persistence_settings_unavailable">ការកំណត់ VPN មិនអាចប្រើបានលើឧបករណ៍នេះទេ។</string>
     <string name="help_tab_about">អំពី</string>
     <string name="about_app_name">AdAway Community</string>
     <string name="about_version">កំណែ %s</string>

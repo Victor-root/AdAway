@@ -19,6 +19,9 @@
     <string name="home_tile_log">DNS မှတ်တမ်း</string>
     <string name="home_tile_help">အကူအညီ</string>
 
+    <string name="home_persistence_subtitle">နောက်ခံတွင် ကြော်ငြာပိတ်ဆို့မှုကို ဆက်လက်လုပ်ဆောင်ပါ</string>
+    <string name="home_persistence_settings_unavailable">ဤစက်တွင် VPN ဆက်တင်များ မရနိုင်ပါ။</string>
+
     <!-- About tab -->
     <string name="help_tab_about">အကြောင်း</string>
     <string name="about_app_name">AdAway Community</string>

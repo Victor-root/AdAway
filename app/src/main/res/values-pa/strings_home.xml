@@ -29,6 +29,9 @@
     <string name="home_tile_log">DNS ਲੌਗ</string>
     <string name="home_tile_help">ਮਦਦ</string>
 
+    <string name="home_persistence_subtitle">ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਵਿਗਿਆਪਨ ਬਲੌਕਿੰਗ ਚਾਲੂ ਰੱਖੋ</string>
+    <string name="home_persistence_settings_unavailable">ਇਸ ਡਿਵਾਈਸ \'ਤੇ VPN ਸੈਟਿੰਗਾਂ ਉਪਲਬਧ ਨਹੀਂ ਹਨ।</string>
+
     <!-- About tab -->
     <string name="help_tab_about">ਬਾਰੇ</string>
     <string name="about_app_name">AdAway Community</string>

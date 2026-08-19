@@ -58,6 +58,9 @@
     <string name="home_tile_log">DNS-napló</string>
     <string name="home_tile_help">Súgó</string>
 
+    <string name="home_persistence_subtitle">A hirdetésblokkolás futva tartása a háttérben</string>
+    <string name="home_persistence_settings_unavailable">A VPN-beállítások nem érhetők el ezen az eszközön.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Névjegy</string>
     <string name="about_app_name">AdAway Community</string>

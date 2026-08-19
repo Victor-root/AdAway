@@ -15,6 +15,9 @@
     <string name="home_tile_log">DNS لاگ</string>
     <string name="home_tile_help">مدد</string>
 
+    <string name="home_persistence_subtitle">پس منظر میں اشتہارات کی بلاکنگ جاری رکھیں</string>
+    <string name="home_persistence_settings_unavailable">اس ڈیوائس پر VPN کی ترتیبات دستیاب نہیں ہیں۔</string>
+
     <!-- About tab -->
     <string name="help_tab_about">متعلق</string>
     <string name="about_app_name">AdAway Community</string>

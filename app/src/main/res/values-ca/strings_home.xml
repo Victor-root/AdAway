@@ -58,6 +58,9 @@
     <string name="home_tile_log">Registre DNS</string>
     <string name="home_tile_help">Ajuda</string>
 
+    <string name="home_persistence_subtitle">Mantén el bloqueig d\'anuncis actiu en segon pla</string>
+    <string name="home_persistence_settings_unavailable">La configuració de VPN no està disponible en aquest dispositiu.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Quant a</string>
     <string name="about_app_name">AdAway Community</string>

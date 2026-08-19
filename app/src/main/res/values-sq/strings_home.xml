@@ -29,6 +29,9 @@
     <string name="home_tile_log">Regjistri DNS</string>
     <string name="home_tile_help">Ndihmë</string>
 
+    <string name="home_persistence_subtitle">Mbaje bllokimin e reklamave aktiv në sfond</string>
+    <string name="home_persistence_settings_unavailable">Cilësimet e VPN-së nuk janë të disponueshme në këtë pajisje.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Rreth</string>
     <string name="about_app_name">AdAway Community</string>

@@ -23,6 +23,9 @@
     <string name="home_preferences_subtitle">AdAway mîheng bike</string>
     <string name="home_tile_log">Tomarê DNS</string>
     <string name="home_tile_help">Alîkarî</string>
+
+    <string name="home_persistence_subtitle">Astengkirina reklaman di paşxaneyê de çalak bihêle</string>
+    <string name="home_persistence_settings_unavailable">Mîhengên VPN li ser vê amûrê tune ne.</string>
     <string name="help_tab_about">Derbar</string>
     <string name="about_app_name">AdAway Community</string>
     <string name="about_version">Guherto %s</string>

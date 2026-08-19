@@ -54,6 +54,9 @@
     <string name="home_tile_log">DNS günlüğü</string>
     <string name="home_tile_help">Yardım</string>
 
+    <string name="home_persistence_subtitle">Reklam engellemeyi arka planda çalışır durumda tut</string>
+    <string name="home_persistence_settings_unavailable">VPN ayarları bu cihazda kullanılamıyor.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Hakkında</string>
     <string name="about_app_name">AdAway Community</string>

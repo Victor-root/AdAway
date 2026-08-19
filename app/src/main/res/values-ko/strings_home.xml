@@ -51,6 +51,9 @@
     <string name="home_preferences_subtitle">AdAway 구성</string>
     <string name="home_tile_log">DNS 기록</string>
     <string name="home_tile_help">도움말</string>
+
+    <string name="home_persistence_subtitle">백그라운드에서 광고 차단 유지</string>
+    <string name="home_persistence_settings_unavailable">이 기기에서는 VPN 설정을 사용할 수 없습니다.</string>
     <string name="help_tab_about">정보</string>
     <string name="about_app_name">AdAway Community</string>
     <string name="about_version">버전 %s</string>

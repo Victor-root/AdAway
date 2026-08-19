@@ -58,6 +58,9 @@
     <string name="home_tile_log">DNS-Protokoll</string>
     <string name="home_tile_help">Hilfe</string>
 
+    <string name="home_persistence_subtitle">Werbeblockierung im Hintergrund aktiv halten</string>
+    <string name="home_persistence_settings_unavailable">VPN-Einstellungen sind auf diesem Gerät nicht verfügbar.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Über</string>
     <string name="about_app_name">AdAway Community</string>

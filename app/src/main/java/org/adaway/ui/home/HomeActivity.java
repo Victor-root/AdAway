@@ -37,6 +37,7 @@ import org.adaway.helper.PreferenceHelper;
 import org.adaway.helper.ThemeHelper;
 import org.adaway.model.adblocking.AdBlockMethod;
 import org.adaway.model.error.HostError;
+import org.adaway.ui.dialog.VpnPersistenceDialog;
 import org.adaway.ui.help.HelpActivity;
 import org.adaway.ui.hosts.HostsSourcesActivity;
 import org.adaway.ui.lists.ListsActivity;
@@ -109,7 +110,21 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         checkFirstStep();
+        updatePersistenceCardVisibility();
         UpdateActivity.tryResumePendingInstall(this);
+    }
+
+    /**
+     * Show the VPN persistence card only in VPN mode. Root mode installs the block list into the
+     * system hosts file, which simply stays there: there is no service to keep alive and no
+     * Always-on VPN to pin, so the card would offer nothing to act on.
+     * <p>
+     * Refreshed on every resume rather than once at creation: the method is chosen in the welcome
+     * wizard, which finishes back onto this screen.
+     */
+    private void updatePersistenceCardVisibility() {
+        boolean vpnMode = PreferenceHelper.getAdBlockMethod(this) == VPN;
+        this.binding.content.persistenceCardView.setVisibility(vpnMode ? View.VISIBLE : View.GONE);
     }
 
     private void checkFirstStep() {
@@ -219,6 +234,10 @@ public class HomeActivity extends AppCompatActivity {
         this.binding.content.logCardView.setOnClickListener(this::startDnsLogActivity);
         this.binding.content.helpCardView.setOnClickListener(this::startHelpActivity);
         this.binding.content.preferencesCardView.setOnClickListener(this::startPrefsActivity);
+        // No ADB fallback here, unlike TV: a phone always has the system VPN settings screen,
+        // whereas a fair share of Android TV builds hide it outright.
+        this.binding.content.persistenceCardView.setOnClickListener(v -> VpnPersistenceDialog.show(
+                this, false, R.string.home_persistence_settings_unavailable));
     }
 
     private void bindFab() {

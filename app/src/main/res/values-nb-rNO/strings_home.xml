@@ -26,6 +26,9 @@
     <string name="home_preferences_subtitle">Konfigurer AdAway</string>
     <string name="home_tile_log">DNS-logg</string>
     <string name="home_tile_help">Hjelp</string>
+
+    <string name="home_persistence_subtitle">Hold annonseblokkering i gang i bakgrunnen</string>
+    <string name="home_persistence_settings_unavailable">VPN-innstillinger er ikke tilgjengelige på denne enheten.</string>
     <string name="help_tab_about">Om</string>
     <string name="about_app_name">AdAway Community</string>
     <string name="about_version">Versjon %s</string>

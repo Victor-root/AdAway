@@ -56,6 +56,9 @@
     <string name="home_preferences_subtitle">Skonfiguruj AdAway</string>
     <string name="home_tile_log">Dziennik DNS</string>
     <string name="home_tile_help">Pomoc</string>
+
+    <string name="home_persistence_subtitle">Utrzymuj blokowanie reklam w tle</string>
+    <string name="home_persistence_settings_unavailable">Ustawienia VPN nie są dostępne na tym urządzeniu.</string>
     <string name="help_tab_about">O aplikacji</string>
     <string name="about_app_name">AdAway Community</string>
     <string name="about_version">Wersja %s</string>

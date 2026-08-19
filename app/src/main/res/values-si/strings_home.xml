@@ -29,6 +29,9 @@
     <string name="home_tile_log">DNS ලොගය</string>
     <string name="home_tile_help">උදව්</string>
 
+    <string name="home_persistence_subtitle">පසුබිමින් දැන්වීම් අවහිර කිරීම ක්‍රියාත්මකව තබන්න</string>
+    <string name="home_persistence_settings_unavailable">මෙම උපාංගයේ VPN සැකසුම් ලබා ගත නොහැක.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">පිළිබඳව</string>
     <string name="about_app_name">AdAway Community</string>

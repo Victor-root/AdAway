@@ -52,6 +52,9 @@
     <string name="home_tile_log">DNS பதிவு</string>
     <string name="home_tile_help">உதவி</string>
 
+    <string name="home_persistence_subtitle">பின்னணியில் விளம்பரத் தடுப்பை இயங்க வைக்கவும்</string>
+    <string name="home_persistence_settings_unavailable">இந்தச் சாதனத்தில் VPN அமைப்புகள் கிடைக்கவில்லை.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">பற்றி</string>
     <string name="about_app_name">AdAway Community</string>

@@ -58,6 +58,9 @@
     <string name="home_tile_log">DNS-logg</string>
     <string name="home_tile_help">Hjälp</string>
 
+    <string name="home_persistence_subtitle">Håll annonsblockering igång i bakgrunden</string>
+    <string name="home_persistence_settings_unavailable">VPN-inställningar är inte tillgängliga på den här enheten.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Om</string>
     <string name="about_app_name">AdAway Community</string>

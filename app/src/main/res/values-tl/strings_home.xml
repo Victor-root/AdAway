@@ -29,6 +29,9 @@
     <string name="home_tile_log">Log ng DNS</string>
     <string name="home_tile_help">Tulong</string>
 
+    <string name="home_persistence_subtitle">Panatilihing tumatakbo ang pag-block ng ad sa background</string>
+    <string name="home_persistence_settings_unavailable">Hindi available ang mga setting ng VPN sa device na ito.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Tungkol sa</string>
     <string name="about_app_name">AdAway Community</string>

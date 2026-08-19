@@ -51,6 +51,9 @@
     <string name="home_preferences_subtitle">AdAwayを設定</string>
     <string name="home_tile_log">DNSログ</string>
     <string name="home_tile_help">ヘルプ</string>
+
+    <string name="home_persistence_subtitle">バックグラウンドで広告ブロックを維持する</string>
+    <string name="home_persistence_settings_unavailable">この端末では VPN 設定を利用できません。</string>
     <string name="help_tab_about">情報</string>
     <string name="about_app_name">AdAway Community</string>
     <string name="about_version">バージョン %s</string>

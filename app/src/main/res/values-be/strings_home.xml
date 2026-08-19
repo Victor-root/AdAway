@@ -62,6 +62,9 @@
     <string name="home_tile_log">Журнал DNS</string>
     <string name="home_tile_help">Даведка</string>
 
+    <string name="home_persistence_subtitle">Захоўваць блакіроўку рэкламы актыўнай у фоне</string>
+    <string name="home_persistence_settings_unavailable">Налады VPN недаступныя на гэтай прыладзе.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Пра праграму</string>
     <string name="about_app_name">AdAway Community</string>

@@ -29,6 +29,9 @@
     <string name="home_tile_log">DNS-protokolo</string>
     <string name="home_tile_help">Helpo</string>
 
+    <string name="home_persistence_subtitle">Teni la reklamblokadon aktiva en la fono</string>
+    <string name="home_persistence_settings_unavailable">VPN-agordoj ne disponeblas sur ĉi tiu aparato.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Pri</string>
     <string name="about_app_name">AdAway Community</string>

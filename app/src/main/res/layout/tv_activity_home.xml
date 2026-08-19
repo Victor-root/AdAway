@@ -274,6 +274,12 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="16dp">
 
+                <!--
+                    Hidden by default and only shown in VPN mode, from
+                    TvHomeActivity.updatePersistenceVisibility(): root mode has no VPN to keep
+                    alive. Every explicit D-pad link aimed here is re-pointed at the theme card
+                    when it is hidden, in applyBottomRowFocus().
+                -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/btn_persistence"
                     style="@style/Widget.AdAway.TvHomeCard"
@@ -282,7 +288,9 @@
                     android:layout_marginEnd="10dp"
                     android:focusable="true"
                     android:nextFocusUp="@id/btn_toggle"
-                    android:nextFocusRight="@id/btn_theme">
+                    android:nextFocusRight="@id/btn_theme"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="wrap_content"

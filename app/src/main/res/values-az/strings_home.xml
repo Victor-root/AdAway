@@ -29,6 +29,9 @@
     <string name="home_tile_log">DNS jurnalı</string>
     <string name="home_tile_help">Kömək</string>
 
+    <string name="home_persistence_subtitle">Reklam bloklamasını arxa planda aktiv saxlayın</string>
+    <string name="home_persistence_settings_unavailable">VPN parametrləri bu cihazda mövcud deyil.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Haqqında</string>
     <string name="about_app_name">AdAway Community</string>

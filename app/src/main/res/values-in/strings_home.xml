@@ -56,6 +56,9 @@
     <string name="home_tile_log">Log DNS</string>
     <string name="home_tile_help">Bantuan</string>
 
+    <string name="home_persistence_subtitle">Menjaga pemblokiran iklan tetap aktif di latar belakang</string>
+    <string name="home_persistence_settings_unavailable">Pengaturan VPN tidak tersedia di perangkat ini.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Tentang</string>
     <string name="about_app_name">AdAway Community</string>

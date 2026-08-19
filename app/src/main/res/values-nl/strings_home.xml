@@ -52,6 +52,9 @@
     <string name="home_preferences_subtitle">AdAway configureren</string>
     <string name="home_tile_log">DNS-logboek</string>
     <string name="home_tile_help">Help</string>
+
+    <string name="home_persistence_subtitle">Advertentieblokkering op de achtergrond actief houden</string>
+    <string name="home_persistence_settings_unavailable">VPN-instellingen zijn niet beschikbaar op dit apparaat.</string>
     <string name="help_tab_about">Over</string>
     <string name="about_app_name">AdAway Community</string>
     <string name="about_version">Versie %s</string>

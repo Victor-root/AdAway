@@ -14,6 +14,9 @@
     <string name="home_preferences_subtitle">Konfigurasikan AdAway</string>
     <string name="home_tile_log">Log DNS</string>
     <string name="home_tile_help">Bantuan</string>
+
+    <string name="home_persistence_subtitle">Kekalkan sekatan iklan berjalan di latar belakang</string>
+    <string name="home_persistence_settings_unavailable">Tetapan VPN tidak tersedia pada peranti ini.</string>
     <string name="help_tab_about">Perihal</string>
     <string name="about_app_name">AdAway Community</string>
     <string name="about_version">Versi %s</string>

@@ -28,6 +28,9 @@
     <string name="home_tile_log">DNS یادښت</string>
     <string name="home_tile_help">مرسته</string>
 
+    <string name="home_persistence_subtitle">د اعلاناتو بندول په شاليد کې فعال وساتئ</string>
+    <string name="home_persistence_settings_unavailable">د VPN تنظیمات پدې وسیله کې شتون نلري.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">په اړه</string>
     <string name="about_app_name">AdAway Community</string>

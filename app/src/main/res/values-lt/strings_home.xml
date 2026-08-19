@@ -51,6 +51,9 @@
     <string name="home_preferences_subtitle">Konfigūruoti AdAway</string>
     <string name="home_tile_log">DNS žurnalas</string>
     <string name="home_tile_help">Pagalba</string>
+
+    <string name="home_persistence_subtitle">Palikti reklamų blokavimą veikti fone</string>
+    <string name="home_persistence_settings_unavailable">VPN nustatymai šiame įrenginyje nepasiekiami.</string>
     <string name="help_tab_about">Apie</string>
     <string name="about_app_name">AdAway Community</string>
     <string name="about_version">Versija %s</string>

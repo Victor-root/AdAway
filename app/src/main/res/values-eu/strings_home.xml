@@ -58,6 +58,9 @@
     <string name="home_tile_log">DNS erregistroa</string>
     <string name="home_tile_help">Laguntza</string>
 
+    <string name="home_persistence_subtitle">Mantendu iragarkien blokeoa aktibo atzeko planoan</string>
+    <string name="home_persistence_settings_unavailable">VPN ezarpenak ez daude erabilgarri gailu honetan.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Honi buruz</string>
     <string name="about_app_name">AdAway Community</string>

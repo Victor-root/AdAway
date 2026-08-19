@@ -47,6 +47,9 @@
     <string name="home_tile_log">DNS-logi</string>
     <string name="home_tile_help">Abi</string>
 
+    <string name="home_persistence_subtitle">Hoia reklaamide blokeerimine taustal töös</string>
+    <string name="home_persistence_settings_unavailable">VPN-i seaded ei ole selles seadmes saadaval.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Teave</string>
     <string name="about_app_name">AdAway Community</string>

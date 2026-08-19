@@ -38,6 +38,9 @@
     <string name="home_tile_log">Journal DNS</string>
     <string name="home_tile_help">Aide</string>
 
+    <string name="home_persistence_subtitle">Maintenir le blocage actif en arrière-plan</string>
+    <string name="home_persistence_settings_unavailable">Les réglages VPN ne sont pas accessibles sur cet appareil.</string>
+
     <!-- Project card -->
     <string name="project_label">Ouvrir la page GitHub</string>
 

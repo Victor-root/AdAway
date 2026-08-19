@@ -58,6 +58,9 @@
     <string name="home_tile_log">Αρχείο DNS</string>
     <string name="home_tile_help">Βοήθεια</string>
 
+    <string name="home_persistence_subtitle">Διατήρηση του αποκλεισμού διαφημίσεων ενεργού στο παρασκήνιο</string>
+    <string name="home_persistence_settings_unavailable">Οι ρυθμίσεις VPN δεν είναι διαθέσιμες σε αυτή τη συσκευή.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Σχετικά</string>
     <string name="about_app_name">AdAway Community</string>

@@ -62,6 +62,9 @@
     <string name="home_tile_log">Dnevnik DNS</string>
     <string name="home_tile_help">Pomoč</string>
 
+    <string name="home_persistence_subtitle">Ohrani blokiranje oglasov dejavno v ozadju</string>
+    <string name="home_persistence_settings_unavailable">Nastavitve VPN v tej napravi niso na voljo.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">O programu</string>
     <string name="about_app_name">AdAway Community</string>

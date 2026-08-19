@@ -62,6 +62,9 @@
     <string name="home_tile_log">Журнал DNS</string>
     <string name="home_tile_help">Справка</string>
 
+    <string name="home_persistence_subtitle">Поддерживать блокировку рекламы в фоновом режиме</string>
+    <string name="home_persistence_settings_unavailable">Настройки VPN недоступны на этом устройстве.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">О приложении</string>
     <string name="about_app_name">AdAway Community</string>

@@ -19,6 +19,9 @@
     <string name="home_tile_log">DNS लग</string>
     <string name="home_tile_help">मद्दत</string>
 
+    <string name="home_persistence_subtitle">पृष्ठभूमिमा विज्ञापन ब्लक गर्ने सुविधा चालू राख्नुहोस्</string>
+    <string name="home_persistence_settings_unavailable">यस उपकरणमा VPN सेटिङहरू उपलब्ध छैनन्।</string>
+
     <!-- About tab -->
     <string name="help_tab_about">बारेमा</string>
     <string name="about_app_name">AdAway Community</string>

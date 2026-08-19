@@ -54,6 +54,9 @@
     <string name="home_tile_log">Jurnal DNS</string>
     <string name="home_tile_help">Ajutor</string>
 
+    <string name="home_persistence_subtitle">Menține blocarea reclamelor activă în fundal</string>
+    <string name="home_persistence_settings_unavailable">Setările VPN nu sunt disponibile pe acest dispozitiv.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Despre</string>
     <string name="about_app_name">AdAway Community</string>

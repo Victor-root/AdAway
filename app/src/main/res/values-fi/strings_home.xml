@@ -58,6 +58,9 @@
     <string name="home_tile_log">DNS-loki</string>
     <string name="home_tile_help">Ohje</string>
 
+    <string name="home_persistence_subtitle">Pidä mainosten esto käynnissä taustalla</string>
+    <string name="home_persistence_settings_unavailable">VPN-asetukset eivät ole käytettävissä tässä laitteessa.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Tietoja</string>
     <string name="about_app_name">AdAway Community</string>

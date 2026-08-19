@@ -29,6 +29,9 @@
     <string name="home_tile_log">DNS লগ</string>
     <string name="home_tile_help">সহায়তা</string>
 
+    <string name="home_persistence_subtitle">ব্যাকগ্রাউন্ডে বিজ্ঞাপন ব্লকিং চালু রাখুন</string>
+    <string name="home_persistence_settings_unavailable">এই ডিভাইসে VPN সেটিংস উপলব্ধ নয়।</string>
+
     <!-- About tab -->
     <string name="help_tab_about">সম্পর্কে</string>
     <string name="about_app_name">AdAway Community</string>

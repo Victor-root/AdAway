@@ -58,6 +58,9 @@
     <string name="home_tile_log">گزارش DNS</string>
     <string name="home_tile_help">راهنما</string>
 
+    <string name="home_persistence_subtitle">مسدودسازی تبلیغات را در پس‌زمینه فعال نگه دارید</string>
+    <string name="home_persistence_settings_unavailable">تنظیمات VPN روی این دستگاه در دسترس نیست.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">درباره</string>
     <string name="about_app_name">AdAway Community</string>

@@ -52,6 +52,9 @@
     <string name="home_tile_log">Nhật ký DNS</string>
     <string name="home_tile_help">Trợ giúp</string>
 
+    <string name="home_persistence_subtitle">Giữ cho tính năng chặn quảng cáo chạy nền</string>
+    <string name="home_persistence_settings_unavailable">Cài đặt VPN không khả dụng trên thiết bị này.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Giới thiệu</string>
     <string name="about_app_name">AdAway Community</string>

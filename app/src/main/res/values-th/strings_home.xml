@@ -22,6 +22,9 @@
     <string name="home_tile_log">บันทึก DNS</string>
     <string name="home_tile_help">ช่วยเหลือ</string>
 
+    <string name="home_persistence_subtitle">ให้การบล็อกโฆษณาทำงานต่อในเบื้องหลัง</string>
+    <string name="home_persistence_settings_unavailable">การตั้งค่า VPN ไม่พร้อมใช้งานบนอุปกรณ์นี้</string>
+
     <!-- About tab -->
     <string name="help_tab_about">เกี่ยวกับ</string>
     <string name="about_app_name">AdAway Community</string>

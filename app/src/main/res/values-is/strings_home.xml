@@ -22,6 +22,9 @@
     <string name="home_preferences_subtitle">Stilltu AdAway</string>
     <string name="home_tile_log">DNS-annáll</string>
     <string name="home_tile_help">Hjálp</string>
+
+    <string name="home_persistence_subtitle">Halda auglýsingalokun virkri í bakgrunni</string>
+    <string name="home_persistence_settings_unavailable">VPN-stillingar eru ekki tiltækar á þessu tæki.</string>
     <string name="help_tab_about">Um</string>
     <string name="about_app_name">AdAway Community</string>
     <string name="about_version">Útgáfa %s</string>

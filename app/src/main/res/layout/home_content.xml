@@ -715,6 +715,77 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <!--
+                ====================== VPN persistence ======================
+                Full width below the tile row rather than a fourth tile in it: the three tiles
+                already share one row and a fourth would squeeze every label. Opens the same
+                dialog the TV home screen has had, which is where the Always-on VPN shortcut
+                lives - the one recovery path that survives a force-stop, and until now
+                unreachable anywhere on mobile.
+
+                Hidden by default and only shown in VPN mode, from
+                HomeActivity.updatePersistenceCardVisibility(): root mode has no VPN to keep
+                alive at all. Defaulting to gone rather than visible so a root install never
+                renders it, not even for the frame before onResume runs.
+            -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/persistenceCardView"
+                style="@style/Widget.AdAway.HomeCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/persistenceImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_circle"
+                        android:backgroundTint="@color/pastelGreenBg"
+                        android:contentDescription="@null"
+                        android:padding="12dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_vpn_key_24dp"
+                        app:tint="@color/pastelGreenFg" />
+
+                    <TextView
+                        android:id="@+id/persistenceTitleTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/vpn_persistence_title"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/persistenceSubtitleTextView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/persistenceImageView"
+                        app:layout_constraintTop_toTopOf="@+id/persistenceImageView"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <TextView
+                        android:id="@+id/persistenceSubtitleTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/home_persistence_subtitle"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                        android:textColor="@color/homeCardSubtitle"
+                        app:layout_constraintBottom_toBottomOf="@+id/persistenceImageView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/persistenceImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/persistenceTitleTextView" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>

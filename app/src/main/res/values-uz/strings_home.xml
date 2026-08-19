@@ -15,6 +15,9 @@
     <string name="home_tile_log">DNS jurnali</string>
     <string name="home_tile_help">Yordam</string>
 
+    <string name="home_persistence_subtitle">Reklama blokirovkasini fonda ishlab turishini ta\'minlang</string>
+    <string name="home_persistence_settings_unavailable">Bu qurilmada VPN sozlamalari mavjud emas.</string>
+
     <!-- About tab -->
     <string name="help_tab_about">Ilova haqida</string>
     <string name="about_app_name">AdAway Community</string>
