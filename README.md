@@ -39,6 +39,14 @@ This fork is **not affiliated with, endorsed by, or signed by** the official AdA
 
 ---
 
+## 📥 Download and updates
+
+<p align="center">
+  <a href="https://victor-root.github.io/Omnify/add.html?url=https%3A%2F%2Fgithub.com%2FVictor-root%2FAdAway-Community"><img src="https://victor-root.github.io/Omnify/assets/get-it-on-omnify.svg" alt="Get it on Omnify"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/Victor-root/AdAway-Community/releases"><img src="docs/badges/get-it-on-github.svg" alt="Get it on GitHub"/></a>
+</p>
+
+---
+
 ## 🚀 Why this fork exists
 
 AdAway is a great project with a long history, but upstream release and review activity has been limited for a while.
@@ -143,34 +151,6 @@ Known points where more feedback is useful:
 - DNS monitor behavior on TV;
 - host sources screen usability on TV;
 - Ethernet behavior on Android TV boxes.
-
----
-
-## ⬆️ Updating AdAway Community
-
-There are three ways to update AdAway Community:
-
-### 1. Built-in updater
-
-AdAway Community can check for new releases directly from the app.
-
-When an update is available, follow the update prompt to download and install it without having to visit GitHub manually.
-
-### 2. Omnify
-
-[<img src="docs/badges/get-it-on-omnify.svg" alt="Get it on Omnify" height="56">](https://victor-root.github.io/Omnify/)
-
-Omnify can add AdAway Community directly from its GitHub repository, track new releases and offer future updates alongside the rest of your apps.
-
-You can also open this repository in your browser, tap **Share**, and choose **Omnify** to pre-fill the repository automatically.
-
-### 3. Manual download from GitHub
-
-Download the latest APK from the [Releases page](https://github.com/Victor-root/AdAway-Community/releases) and install it over your current AdAway Community installation.
-
-All Community releases are signed with the same signing key, so future updates keep your existing settings and data.
-
-The first time you install an APK through your browser, file manager or Omnify, Android may ask you to allow that app to install unknown applications.
 
 ---
 
