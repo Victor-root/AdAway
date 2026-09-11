@@ -73,6 +73,11 @@ public class WebServerUtils {
      */
     public static void startWebServer(Context context) {
         Timber.d("Starting web server…");
+        // The web server runs as a detached root process, so it survives an app update or
+        // reinstall: a stale instance from a previous install can still be holding the ports,
+        // which makes the freshly started one fail to bind them. Clear it first so the new
+        // process is the one actually listening.
+        killBundledExecutable(WEB_SERVER_EXECUTABLE);
 
         Path resourcePath = context.getFilesDir().toPath().resolve(WEB_SERVER_EXECUTABLE);
         inflateResources(context, resourcePath);
@@ -115,8 +120,10 @@ public class WebServerUtils {
                     R.string.pref_webserver_state_running_and_installed :
                     R.string.pref_webserver_state_not_running;
         } catch (SSLHandshakeException e) {
+            Timber.d(e, "Web server test failed with a TLS handshake error.");
             return R.string.pref_webserver_state_running_not_installed;
         } catch (ConnectException e) {
+            Timber.d(e, "Web server test failed to connect.");
             return R.string.pref_webserver_state_not_running;
         } catch (IOException e) {
             Timber.w(e, "Failed to test web server.");
