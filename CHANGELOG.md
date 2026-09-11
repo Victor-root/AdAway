@@ -1,5 +1,21 @@
 # 📋 Changelog
 
+## [6.6.1-c] - 2026-09-11
+
+### 🐛 Fixed
+
+* 🔐 Fix web server certificate installation failing with "you need a private key" error
+* 🔀 Fix the web server switch not staying checked when toggled
+* 🗂️ Fix the web server serving stale bundled resources (certificate included) after an app update
+* 🔌 Fix the web server not starting on first activation after being freshly toggled on
+* ✅ Fix the welcome screen reporting sync as done before it actually finished
+* ⏳ Ask before leaving the welcome sync step early instead of hard-blocking "Next"
+
+### 🔄 Changed
+
+* Disable the web server by default
+* Complete translations for this release's new strings
+
 ## [6.6.0-c] - 2026-08-19
 
 ### ➕ Added
