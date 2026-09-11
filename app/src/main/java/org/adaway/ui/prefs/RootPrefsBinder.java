@@ -213,17 +213,31 @@ final class RootPrefsBinder {
         // Start web server when preference is enabled
         SwitchPreferenceCompat webServerEnabledPref = require(R.string.pref_webserver_enabled_key);
         webServerEnabledPref.setOnPreferenceChangeListener((preference, newValue) -> {
-            if (newValue.equals(true)) {
-                // Start web server
+            boolean enabled = newValue.equals(true);
+            if (enabled) {
                 startWebServer(context);
-                updateWebServerState();
-                return isWebServerRunning();
             } else {
-                // Stop web server
                 stopWebServer();
-                updateWebServerState();
-                return !isWebServerRunning();
             }
+            updateWebServerState();
+            // The web server binary is started or killed in a background shell command, so it
+            // needs a moment before it actually shows up (or disappears) from the process list.
+            // Accept the switch change right away and correct it afterwards if the process
+            // never reached the expected state, instead of checking synchronously here and
+            // rejecting a change that simply hasn't happened yet.
+            AppExecutors executors = AppExecutors.getInstance();
+            executors.networkIO().execute(() -> {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                boolean running = isWebServerRunning();
+                if (running != enabled) {
+                    executors.mainThread().execute(() -> webServerEnabledPref.setChecked(running));
+                }
+            });
+            return true;
         });
     }
 

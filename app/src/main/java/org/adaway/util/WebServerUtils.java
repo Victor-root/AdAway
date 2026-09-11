@@ -40,6 +40,7 @@ import java.io.OutputStream;
 import java.net.ConnectException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import javax.net.ssl.SSLHandshakeException;
 import javax.security.cert.CertificateException;
@@ -185,8 +186,12 @@ public class WebServerUtils {
             Files.createDirectories(target);
         }
         Path targetFile = target.resolve(resource);
-        if (!Files.isRegularFile(targetFile)) {
-            Files.copy(assetManager.open(resource), targetFile);
+        // Always mirror the current app assets: these files are never user data, only ever
+        // ship in the APK, and skipping the copy when a stale one is already on disk (e.g. from
+        // an older app version) would keep serving that stale copy forever, certificate
+        // included.
+        try (InputStream inputStream = assetManager.open(resource)) {
+            Files.copy(inputStream, targetFile, StandardCopyOption.REPLACE_EXISTING);
         }
     }
 }
