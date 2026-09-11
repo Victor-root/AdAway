@@ -41,6 +41,10 @@
     <string name="welcome_sync_retry_logo">Reintentar la sincronización</string>
     <string name="welcome_sync_error">Error al sincronizar: %1$s ¿Reintentar ahora?</string>
     <string name="welcome_sync_notifications">Puedes enviar notificaciones para mostrar el estado y el control del bloqueo de anuncios, y para notificar sobre las actualizaciones disponibles de la aplicación (unas pocas al año). Habilítalas si quieres estar actualizado.</string>
+    <string name="welcome_sync_leave_early_title">La sincronización aún no ha terminado</string>
+    <string name="welcome_sync_leave_early_message">La descarga de las listas de bloqueo aún no ha terminado. Puedes continuar ahora y seguirá en segundo plano, o esperar aquí hasta que termine.</string>
+    <string name="welcome_sync_leave_early_wait">Esperar</string>
+    <string name="welcome_sync_leave_early_continue">Continuar de todos modos</string>
 
     <!-- Support -->
 

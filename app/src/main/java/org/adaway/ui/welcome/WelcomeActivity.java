@@ -122,6 +122,11 @@ public class WelcomeActivity extends AppCompatActivity implements WelcomeNavigab
 
     private void goNext() {
         int currentItem = this.binding.viewPager.getCurrentItem();
+        WelcomeFragment currentFragment = this.pagerAdapter.createFragment(currentItem);
+        currentFragment.requestLeave(() -> advanceFrom(currentItem));
+    }
+
+    private void advanceFrom(int currentItem) {
         int count = this.pagerAdapter.getItemCount();
         if (currentItem >= count - 1) {
             startHomeActivity();
@@ -130,7 +135,8 @@ public class WelcomeActivity extends AppCompatActivity implements WelcomeNavigab
         currentItem++;
         this.binding.viewPager.setCurrentItem(currentItem);
         allowBack();
-        if (this.pagerAdapter.createFragment(currentItem).canGoNext()) {
+        WelcomeFragment nextFragment = this.pagerAdapter.createFragment(currentItem);
+        if (nextFragment.canGoNext() || !nextFragment.shouldHideNextWhileBlocked()) {
             allowNext();
         } else {
             blockNext();

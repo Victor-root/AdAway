@@ -41,6 +41,10 @@
     <string name="welcome_sync_retry_logo">Επανάληψη συγχρονισμού</string>
     <string name="welcome_sync_error">Αποτυχία συγχρονισμού: %1$s Επανάληψη τώρα;</string>
     <string name="welcome_sync_notifications">Μπορεί να στείλει ειδοποιήσεις για προβολή της κατάστασης και έλεγχο του μπλοκαρίσματος διαφημίσεων και να σας ειδοποιήσει εάν υπάρξει διαθέσιμη ενημέρωση εφαρμογής (λίγες ανά έτος). Ενεργοποιήστε το εάν θέλετε να παραμείνετε ενημερωμένοι.</string>
+    <string name="welcome_sync_leave_early_title">Ο συγχρονισμός δεν έχει ολοκληρωθεί ακόμα</string>
+    <string name="welcome_sync_leave_early_message">Η λήψη των λιστών αποκλεισμού δεν έχει ολοκληρωθεί. Μπορείτε να συνεχίσετε τώρα και θα συνεχιστεί στο παρασκήνιο, ή να περιμένετε εδώ μέχρι να ολοκληρωθεί.</string>
+    <string name="welcome_sync_leave_early_wait">Αναμονή</string>
+    <string name="welcome_sync_leave_early_continue">Συνέχεια ούτως ή άλλως</string>
 
     <!-- Support -->
 

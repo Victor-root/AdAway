@@ -41,6 +41,10 @@
     <string name="welcome_sync_retry_logo">دوباره همگام سازی کنید</string>
     <string name="welcome_sync_error">همگام‌ سازی انجام نشد : %1$s آیا دوباره امتحان می‌کنید؟</string>
     <string name="welcome_sync_notifications">این گزینه اعلان‌ هایی را برای نمایش وضعیت مسدود کردن تبلیغات و مدیریت و اطلاع‌ رسانی در مورد به‌ روز رسانی برنامه (تا چندین سال) ارسال کند اگر می‌خواهید به‌ روز بمانید آن‌ها را فعال کنید</string>
+    <string name="welcome_sync_leave_early_title">همگام‌سازی هنوز تمام نشده است</string>
+    <string name="welcome_sync_leave_early_message">دانلود لیست‌های مسدودسازی هنوز تمام نشده است. می‌توانید اکنون ادامه دهید و در پس‌زمینه ادامه می‌یابد، یا اینجا منتظر بمانید تا تمام شود.</string>
+    <string name="welcome_sync_leave_early_wait">منتظر بمانید</string>
+    <string name="welcome_sync_leave_early_continue">در هر صورت ادامه بده</string>
 
     <!-- Support -->
 

@@ -41,6 +41,10 @@
     <string name="welcome_sync_retry_logo">重新同步</string>
     <string name="welcome_sync_error">同步失败：%1$s 立即重试吗？</string>
     <string name="welcome_sync_notifications">它可以发送通知展示广告拦截状态和控制，并提示可用的应用更新（每年几次）。如你想保持最新版本，请启用它们。</string>
+    <string name="welcome_sync_leave_early_title">同步尚未完成</string>
+    <string name="welcome_sync_leave_early_message">屏蔽列表尚未下载完成。您可以现在继续，它将在后台继续进行，或者在此等待完成。</string>
+    <string name="welcome_sync_leave_early_wait">等待</string>
+    <string name="welcome_sync_leave_early_continue">仍然继续</string>
 
     <!-- Support -->
 

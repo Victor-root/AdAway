@@ -41,6 +41,10 @@
     <string name="welcome_sync_retry_logo">נסה סנכרון מחדש</string>
     <string name="welcome_sync_error">סנכרון נכשל: %1$s לנסות כעת?</string>
     <string name="welcome_sync_notifications">היישום יכול לשלוח התראות להצגת מצב ושליטה בחסימת פרסומות, וכן להודיע על עדכוני אפליקציה זמינים (כמה פעמים בשנה). הפעל התראות אלו אם ברצונך להישאר מעודכן.</string>
+    <string name="welcome_sync_leave_early_title">הסנכרון עדיין לא הסתיים</string>
+    <string name="welcome_sync_leave_early_message">הורדת רשימות החסימה עדיין לא הסתיימה. תוכל להמשיך עכשיו והיא תמשיך ברקע, או להמתין כאן עד לסיומה.</string>
+    <string name="welcome_sync_leave_early_wait">המתן</string>
+    <string name="welcome_sync_leave_early_continue">המשך בכל זאת</string>
 
     <!-- Support -->
 

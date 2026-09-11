@@ -43,6 +43,10 @@
     <string name="welcome_sync_retry_logo">Retry sync</string>
     <string name="welcome_sync_error">Failed to sync: %1$s Retry now?</string>
     <string name="welcome_sync_notifications">It can send notifications to display ad block status and control, and to notify about available app update (a few per year). Enable them if you want to stay up-to-date.</string>
+    <string name="welcome_sync_leave_early_title">Sync not finished yet</string>
+    <string name="welcome_sync_leave_early_message">The block lists haven\'t finished downloading. You can continue now and it will keep going in the background, or wait here until it\'s done.</string>
+    <string name="welcome_sync_leave_early_wait">Wait</string>
+    <string name="welcome_sync_leave_early_continue">Continue anyway</string>
 
     <!-- Battery optimization step (standard Android Doze exemption) -->
     <string name="welcome_battery_header">Stay protected in the background</string>

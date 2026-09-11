@@ -41,6 +41,10 @@
     <string name="welcome_sync_retry_logo">Tentar sincronização novamente</string>
     <string name="welcome_sync_error">Falha ao sincronizar: %1$s Tentar novamente?</string>
     <string name="welcome_sync_notifications">Pode enviar notificações para exibir o estado e o controle do bloqueio de anúncios e notificar sobre atualizações disponíveis para a aplicação (algumas por ano). Ativa-as se quiseres manter-te atualizado(a).</string>
+    <string name="welcome_sync_leave_early_title">A sincronização ainda não terminou</string>
+    <string name="welcome_sync_leave_early_message">A transferência das listas de bloqueio ainda não terminou. Podes continuar agora e ela continuará em segundo plano, ou esperar aqui até terminar.</string>
+    <string name="welcome_sync_leave_early_wait">Esperar</string>
+    <string name="welcome_sync_leave_early_continue">Continuar mesmo assim</string>
 
     <!-- Support -->
 

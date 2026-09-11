@@ -43,6 +43,10 @@
     <string name="welcome_sync_retry_logo">Essayer de resynchroniser</string>
     <string name="welcome_sync_error">Échec de synchronisation : %1$s Réessayer maintenant ?</string>
     <string name="welcome_sync_notifications">Peut envoyer des notifications pour afficher l’état et le contrôle du blocage des publicités et vous signaler la présence de mise à jour de l’appli (quelques fois par an). Activez-les si vous voulez rester à jour.</string>
+    <string name="welcome_sync_leave_early_title">Synchronisation pas encore terminée</string>
+    <string name="welcome_sync_leave_early_message">Le téléchargement des listes de blocage n’est pas terminé. Vous pouvez continuer maintenant, il se poursuivra en arrière-plan, ou rester ici jusqu’à ce que ce soit fini.</string>
+    <string name="welcome_sync_leave_early_wait">Attendre</string>
+    <string name="welcome_sync_leave_early_continue">Continuer quand même</string>
 
     <!-- Support -->
 

@@ -41,6 +41,10 @@
     <string name="welcome_sync_retry_logo">Riprova sincronizzazione</string>
     <string name="welcome_sync_error">Sincronizzazione fallita: %1$s Vuoi riprovare adesso?</string>
     <string name="welcome_sync_notifications">Può inviare notifiche per mostrare lo stato e i controlli del blocco pubblicità, e per segnalare la disponibilità di aggiornamenti dell\'app (poche volte all\'anno). Abilitale se vuoi rimanere aggiornato.</string>
+    <string name="welcome_sync_leave_early_title">Sincronizzazione non ancora terminata</string>
+    <string name="welcome_sync_leave_early_message">Il download delle liste di blocco non è ancora terminato. Puoi continuare ora e proseguirà in background, oppure aspettare qui finché non sarà completato.</string>
+    <string name="welcome_sync_leave_early_wait">Aspetta</string>
+    <string name="welcome_sync_leave_early_continue">Continua comunque</string>
 
     <!-- Support -->
 

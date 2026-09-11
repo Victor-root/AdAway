@@ -36,6 +36,10 @@
     <string name="welcome_sync_retry_logo">أعد محاولة المزامنة</string>
     <string name="welcome_sync_error">فشل مزامنة: %1$s إعادة المحاولة الآن</string>
     <string name="welcome_sync_notifications">يمكنه إرسال إشعارات لعرض حالة حظر الإعلانات والتحكم فيها، وإعلامك بتحديث التطبيق المتاح (عدد قليل في السنة). قم بتمكينها إذا كنت ترغب في البقاء على اطلاع دائم.</string>
+    <string name="welcome_sync_leave_early_title">المزامنة لم تنته بعد</string>
+    <string name="welcome_sync_leave_early_message">لم يكتمل تنزيل قوائم الحظر بعد. يمكنك المتابعة الآن وستستمر في الخلفية، أو الانتظار هنا حتى الانتهاء.</string>
+    <string name="welcome_sync_leave_early_wait">انتظار</string>
+    <string name="welcome_sync_leave_early_continue">المتابعة على أي حال</string>
 
     <!-- Support -->
 

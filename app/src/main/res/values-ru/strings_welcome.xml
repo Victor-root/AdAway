@@ -36,6 +36,10 @@
     <string name="welcome_sync_retry_logo">Повторить синхронизацию</string>
     <string name="welcome_sync_error">Ошибка синхронизации: %1$s Повторить сейчас?</string>
     <string name="welcome_sync_notifications">Это поможет отправлять уведомления для отображения статуса блокировки рекламы и управления, а также уведомит, когда будет доступно обновление приложения (несколько раз в год). Включите, если хотите быть в курсе событий.</string>
+    <string name="welcome_sync_leave_early_title">Синхронизация ещё не завершена</string>
+    <string name="welcome_sync_leave_early_message">Загрузка списков блокировки ещё не завершена. Вы можете продолжить сейчас, и она продолжится в фоновом режиме, или подождать здесь, пока она не завершится.</string>
+    <string name="welcome_sync_leave_early_wait">Подождать</string>
+    <string name="welcome_sync_leave_early_continue">Всё равно продолжить</string>
 
     <!-- Support -->
 

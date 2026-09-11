@@ -42,6 +42,10 @@
     <string name="welcome_sync_error">81%match
 Het synchroniseren is mislukt: %1$s Wilt u het opnieuw proberen?</string>
     <string name="welcome_sync_notifications">Het kan notificaties sturen om de blokkeerstatus te laten zien en te controleren, je op de hoogte stellen van een bestaande app update (een paar per jaar). Schakel in als je up-to-date wilt blijven.</string>
+    <string name="welcome_sync_leave_early_title">Synchronisatie nog niet klaar</string>
+    <string name="welcome_sync_leave_early_message">Het downloaden van de blokkeerlijsten is nog niet klaar. Je kunt nu doorgaan, het gaat op de achtergrond verder, of hier wachten tot het klaar is.</string>
+    <string name="welcome_sync_leave_early_wait">Wachten</string>
+    <string name="welcome_sync_leave_early_continue">Toch doorgaan</string>
 
     <!-- Support -->
 

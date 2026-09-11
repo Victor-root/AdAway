@@ -36,6 +36,10 @@
     <string name="welcome_sync_retry_logo">Ponovi sinhronizacijo</string>
     <string name="welcome_sync_error">Sinhronizacija %1$s ni uspela: Želite poskusiti znova?</string>
     <string name="welcome_sync_notifications">Pošilja lahko obvestila prikaza stanja in nadzora zaviranja oglasov ter za obveščanje o razpoložljivih posodobitvah aplikacije (nekaj na leto). Omogočite jih, če želite biti na tekočem.</string>
+    <string name="welcome_sync_leave_early_title">Sinhronizacija še ni končana</string>
+    <string name="welcome_sync_leave_early_message">Prenos seznamov za blokiranje še ni končan. Lahko nadaljujete zdaj in se bo nadaljeval v ozadju, ali pa počakate tukaj, dokler ne bo končan.</string>
+    <string name="welcome_sync_leave_early_wait">Počakaj</string>
+    <string name="welcome_sync_leave_early_continue">Vseeno nadaljuj</string>
 
     <!-- Support -->
 

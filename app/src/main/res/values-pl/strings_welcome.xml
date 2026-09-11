@@ -36,6 +36,10 @@
     <string name="welcome_sync_retry_logo">Ponów synchronizację</string>
     <string name="welcome_sync_error">Błąd synchronizacji: %1$s Powtórzyć? </string>
     <string name="welcome_sync_notifications">Może wyświetlać powiadomienia o statusie AdAway i jego ustawieniach oraz informować o dostępnych aktualizacjach aplikacji (kilka w ciągu roku). Włącz, aby być na bieżąco.</string>
+    <string name="welcome_sync_leave_early_title">Synchronizacja jeszcze się nie zakończyła</string>
+    <string name="welcome_sync_leave_early_message">Pobieranie list blokowania jeszcze się nie zakończyło. Możesz kontynuować teraz, a pobieranie będzie kontynuowane w tle, albo poczekać tutaj, aż się zakończy.</string>
+    <string name="welcome_sync_leave_early_wait">Czekaj</string>
+    <string name="welcome_sync_leave_early_continue">Kontynuuj mimo to</string>
 
     <!-- Support -->
 

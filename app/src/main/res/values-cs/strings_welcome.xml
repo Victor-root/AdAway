@@ -36,6 +36,10 @@
     <string name="welcome_sync_retry_logo">Opakovat synchonizaci</string>
     <string name="welcome_sync_error">Selhala synchronizace: %1$s Opakovat nyní?</string>
     <string name="welcome_sync_notifications">Může zasílat oznámení k zobrazení stavu blokování reklam a ovládání, zznamovat nové aktualizace aplikace (několikrát ročně). Povolte je, pokud chcete zůstat informováni.</string>
+    <string name="welcome_sync_leave_early_title">Synchronizace ještě neskončila</string>
+    <string name="welcome_sync_leave_early_message">Stahování seznamů blokování ještě neskončilo. Můžete pokračovat nyní a stahování bude pokračovat na pozadí, nebo počkat zde, dokud nebude hotovo.</string>
+    <string name="welcome_sync_leave_early_wait">Počkat</string>
+    <string name="welcome_sync_leave_early_continue">Pokračovat i tak</string>
 
     <!-- Support -->
 

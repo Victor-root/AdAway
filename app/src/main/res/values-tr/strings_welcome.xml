@@ -36,6 +36,10 @@
     <string name="welcome_sync_retry_logo">Eşitlemeyi tekrar dene</string>
     <string name="welcome_sync_error">%1$ssenkronize edilemedi. Tekrar denensin mi?</string>
     <string name="welcome_sync_notifications">Reklam bloğu durumunu ve kontrolünü görüntülemek ve mevcut uygulama güncellemesi hakkında bilgi vermek için (yılda birkaç kez) bildirimler gönderebilir. Güncel kalmak istiyorsanız bunları etkinleştirin.</string>
+    <string name="welcome_sync_leave_early_title">Senkronizasyon henüz tamamlanmadı</string>
+    <string name="welcome_sync_leave_early_message">Engelleme listelerinin indirilmesi henüz tamamlanmadı. Şimdi devam edebilirsiniz, arka planda devam edecektir, ya da tamamlanana kadar burada bekleyebilirsiniz.</string>
+    <string name="welcome_sync_leave_early_wait">Bekle</string>
+    <string name="welcome_sync_leave_early_continue">Yine de devam et</string>
 
     <!-- Support -->
 

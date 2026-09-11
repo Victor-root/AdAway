@@ -36,6 +36,10 @@
     <string name="welcome_sync_retry_logo">Saiatu berriro sinkronizatzen</string>
     <string name="welcome_sync_error">Huts egin du %1$s sinkronizatzeak. Berriro saiatu?</string>
     <string name="welcome_sync_notifications">Jakinarazpenak bidal ditzakezu iragarkien eta kontrolaren blokeo-egoera erakusteko, bai eta eskuragarri dagoen aplikazioaren eguneratzearen berri emateko ere (gutxi batzuk urtean). Gaitu egunean egon nahi baduzu.</string>
+    <string name="welcome_sync_leave_early_title">Sinkronizazioa oraindik ez da amaitu</string>
+    <string name="welcome_sync_leave_early_message">Blokeo-zerrenden deskarga oraindik ez da amaitu. Orain jarrai dezakezu eta atzeko planoan jarraituko du, edo hemen itxaron amaitu arte.</string>
+    <string name="welcome_sync_leave_early_wait">Itxaron</string>
+    <string name="welcome_sync_leave_early_continue">Jarraitu hala ere</string>
 
     <!-- Support -->
 

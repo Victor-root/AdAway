@@ -41,6 +41,10 @@
     <string name="welcome_sync_retry_logo">Synchronisierung wiederholen</string>
     <string name="welcome_sync_error">Fehler beim Synchronisieren: %1$s. Jetzt erneut versuchen?</string>
     <string name="welcome_sync_notifications">Es kann Benachrichtigungen anzeigen, die Informationen sowohl über den Status und das Blockieren von Werbung enthalten als auch über anstehende App-Aktualisierungen (einige pro Jahr). Diese einschalten, um immer auf dem Laufenden zu bleiben.</string>
+    <string name="welcome_sync_leave_early_title">Synchronisierung noch nicht abgeschlossen</string>
+    <string name="welcome_sync_leave_early_message">Der Download der Blockierlisten ist noch nicht abgeschlossen. Du kannst jetzt fortfahren, er läuft im Hintergrund weiter, oder hier warten, bis er fertig ist.</string>
+    <string name="welcome_sync_leave_early_wait">Warten</string>
+    <string name="welcome_sync_leave_early_continue">Trotzdem fortfahren</string>
 
     <!-- Support -->
 

@@ -20,6 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import org.adaway.R;
 import org.adaway.databinding.WelcomeSyncLayoutBinding;
 import org.adaway.model.error.HostError;
@@ -58,6 +60,28 @@ public class WelcomeSyncFragment extends WelcomeFragment {
         this.homeViewModel.enable();
 
         return this.binding.getRoot();
+    }
+
+    @Override
+    protected boolean shouldHideNextWhileBlocked() {
+        // Keep "Next" visible from the moment this page shows up: syncing keeps running in the
+        // background regardless of which page is on screen, so there's no real need to trap the
+        // user here. requestLeave() below asks for confirmation instead when tapped too early.
+        return false;
+    }
+
+    @Override
+    protected void requestLeave(Runnable proceed) {
+        if (canGoNext()) {
+            proceed.run();
+            return;
+        }
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.welcome_sync_leave_early_title)
+                .setMessage(R.string.welcome_sync_leave_early_message)
+                .setNegativeButton(R.string.welcome_sync_leave_early_wait, null)
+                .setPositiveButton(R.string.welcome_sync_leave_early_continue, (dialog, which) -> proceed.run())
+                .show();
     }
 
     private void bindRetry() {

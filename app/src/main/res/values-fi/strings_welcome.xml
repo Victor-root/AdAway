@@ -36,6 +36,10 @@
     <string name="welcome_sync_retry_logo">Yritä synkronointia uudelleen</string>
     <string name="welcome_sync_error">Synkronointi epäonnistui: %1$s Yritetäänkö uudelleen?</string>
     <string name="welcome_sync_notifications">Sovellus voi näyttää ilmoituksia mainoseston tilasta, hallinnasta ja uusista sovellusversioista (muutama vuodessa). Ota ne käyttöön, jos haluat pysyä ajan tasalla.</string>
+    <string name="welcome_sync_leave_early_title">Synkronointi ei ole vielä valmis</string>
+    <string name="welcome_sync_leave_early_message">Estolistojen lataus ei ole vielä valmis. Voit jatkaa nyt, ja lataus jatkuu taustalla, tai odottaa täällä, kunnes se on valmis.</string>
+    <string name="welcome_sync_leave_early_wait">Odota</string>
+    <string name="welcome_sync_leave_early_continue">Jatka silti</string>
 
     <!-- Support -->
 

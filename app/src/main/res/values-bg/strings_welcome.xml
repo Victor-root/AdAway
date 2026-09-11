@@ -43,6 +43,10 @@
     <string name="welcome_sync_retry_logo">Повторно синхронизиране</string>
     <string name="welcome_sync_error">Грешка при синхронизиране: %1$s Повторен опит?</string>
     <string name="welcome_sync_notifications">Може да показва известия за състоянието и да ви известява за налични обновявания (няколко пъти в годината). Включете ги, за да научаеате последните промени.</string>
+    <string name="welcome_sync_leave_early_title">Синхронизацията все още не е завършена</string>
+    <string name="welcome_sync_leave_early_message">Изтеглянето на списъците за блокиране не е завършено. Можете да продължите сега и то ще продължи във фонов режим, или да изчакате тук, докато приключи.</string>
+    <string name="welcome_sync_leave_early_wait">Изчакай</string>
+    <string name="welcome_sync_leave_early_continue">Продължи все пак</string>
 
     <!-- Support -->
 

@@ -36,6 +36,10 @@
     <string name="welcome_sync_retry_logo">Thử đồng bộ lại</string>
     <string name="welcome_sync_error">Đồng bộ thất bại: %1$sThử lại ngay?</string>
     <string name="welcome_sync_notifications">Nó có thể gửi thông báo để hiển thị trạng thái và kiểm soát khối quảng cáo cũng như thông báo về bản cập nhật ứng dụng có sẵn (một vài bản cập nhật mỗi năm). Kích hoạt chúng nếu bạn muốn luôn cập nhật.</string>
+    <string name="welcome_sync_leave_early_title">Đồng bộ chưa hoàn tất</string>
+    <string name="welcome_sync_leave_early_message">Việc tải xuống danh sách chặn chưa hoàn tất. Bạn có thể tiếp tục ngay bây giờ và nó sẽ tiếp tục chạy nền, hoặc chờ ở đây cho đến khi hoàn tất.</string>
+    <string name="welcome_sync_leave_early_wait">Chờ</string>
+    <string name="welcome_sync_leave_early_continue">Vẫn tiếp tục</string>
 
     <!-- Support -->
 

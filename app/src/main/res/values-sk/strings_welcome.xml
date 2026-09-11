@@ -41,6 +41,10 @@
     <string name="welcome_sync_retry_logo">Zopakovať synchronizáciu</string>
     <string name="welcome_sync_error">Synchronizácia zlyhala: %1$s Skúsiť znova?</string>
     <string name="welcome_sync_notifications">Môže posielať upozornenia na zobrazenie stavu a kontroly blokovania reklám a upozorniť na dostupnú aktualizáciu aplikácie (niekoľko za rok). Ak ich chcete mať stále aktuálne, povoľte ich.</string>
+    <string name="welcome_sync_leave_early_title">Synchronizácia ešte neskončila</string>
+    <string name="welcome_sync_leave_early_message">Sťahovanie zoznamov blokovania ešte neskončilo. Môžete pokračovať teraz a bude pokračovať na pozadí, alebo počkať tu, kým sa nedokončí.</string>
+    <string name="welcome_sync_leave_early_wait">Počkať</string>
+    <string name="welcome_sync_leave_early_continue">Pokračovať aj tak</string>
 
     <!-- Support -->
 

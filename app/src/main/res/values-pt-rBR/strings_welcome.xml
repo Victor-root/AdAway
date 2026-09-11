@@ -36,6 +36,10 @@
     <string name="welcome_sync_retry_logo">Repetir sincronização</string>
     <string name="welcome_sync_error">Falha ao sincronizar: %1$s Repetir agora?</string>
     <string name="welcome_sync_notifications">Ele pode enviar notificações para exibir o status e o controle do bloqueio de anúncios e para notificar sobre atualizações disponíveis do aplicativo (algumas por ano). Ative-as se quiser se manter atualizado.</string>
+    <string name="welcome_sync_leave_early_title">A sincronização ainda não terminou</string>
+    <string name="welcome_sync_leave_early_message">O download das listas de bloqueio ainda não terminou. Você pode continuar agora e ele continuará em segundo plano, ou esperar aqui até terminar.</string>
+    <string name="welcome_sync_leave_early_wait">Esperar</string>
+    <string name="welcome_sync_leave_early_continue">Continuar mesmo assim</string>
 
     <!-- Support -->
 
