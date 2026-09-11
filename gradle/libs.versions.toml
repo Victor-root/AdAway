@@ -1,7 +1,7 @@
 [versions]
 # Build
-appName = "6.6.0-c"
-appCode = "60600" # Read x.yy.zz to match version name (suffix "-c" = community fork, ignored by code)
+appName = "6.6.1-c"
+appCode = "60601" # Read x.yy.zz to match version name (suffix "-c" = community fork, ignored by code)
 gradle = "8.7.2"
 # Common
 guava = "32.0.1-android"
