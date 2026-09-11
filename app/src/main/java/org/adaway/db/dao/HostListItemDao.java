@@ -52,6 +52,11 @@ public interface HostListItemDao {
     @Query("SELECT COUNT(DISTINCT host) FROM hosts_lists WHERE type = 0 AND enabled = 1")
     LiveData<Integer> getBlockedHostCount();
 
+    // Same query as getBlockedHostCount(), as a blocking call for logging from a background
+    // thread that isn't guaranteed to have anyone observing the LiveData yet.
+    @Query("SELECT COUNT(DISTINCT host) FROM hosts_lists WHERE type = 0 AND enabled = 1")
+    int countBlockedHosts();
+
     @Query("SELECT COUNT(DISTINCT host) FROM hosts_lists WHERE type = 1 AND enabled = 1")
     LiveData<Integer> getAllowedHostCount();
 

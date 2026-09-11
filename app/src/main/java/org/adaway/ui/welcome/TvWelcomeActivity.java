@@ -99,9 +99,9 @@ public class TvWelcomeActivity extends AppCompatActivity {
             this.homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
             this.homeViewModel.getState().observe(this, state -> this.progressDetailText.setText(state));
             this.homeViewModel.getError().observe(this, this::showError);
-            this.homeViewModel.isAdBlocked().observe(this, adBlocked -> {
-                Timber.d("TvWelcomeActivity: isAdBlocked=%s.", adBlocked);
-                if (adBlocked) {
+            this.homeViewModel.isEnableCompleted().observe(this, completed -> {
+                Timber.d("TvWelcomeActivity: enableCompleted=%s.", completed);
+                if (completed) {
                     showSuccess();
                 }
             });

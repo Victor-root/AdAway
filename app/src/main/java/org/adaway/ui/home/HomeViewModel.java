@@ -40,6 +40,7 @@ public class HomeViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> pending;
     private final MediatorLiveData<String> state;
     private final MutableLiveData<HostError> error;
+    private final MutableLiveData<Boolean> enableCompleted;
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
@@ -57,6 +58,7 @@ public class HomeViewModel extends AndroidViewModel {
         this.state.addSource(this.sourceModel.getState(), this.state::setValue);
         this.state.addSource(this.adBlockModel.getState(), this.state::setValue);
         this.error = new MutableLiveData<>();
+        this.enableCompleted = new MutableLiveData<>(false);
     }
 
     private static boolean isTrue(LiveData<Boolean> liveData) {
@@ -66,6 +68,19 @@ public class HomeViewModel extends AndroidViewModel {
 
     public LiveData<Boolean> isAdBlocked() {
         return this.adBlockModel.isApplied();
+    }
+
+    /**
+     * Whether the {@link #enable()} call this instance most recently triggered has actually
+     * finished (sources retrieved and the ad-block model applied), as opposed to
+     * {@link #isAdBlocked()}, which only reflects whether enforcement currently happens to be
+     * active - true right away for the welcome screen's very first observer callback whenever
+     * a device already has ad-blocking applied from a previous run (root mode's hosts file is a
+     * system file surviving an app reinstall or data wipe), regardless of whether the fresh
+     * sync this screen just kicked off has synced anything at all yet.
+     */
+    public LiveData<Boolean> isEnableCompleted() {
+        return this.enableCompleted;
     }
 
     public LiveData<Boolean> isUpdateAvailable() {
@@ -187,14 +202,21 @@ public class HomeViewModel extends AndroidViewModel {
             Timber.d("HomeViewModel.enable: already pending, ignoring.");
             return;
         }
+        this.enableCompleted.postValue(false);
         EXECUTORS.networkIO().execute(() -> {
             try {
                 this.pending.postValue(true);
                 Timber.d("HomeViewModel.enable: retrieving hosts sources.");
                 this.sourceModel.retrieveHostsSources();
-                Timber.d("HomeViewModel.enable: hosts sources retrieved, applying ad-block model.");
+                // Same figure as the "blocked" count shown on the main screen: compare it here
+                // against what's actually expected from the configured sources to tell a truly
+                // finished sync from one the welcome screen is about to report as done too soon.
+                Timber.d("HomeViewModel.enable: hosts sources retrieved, blocked host count is now %d.",
+                        this.hostListItemDao.countBlockedHosts());
+                Timber.d("HomeViewModel.enable: applying ad-block model.");
                 this.adBlockModel.apply();
                 Timber.d("HomeViewModel.enable: ad-block model applied.");
+                this.enableCompleted.postValue(true);
             } catch (HostErrorException exception) {
                 Timber.w(exception, "Failed to enable ad-blocking.");
                 this.error.postValue(exception.getError());

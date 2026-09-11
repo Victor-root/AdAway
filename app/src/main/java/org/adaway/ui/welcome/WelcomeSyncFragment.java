@@ -49,8 +49,8 @@ public class WelcomeSyncFragment extends WelcomeFragment {
 
         this.homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
-        this.homeViewModel.isAdBlocked().observe(lifecycleOwner, adBlocked -> {
-            if (adBlocked) {
+        this.homeViewModel.isEnableCompleted().observe(lifecycleOwner, completed -> {
+            if (completed) {
                 notifySynced();
             }
         });

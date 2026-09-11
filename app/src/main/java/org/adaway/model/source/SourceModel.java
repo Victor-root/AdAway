@@ -390,6 +390,14 @@ public class SourceModel {
             }
         }
         Timber.d("retrieveHostsSources: %d attempted, %d failed.", numberOfCopies, numberOfFailedCopies);
+        // A partial failure (some sources succeeded, some didn't) falls through here silently:
+        // only "every attempted source failed" throws below. That lets the welcome screen see
+        // a "successful" sync that actually merged only some of the configured sources. Flag it
+        // loudly until this is properly handled instead of just logged.
+        if (numberOfFailedCopies > 0 && numberOfFailedCopies < numberOfCopies) {
+            Timber.w("retrieveHostsSources: PARTIAL FAILURE, %d of %d attempted source(s) failed but the sync is proceeding as if it succeeded. Blocked host count so far: %d.",
+                    numberOfFailedCopies, numberOfCopies, this.hostListItemDao.countBlockedHosts());
+        }
         // Check if all copies failed
         if (numberOfCopies == numberOfFailedCopies && numberOfCopies != 0) {
             throw new HostErrorException(DOWNLOAD_FAILED);
